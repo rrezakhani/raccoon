@@ -1,0 +1,342 @@
+<!DOCTYPE html><head><meta charset="UTF-8"><link rel="icon" type="image/x-icon" href="../../media/raccoon_icon.png" sizes="16x16 32x32 64x64 128x128"></link><link href="../../contrib/materialize/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"></link><link href="../../contrib/prism/prism.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/alert_moose.css" type="text/css" rel="stylesheet"></link><link href="../../contrib/katex/katex.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/katex_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/content_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/sqa_moose.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../../contrib/jquery/jquery.min.js"></script><script type="text/javascript" src="../../contrib/katex/katex.min.js"></script><script type="text/javascript" src="../../contrib/plotly/plotly.min.js"></script><title>ArrayDiffusion|RACCOON</title></head><body><div class="page-wrap"><header><nav><div class="nav-wrapper container"><a href="https://hugary1995.github.io/raccoon/index.html" class="left moose-logo hide-on-med-and-down">RACCOON</a><a href="https://github.com/hugary1995/raccoon" class="right"><img src="../../media/framework/github-logo.png" class="github-mark"></img><img src="../../media/framework/github-mark.png" class="github-logo"></img></a><ul class="right hide-on-med-and-down"><li><a href="../../install/index.html">Install</a></li><li class="moose-mega-menu-trigger" data-target="d450a121-aff1-4b10-8ac4-225d4926c2e5"><a>Benchmarks<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../theory/index.html">Theory</a></li><li><a href="../../modules/index.html">Modules</a></li><li><a href="../../syntax/index.html">Syntax</a></li></ul><a href="#" class="sidenav-trigger" data-target="5ec8de9d-4b9a-406f-b3e2-34a7956baa96"><i class="material-icons">menu</i></a><ul class="sidenav" id="5ec8de9d-4b9a-406f-b3e2-34a7956baa96"><li><a href="../../install/index.html">Install</a></li><li><a href="../../benchmarks.menu.html">Benchmarks</a></li><li><a href="../../theory/index.html">Theory</a></li><li><a href="../../modules/index.html">Modules</a></li><li><a href="../../syntax/index.html">Syntax</a></li></ul><a href="#moose-search" class="modal-trigger"><i class="material-icons">search</i></a></div></nav><div class="moose-mega-menu-content" id="d450a121-aff1-4b10-8ac4-225d4926c2e5"><div class="moose-mega-menu-wrapper"><div class="row row"><div class="col s12 m6 l4"><h2 id="mode-i-crack-propagation"><a href="../../benchmarks/mode1.html">Mode I crack propagation <i class="material-icons moose-inline-icon">link</i></a></h2><img src="../../media/mode1.gif" class="materialboxed moose-image" style="width:75%;float:left;padding-top:2.5%;"></img><p></p></div><div class="col s12 m6 l4"><h2 id="mode-ii-crack-propagation"><a href="../../benchmarks/mode2.html">Mode II crack propagation <i class="material-icons moose-inline-icon">link</i></a></h2><img src="../../media/mode2.gif" class="materialboxed moose-image" style="width:75%;float:left;padding-top:2.5%;"></img><p></p></div><div class="col s12 m6 l4"><h2 id="soil-desiccation"><a href="../../benchmarks/mud.html">Soil desiccation <i class="material-icons moose-inline-icon">link</i></a></h2><img src="../../media/soil.gif" class="materialboxed moose-image" style="width:75%;float:left;padding-top:2.5%;"></img><p></p></div></div></div></div><div class="modal modal-fixed-footer moose-search-modal" id="moose-search"><div class="modal-content container moose-search-modal-content"><div class="row"><div class="col l12"><div class="input-field"><input type_="text" onkeyup="mooseSearch()" placeholder="https://hugary1995.github.io/raccoon/index.html" id="moose-search-box"></input></div></div><div><div class="col s12" id="moose-search-results"></div></div></div></div><div class="modal-footer"><a href="#!" class="modal-close btn-flat">Close</a></div></div></header><main class="main"><div class="container"><div class="row"><div class="col hide-on-med-and-down l12"><nav class="breadcrumb-nav"><div class="nav-wrapper"><a href=".." class="breadcrumb">source</a><span class="breadcrumb">kernels</span><a href="#" class="breadcrumb">ArrayDiffusion</a></div></nav></div></div><div class="row"><div class="moose-content col s12 m12 l10"><section id="16421971-8ef1-4630-9808-d4118d84d207" data-section-level="1" data-section-text="ArrayDiffusion"><h1 id="arraydiffusion">ArrayDiffusion</h1><section class="scrollspy" id="253cacb4-d1d7-4ce3-bc45-05d56bdf0abc" data-section-level="2" data-section-text="Description"><h2 id="description">Description</h2><p>This array kernel implements the following piece of a weak form:</p><p><span class="moose-katex-block-equation"><span tex="(\nabla \vec{u}^\ast, \mathbf{D} \nabla \vec{u})," bookmark="moose-equation-c1af7a96-ae03-40db-a754-36b698c8e3b4" recursive="True" class="moose-katex-equation table-cell" id="moose-equation-c1af7a96-ae03-40db-a754-36b698c8e3b4"></span><script>var element = document.getElementById("moose-equation-c1af7a96-ae03-40db-a754-36b698c8e3b4");katex.render("(\\nabla \\vec{u}^\\ast, \\mathbf{D} \\nabla \\vec{u}),", element, {displayMode:true,throwOnError:false,macros:{"\\bs":"\\boldsymbol{#1}","\\normal":"\\bs{n}","\\divergence":"\\nabla \\cdot","\\norm":"\\left\\lVert#1\\right\\rVert","\\dArea":"\\text{ d}A","\\dVolume":"\\text{ d}V","\\total":"\\text{total}","\\internal":"\\text{internal}","\\external":"\\text{external}","\\elastic":"\\text{elastic}","\\fracture":"\\text{fracture}","\\critical":"\\text{critical}","\\activeenergy":"{\\left< A \\right>}","\\inactiveenergy":"{\\left< I \\right>}","\\Gc":"\\mathcal{G}_c","\\strain":"\\bs{\\varepsilon}","\\stress":"\\bs{\\sigma}","\\xstress":"\\widetilde{\\stress}","\\macaulay":"\\left<#1\\right>"}});</script></span> which is expanded as <span class="moose-katex-block-equation"><span tex="(\nabla \vec{u}^\ast, \mathbf{D} \nabla \vec{u}) = \sum_{p=1}^N w_p \sum_{q=1}^N (\nabla u_p^\ast, D_{p,q} \nabla u_q)," bookmark="moose-equation-155cad20-26ae-4a91-b4da-e6d192654f0b" recursive="True" class="moose-katex-equation table-cell" id="moose-equation-155cad20-26ae-4a91-b4da-e6d192654f0b"></span><script>var element = document.getElementById("moose-equation-155cad20-26ae-4a91-b4da-e6d192654f0b");katex.render("(\\nabla \\vec{u}^\\ast, \\mathbf{D} \\nabla \\vec{u}) = \\sum_{p=1}^N w_p \\sum_{q=1}^N (\\nabla u_p^\\ast, D_{p,q} \\nabla u_q),", element, {displayMode:true,throwOnError:false,macros:{"\\bs":"\\boldsymbol{#1}","\\normal":"\\bs{n}","\\divergence":"\\nabla \\cdot","\\norm":"\\left\\lVert#1\\right\\rVert","\\dArea":"\\text{ d}A","\\dVolume":"\\text{ d}V","\\total":"\\text{total}","\\internal":"\\text{internal}","\\external":"\\text{external}","\\elastic":"\\text{elastic}","\\fracture":"\\text{fracture}","\\critical":"\\text{critical}","\\activeenergy":"{\\left< A \\right>}","\\inactiveenergy":"{\\left< I \\right>}","\\Gc":"\\mathcal{G}_c","\\strain":"\\bs{\\varepsilon}","\\stress":"\\bs{\\sigma}","\\xstress":"\\widetilde{\\stress}","\\macaulay":"\\left<#1\\right>"}});</script></span> where <span tex="\vec{u}^\ast" bookmark="moose-equation-3215ed11-7b79-478b-82d2-f733213605ea" recursive="True" class="moose-katex-inline-equation" id="moose-equation-3215ed11-7b79-478b-82d2-f733213605ea"><script>var element = document.getElementById("moose-equation-3215ed11-7b79-478b-82d2-f733213605ea");katex.render("\\vec{u}^\\ast", element, {displayMode:false,throwOnError:false,macros:{"\\bs":"\\boldsymbol{#1}","\\normal":"\\bs{n}","\\divergence":"\\nabla \\cdot","\\norm":"\\left\\lVert#1\\right\\rVert","\\dArea":"\\text{ d}A","\\dVolume":"\\text{ d}V","\\total":"\\text{total}","\\internal":"\\text{internal}","\\external":"\\text{external}","\\elastic":"\\text{elastic}","\\fracture":"\\text{fracture}","\\critical":"\\text{critical}","\\activeenergy":"{\\left< A \\right>}","\\inactiveenergy":"{\\left< I \\right>}","\\Gc":"\\mathcal{G}_c","\\strain":"\\bs{\\varepsilon}","\\stress":"\\bs{\\sigma}","\\xstress":"\\widetilde{\\stress}","\\macaulay":"\\left<#1\\right>"}});</script></span> is the test function, <span tex="\vec{u}" bookmark="moose-equation-be99c338-f3ce-496e-af06-a83d08d7ca81" recursive="True" class="moose-katex-inline-equation" id="moose-equation-be99c338-f3ce-496e-af06-a83d08d7ca81"><script>var element = document.getElementById("moose-equation-be99c338-f3ce-496e-af06-a83d08d7ca81");katex.render("\\vec{u}", element, {displayMode:false,throwOnError:false,macros:{"\\bs":"\\boldsymbol{#1}","\\normal":"\\bs{n}","\\divergence":"\\nabla \\cdot","\\norm":"\\left\\lVert#1\\right\\rVert","\\dArea":"\\text{ d}A","\\dVolume":"\\text{ d}V","\\total":"\\text{total}","\\internal":"\\text{internal}","\\external":"\\text{external}","\\elastic":"\\text{elastic}","\\fracture":"\\text{fracture}","\\critical":"\\text{critical}","\\activeenergy":"{\\left< A \\right>}","\\inactiveenergy":"{\\left< I \\right>}","\\Gc":"\\mathcal{G}_c","\\strain":"\\bs{\\varepsilon}","\\stress":"\\bs{\\sigma}","\\xstress":"\\widetilde{\\stress}","\\macaulay":"\\left<#1\\right>"}});</script></span> is the finite element solution and <span tex="\mathbf{D}" bookmark="moose-equation-4353f217-b0cf-47f2-ab30-ff7c1049a02e" recursive="True" class="moose-katex-inline-equation" id="moose-equation-4353f217-b0cf-47f2-ab30-ff7c1049a02e"><script>var element = document.getElementById("moose-equation-4353f217-b0cf-47f2-ab30-ff7c1049a02e");katex.render("\\mathbf{D}", element, {displayMode:false,throwOnError:false,macros:{"\\bs":"\\boldsymbol{#1}","\\normal":"\\bs{n}","\\divergence":"\\nabla \\cdot","\\norm":"\\left\\lVert#1\\right\\rVert","\\dArea":"\\text{ d}A","\\dVolume":"\\text{ d}V","\\total":"\\text{total}","\\internal":"\\text{internal}","\\external":"\\text{external}","\\elastic":"\\text{elastic}","\\fracture":"\\text{fracture}","\\critical":"\\text{critical}","\\activeenergy":"{\\left< A \\right>}","\\inactiveenergy":"{\\left< I \\right>}","\\Gc":"\\mathcal{G}_c","\\strain":"\\bs{\\varepsilon}","\\stress":"\\bs{\\sigma}","\\xstress":"\\widetilde{\\stress}","\\macaulay":"\\left<#1\\right>"}});</script></span> is the diffusion coefficients. <span tex="\vec{u}" bookmark="moose-equation-2b7c8855-9690-41d9-b0e8-1b3b91428fec" recursive="True" class="moose-katex-inline-equation" id="moose-equation-2b7c8855-9690-41d9-b0e8-1b3b91428fec"><script>var element = document.getElementById("moose-equation-2b7c8855-9690-41d9-b0e8-1b3b91428fec");katex.render("\\vec{u}", element, {displayMode:false,throwOnError:false,macros:{"\\bs":"\\boldsymbol{#1}","\\normal":"\\bs{n}","\\divergence":"\\nabla \\cdot","\\norm":"\\left\\lVert#1\\right\\rVert","\\dArea":"\\text{ d}A","\\dVolume":"\\text{ d}V","\\total":"\\text{total}","\\internal":"\\text{internal}","\\external":"\\text{external}","\\elastic":"\\text{elastic}","\\fracture":"\\text{fracture}","\\critical":"\\text{critical}","\\activeenergy":"{\\left< A \\right>}","\\inactiveenergy":"{\\left< I \\right>}","\\Gc":"\\mathcal{G}_c","\\strain":"\\bs{\\varepsilon}","\\stress":"\\bs{\\sigma}","\\xstress":"\\widetilde{\\stress}","\\macaulay":"\\left<#1\\right>"}});</script></span> is an array variable that has <span tex="N" bookmark="moose-equation-a5f25ccb-1be2-400a-b802-17d11faa2876" recursive="True" class="moose-katex-inline-equation" id="moose-equation-a5f25ccb-1be2-400a-b802-17d11faa2876"><script>var element = document.getElementById("moose-equation-a5f25ccb-1be2-400a-b802-17d11faa2876");katex.render("N", element, {displayMode:false,throwOnError:false,macros:{"\\bs":"\\boldsymbol{#1}","\\normal":"\\bs{n}","\\divergence":"\\nabla \\cdot","\\norm":"\\left\\lVert#1\\right\\rVert","\\dArea":"\\text{ d}A","\\dVolume":"\\text{ d}V","\\total":"\\text{total}","\\internal":"\\text{internal}","\\external":"\\text{external}","\\elastic":"\\text{elastic}","\\fracture":"\\text{fracture}","\\critical":"\\text{critical}","\\activeenergy":"{\\left< A \\right>}","\\inactiveenergy":"{\\left< I \\right>}","\\Gc":"\\mathcal{G}_c","\\strain":"\\bs{\\varepsilon}","\\stress":"\\bs{\\sigma}","\\xstress":"\\widetilde{\\stress}","\\macaulay":"\\left<#1\\right>"}});</script></span> number of components. <span tex="w_p, p=1,\cdots,N" bookmark="moose-equation-1a086397-9020-46bc-93fa-c139c56d6f06" recursive="True" class="moose-katex-inline-equation" id="moose-equation-1a086397-9020-46bc-93fa-c139c56d6f06"><script>var element = document.getElementById("moose-equation-1a086397-9020-46bc-93fa-c139c56d6f06");katex.render("w_p, p=1,\\cdots,N", element, {displayMode:false,throwOnError:false,macros:{"\\bs":"\\boldsymbol{#1}","\\normal":"\\bs{n}","\\divergence":"\\nabla \\cdot","\\norm":"\\left\\lVert#1\\right\\rVert","\\dArea":"\\text{ d}A","\\dVolume":"\\text{ d}V","\\total":"\\text{total}","\\internal":"\\text{internal}","\\external":"\\text{external}","\\elastic":"\\text{elastic}","\\fracture":"\\text{fracture}","\\critical":"\\text{critical}","\\activeenergy":"{\\left< A \\right>}","\\inactiveenergy":"{\\left< I \\right>}","\\Gc":"\\mathcal{G}_c","\\strain":"\\bs{\\varepsilon}","\\stress":"\\bs{\\sigma}","\\xstress":"\\widetilde{\\stress}","\\macaulay":"\\left<#1\\right>"}});</script></span> is the scalings of all components of the array variable. The size of the vector test function <span tex="\vec{u}^\ast" bookmark="moose-equation-2c10a1d2-e9ed-4591-bdaf-5d95d0aad798" recursive="True" class="moose-katex-inline-equation" id="moose-equation-2c10a1d2-e9ed-4591-bdaf-5d95d0aad798"><script>var element = document.getElementById("moose-equation-2c10a1d2-e9ed-4591-bdaf-5d95d0aad798");katex.render("\\vec{u}^\\ast", element, {displayMode:false,throwOnError:false,macros:{"\\bs":"\\boldsymbol{#1}","\\normal":"\\bs{n}","\\divergence":"\\nabla \\cdot","\\norm":"\\left\\lVert#1\\right\\rVert","\\dArea":"\\text{ d}A","\\dVolume":"\\text{ d}V","\\total":"\\text{total}","\\internal":"\\text{internal}","\\external":"\\text{external}","\\elastic":"\\text{elastic}","\\fracture":"\\text{fracture}","\\critical":"\\text{critical}","\\activeenergy":"{\\left< A \\right>}","\\inactiveenergy":"{\\left< I \\right>}","\\Gc":"\\mathcal{G}_c","\\strain":"\\bs{\\varepsilon}","\\stress":"\\bs{\\sigma}","\\xstress":"\\widetilde{\\stress}","\\macaulay":"\\left<#1\\right>"}});</script></span> is the same as the size of <span tex="\vec{u}" bookmark="moose-equation-6832f850-4892-487d-ba17-ca8652707efc" recursive="True" class="moose-katex-inline-equation" id="moose-equation-6832f850-4892-487d-ba17-ca8652707efc"><script>var element = document.getElementById("moose-equation-6832f850-4892-487d-ba17-ca8652707efc");katex.render("\\vec{u}", element, {displayMode:false,throwOnError:false,macros:{"\\bs":"\\boldsymbol{#1}","\\normal":"\\bs{n}","\\divergence":"\\nabla \\cdot","\\norm":"\\left\\lVert#1\\right\\rVert","\\dArea":"\\text{ d}A","\\dVolume":"\\text{ d}V","\\total":"\\text{total}","\\internal":"\\text{internal}","\\external":"\\text{external}","\\elastic":"\\text{elastic}","\\fracture":"\\text{fracture}","\\critical":"\\text{critical}","\\activeenergy":"{\\left< A \\right>}","\\inactiveenergy":"{\\left< I \\right>}","\\Gc":"\\mathcal{G}_c","\\strain":"\\bs{\\varepsilon}","\\stress":"\\bs{\\sigma}","\\xstress":"\\widetilde{\\stress}","\\macaulay":"\\left<#1\\right>"}});</script></span>. The kernel can be furthur spelled out as <span class="moose-katex-block-equation"><span tex="\sum_{p=1}^N w_p \sum_{q=1}^N (\nabla u_p^\ast, D_{p,q} \nabla u_q) = \sum_{p=1}^N w_p \sum_{q=1}^N \sum_{e} \int_e D_{p,q}(x) \nabla u_p^\ast (x) \cdot \nabla u_q(x)\,dx = \sum_{p=1}^N w_p \sum_{q=1}^N \sum_{e} \sum_{i=1}^{N_{\text{dof}}} \sum_{j=1}^{N_{\text{dof}}} u_{p,i}^\ast u_{q,j} \sum_{\text{qp}=1}^{N_{qp}} (|J|w)_{\text{qp}} D_{p,q,\text{qp}} \nabla b_{i,\text{qp}} \cdot \nabla b_{j,\text{qp}}," label="eq:weak-array-diffusion" number="1" bookmark="moose-equation-272ed2d5-c879-4696-a2cd-aace67e40475" recursive="True" class="moose-katex-equation table-cell" id="moose-equation-272ed2d5-c879-4696-a2cd-aace67e40475"></span><span class="moose-katex-equation-number">(1)</span><script>var element = document.getElementById("moose-equation-272ed2d5-c879-4696-a2cd-aace67e40475");katex.render("\\sum_{p=1}^N w_p \\sum_{q=1}^N (\\nabla u_p^\\ast, D_{p,q} \\nabla u_q) = \\sum_{p=1}^N w_p \\sum_{q=1}^N \\sum_{e} \\int_e D_{p,q}(x) \\nabla u_p^\\ast (x) \\cdot \\nabla u_q(x)\\,dx = \\sum_{p=1}^N w_p \\sum_{q=1}^N \\sum_{e} \\sum_{i=1}^{N_{\\text{dof}}} \\sum_{j=1}^{N_{\\text{dof}}} u_{p,i}^\\ast u_{q,j} \\sum_{\\text{qp}=1}^{N_{qp}} (|J|w)_{\\text{qp}} D_{p,q,\\text{qp}} \\nabla b_{i,\\text{qp}} \\cdot \\nabla b_{j,\\text{qp}}, ", element, {displayMode:true,throwOnError:false,macros:{"\\bs":"\\boldsymbol{#1}","\\normal":"\\bs{n}","\\divergence":"\\nabla \\cdot","\\norm":"\\left\\lVert#1\\right\\rVert","\\dArea":"\\text{ d}A","\\dVolume":"\\text{ d}V","\\total":"\\text{total}","\\internal":"\\text{internal}","\\external":"\\text{external}","\\elastic":"\\text{elastic}","\\fracture":"\\text{fracture}","\\critical":"\\text{critical}","\\activeenergy":"{\\left< A \\right>}","\\inactiveenergy":"{\\left< I \\right>}","\\Gc":"\\mathcal{G}_c","\\strain":"\\bs{\\varepsilon}","\\stress":"\\bs{\\sigma}","\\xstress":"\\widetilde{\\stress}","\\macaulay":"\\left<#1\\right>"}});</script></span> where <span tex="e" bookmark="moose-equation-924c22e3-3992-433f-8b2d-f20396e8f2bc" recursive="True" class="moose-katex-inline-equation" id="moose-equation-924c22e3-3992-433f-8b2d-f20396e8f2bc"><script>var element = document.getElementById("moose-equation-924c22e3-3992-433f-8b2d-f20396e8f2bc");katex.render("e", element, {displayMode:false,throwOnError:false,macros:{"\\bs":"\\boldsymbol{#1}","\\normal":"\\bs{n}","\\divergence":"\\nabla \\cdot","\\norm":"\\left\\lVert#1\\right\\rVert","\\dArea":"\\text{ d}A","\\dVolume":"\\text{ d}V","\\total":"\\text{total}","\\internal":"\\text{internal}","\\external":"\\text{external}","\\elastic":"\\text{elastic}","\\fracture":"\\text{fracture}","\\critical":"\\text{critical}","\\activeenergy":"{\\left< A \\right>}","\\inactiveenergy":"{\\left< I \\right>}","\\Gc":"\\mathcal{G}_c","\\strain":"\\bs{\\varepsilon}","\\stress":"\\bs{\\sigma}","\\xstress":"\\widetilde{\\stress}","\\macaulay":"\\left<#1\\right>"}});</script></span> denotes elements of the mesh; <span tex="N_\text{dof}" bookmark="moose-equation-6c073bb3-3eec-4b99-9825-632b86b8325b" recursive="True" class="moose-katex-inline-equation" id="moose-equation-6c073bb3-3eec-4b99-9825-632b86b8325b"><script>var element = document.getElementById("moose-equation-6c073bb3-3eec-4b99-9825-632b86b8325b");katex.render("N_\\text{dof}", element, {displayMode:false,throwOnError:false,macros:{"\\bs":"\\boldsymbol{#1}","\\normal":"\\bs{n}","\\divergence":"\\nabla \\cdot","\\norm":"\\left\\lVert#1\\right\\rVert","\\dArea":"\\text{ d}A","\\dVolume":"\\text{ d}V","\\total":"\\text{total}","\\internal":"\\text{internal}","\\external":"\\text{external}","\\elastic":"\\text{elastic}","\\fracture":"\\text{fracture}","\\critical":"\\text{critical}","\\activeenergy":"{\\left< A \\right>}","\\inactiveenergy":"{\\left< I \\right>}","\\Gc":"\\mathcal{G}_c","\\strain":"\\bs{\\varepsilon}","\\stress":"\\bs{\\sigma}","\\xstress":"\\widetilde{\\stress}","\\macaulay":"\\left<#1\\right>"}});</script></span> is the number of shape functions on the local element; <span tex="N_\text{qp}" bookmark="moose-equation-e1c19521-f7b8-4a1d-be5a-027baced2fc4" recursive="True" class="moose-katex-inline-equation" id="moose-equation-e1c19521-f7b8-4a1d-be5a-027baced2fc4"><script>var element = document.getElementById("moose-equation-e1c19521-f7b8-4a1d-be5a-027baced2fc4");katex.render("N_\\text{qp}", element, {displayMode:false,throwOnError:false,macros:{"\\bs":"\\boldsymbol{#1}","\\normal":"\\bs{n}","\\divergence":"\\nabla \\cdot","\\norm":"\\left\\lVert#1\\right\\rVert","\\dArea":"\\text{ d}A","\\dVolume":"\\text{ d}V","\\total":"\\text{total}","\\internal":"\\text{internal}","\\external":"\\text{external}","\\elastic":"\\text{elastic}","\\fracture":"\\text{fracture}","\\critical":"\\text{critical}","\\activeenergy":"{\\left< A \\right>}","\\inactiveenergy":"{\\left< I \\right>}","\\Gc":"\\mathcal{G}_c","\\strain":"\\bs{\\varepsilon}","\\stress":"\\bs{\\sigma}","\\xstress":"\\widetilde{\\stress}","\\macaulay":"\\left<#1\\right>"}});</script></span> is the number of quadrature points for doing the spatial integration over an element. <span tex="u_{p,i}^\ast" bookmark="moose-equation-c0c8abef-8922-4e4d-81ea-f0d4600e84e4" recursive="True" class="moose-katex-inline-equation" id="moose-equation-c0c8abef-8922-4e4d-81ea-f0d4600e84e4"><script>var element = document.getElementById("moose-equation-c0c8abef-8922-4e4d-81ea-f0d4600e84e4");katex.render("u_{p,i}^\\ast", element, {displayMode:false,throwOnError:false,macros:{"\\bs":"\\boldsymbol{#1}","\\normal":"\\bs{n}","\\divergence":"\\nabla \\cdot","\\norm":"\\left\\lVert#1\\right\\rVert","\\dArea":"\\text{ d}A","\\dVolume":"\\text{ d}V","\\total":"\\text{total}","\\internal":"\\text{internal}","\\external":"\\text{external}","\\elastic":"\\text{elastic}","\\fracture":"\\text{fracture}","\\critical":"\\text{critical}","\\activeenergy":"{\\left< A \\right>}","\\inactiveenergy":"{\\left< I \\right>}","\\Gc":"\\mathcal{G}_c","\\strain":"\\bs{\\varepsilon}","\\stress":"\\bs{\\sigma}","\\xstress":"\\widetilde{\\stress}","\\macaulay":"\\left<#1\\right>"}});</script></span> and <span tex="u_{p,i}^\ast" bookmark="moose-equation-6404d6de-5574-4e7f-87df-bd84210b4e33" recursive="True" class="moose-katex-inline-equation" id="moose-equation-6404d6de-5574-4e7f-87df-bd84210b4e33"><script>var element = document.getElementById("moose-equation-6404d6de-5574-4e7f-87df-bd84210b4e33");katex.render("u_{p,i}^\\ast", element, {displayMode:false,throwOnError:false,macros:{"\\bs":"\\boldsymbol{#1}","\\normal":"\\bs{n}","\\divergence":"\\nabla \\cdot","\\norm":"\\left\\lVert#1\\right\\rVert","\\dArea":"\\text{ d}A","\\dVolume":"\\text{ d}V","\\total":"\\text{total}","\\internal":"\\text{internal}","\\external":"\\text{external}","\\elastic":"\\text{elastic}","\\fracture":"\\text{fracture}","\\critical":"\\text{critical}","\\activeenergy":"{\\left< A \\right>}","\\inactiveenergy":"{\\left< I \\right>}","\\Gc":"\\mathcal{G}_c","\\strain":"\\bs{\\varepsilon}","\\stress":"\\bs{\\sigma}","\\xstress":"\\widetilde{\\stress}","\\macaulay":"\\left<#1\\right>"}});</script></span> are the expansion coefficients for the test function and the solution respectively, often referred as degrees of freedom. Subscript <span tex="\text{qp}" bookmark="moose-equation-00cb5e1b-e183-4e51-9ac9-4d96af168287" recursive="True" class="moose-katex-inline-equation" id="moose-equation-00cb5e1b-e183-4e51-9ac9-4d96af168287"><script>var element = document.getElementById("moose-equation-00cb5e1b-e183-4e51-9ac9-4d96af168287");katex.render("\\text{qp}", element, {displayMode:false,throwOnError:false,macros:{"\\bs":"\\boldsymbol{#1}","\\normal":"\\bs{n}","\\divergence":"\\nabla \\cdot","\\norm":"\\left\\lVert#1\\right\\rVert","\\dArea":"\\text{ d}A","\\dVolume":"\\text{ d}V","\\total":"\\text{total}","\\internal":"\\text{internal}","\\external":"\\text{external}","\\elastic":"\\text{elastic}","\\fracture":"\\text{fracture}","\\critical":"\\text{critical}","\\activeenergy":"{\\left< A \\right>}","\\inactiveenergy":"{\\left< I \\right>}","\\Gc":"\\mathcal{G}_c","\\strain":"\\bs{\\varepsilon}","\\stress":"\\bs{\\sigma}","\\xstress":"\\widetilde{\\stress}","\\macaulay":"\\left<#1\\right>"}});</script></span> indicates that the associated quantities are evaluated on a quadrature point. <span tex="(|J|w)_\text{qp}" bookmark="moose-equation-5b052675-b554-4e1c-8009-e1545f257471" recursive="True" class="moose-katex-inline-equation" id="moose-equation-5b052675-b554-4e1c-8009-e1545f257471"><script>var element = document.getElementById("moose-equation-5b052675-b554-4e1c-8009-e1545f257471");katex.render("(|J|w)_\\text{qp}", element, {displayMode:false,throwOnError:false,macros:{"\\bs":"\\boldsymbol{#1}","\\normal":"\\bs{n}","\\divergence":"\\nabla \\cdot","\\norm":"\\left\\lVert#1\\right\\rVert","\\dArea":"\\text{ d}A","\\dVolume":"\\text{ d}V","\\total":"\\text{total}","\\internal":"\\text{internal}","\\external":"\\text{external}","\\elastic":"\\text{elastic}","\\fracture":"\\text{fracture}","\\critical":"\\text{critical}","\\activeenergy":"{\\left< A \\right>}","\\inactiveenergy":"{\\left< I \\right>}","\\Gc":"\\mathcal{G}_c","\\strain":"\\bs{\\varepsilon}","\\stress":"\\bs{\\sigma}","\\xstress":"\\widetilde{\\stress}","\\macaulay":"\\left<#1\\right>"}});</script></span> is the determinant of Jacobian, that transform a physical element to a reference element where the shape functions <span tex="b_i(\hat{x}),i=1,\cdots,N_\text{dof}" bookmark="moose-equation-33dda582-6cdb-4e9e-8502-1c6076965912" recursive="True" class="moose-katex-inline-equation" id="moose-equation-33dda582-6cdb-4e9e-8502-1c6076965912"><script>var element = document.getElementById("moose-equation-33dda582-6cdb-4e9e-8502-1c6076965912");katex.render("b_i(\\hat{x}),i=1,\\cdots,N_\\text{dof}", element, {displayMode:false,throwOnError:false,macros:{"\\bs":"\\boldsymbol{#1}","\\normal":"\\bs{n}","\\divergence":"\\nabla \\cdot","\\norm":"\\left\\lVert#1\\right\\rVert","\\dArea":"\\text{ d}A","\\dVolume":"\\text{ d}V","\\total":"\\text{total}","\\internal":"\\text{internal}","\\external":"\\text{external}","\\elastic":"\\text{elastic}","\\fracture":"\\text{fracture}","\\critical":"\\text{critical}","\\activeenergy":"{\\left< A \\right>}","\\inactiveenergy":"{\\left< I \\right>}","\\Gc":"\\mathcal{G}_c","\\strain":"\\bs{\\varepsilon}","\\stress":"\\bs{\\sigma}","\\xstress":"\\widetilde{\\stress}","\\macaulay":"\\left<#1\\right>"}});</script></span> are defined, times local quadrature weighting. It is noted that the test functions of all components are identical because all components of an array variable share the same finite element family and order.</p><p>We can rearrange the fully expanded <a href="#moose-equation-272ed2d5-c879-4696-a2cd-aace67e40475">Eq. (1)</a> into <span class="moose-katex-block-equation"><span tex="(\nabla \vec{u}^\ast, \mathbf{D} \nabla \vec{u}) = \sum_{e} \sum_{i=1}^{N_{\text{dof}}} \sum_{\text{qp}=1}^{N_{qp}} (|J|w)_{\text{qp}} \vec{w}_p\vec{u}_i^\ast \underline{\mathbf{D}_{\text{qp}} \nabla \vec{u}_{\text{qp}} \cdot \nabla b_{i,\text{qp}}}," bookmark="moose-equation-60ebdaf8-1559-4355-9c66-4fa587720f54" recursive="True" class="moose-katex-equation table-cell" id="moose-equation-60ebdaf8-1559-4355-9c66-4fa587720f54"></span><script>var element = document.getElementById("moose-equation-60ebdaf8-1559-4355-9c66-4fa587720f54");katex.render("(\\nabla \\vec{u}^\\ast, \\mathbf{D} \\nabla \\vec{u}) = \\sum_{e} \\sum_{i=1}^{N_{\\text{dof}}} \\sum_{\\text{qp}=1}^{N_{qp}} (|J|w)_{\\text{qp}} \\vec{w}_p\\vec{u}_i^\\ast \\underline{\\mathbf{D}_{\\text{qp}} \\nabla \\vec{u}_{\\text{qp}} \\cdot \\nabla b_{i,\\text{qp}}},", element, {displayMode:true,throwOnError:false,macros:{"\\bs":"\\boldsymbol{#1}","\\normal":"\\bs{n}","\\divergence":"\\nabla \\cdot","\\norm":"\\left\\lVert#1\\right\\rVert","\\dArea":"\\text{ d}A","\\dVolume":"\\text{ d}V","\\total":"\\text{total}","\\internal":"\\text{internal}","\\external":"\\text{external}","\\elastic":"\\text{elastic}","\\fracture":"\\text{fracture}","\\critical":"\\text{critical}","\\activeenergy":"{\\left< A \\right>}","\\inactiveenergy":"{\\left< I \\right>}","\\Gc":"\\mathcal{G}_c","\\strain":"\\bs{\\varepsilon}","\\stress":"\\bs{\\sigma}","\\xstress":"\\widetilde{\\stress}","\\macaulay":"\\left<#1\\right>"}});</script></span> where the underlined term is the array provided by <a href="#44777b15-792d-44cd-9cea-528782832e89" class="modal-trigger">ArrayDiffusion::computeQpResidual</a>. The element, shape function and quadrature point summations are taken care of by MOOSE. It is noted that since test functions are arbitrary, <span tex="\vec{u}_i^\ast" bookmark="moose-equation-6a25a00b-b730-468b-9319-ef513d2b8d2e" recursive="True" class="moose-katex-inline-equation" id="moose-equation-6a25a00b-b730-468b-9319-ef513d2b8d2e"><script>var element = document.getElementById("moose-equation-6a25a00b-b730-468b-9319-ef513d2b8d2e");katex.render("\\vec{u}_i^\\ast", element, {displayMode:false,throwOnError:false,macros:{"\\bs":"\\boldsymbol{#1}","\\normal":"\\bs{n}","\\divergence":"\\nabla \\cdot","\\norm":"\\left\\lVert#1\\right\\rVert","\\dArea":"\\text{ d}A","\\dVolume":"\\text{ d}V","\\total":"\\text{total}","\\internal":"\\text{internal}","\\external":"\\text{external}","\\elastic":"\\text{elastic}","\\fracture":"\\text{fracture}","\\critical":"\\text{critical}","\\activeenergy":"{\\left< A \\right>}","\\inactiveenergy":"{\\left< I \\right>}","\\Gc":"\\mathcal{G}_c","\\strain":"\\bs{\\varepsilon}","\\stress":"\\bs{\\sigma}","\\xstress":"\\widetilde{\\stress}","\\macaulay":"\\left<#1\\right>"}});</script></span> can be viewed as an index indicator with which the local residual goes into the global residual vector. Note that <span tex="\vec{a}\vec{b}" bookmark="moose-equation-bf5be126-b16f-4b91-b8b3-c74eb484c624" recursive="True" class="moose-katex-inline-equation" id="moose-equation-bf5be126-b16f-4b91-b8b3-c74eb484c624"><script>var element = document.getElementById("moose-equation-bf5be126-b16f-4b91-b8b3-c74eb484c624");katex.render("\\vec{a}\\vec{b}", element, {displayMode:false,throwOnError:false,macros:{"\\bs":"\\boldsymbol{#1}","\\normal":"\\bs{n}","\\divergence":"\\nabla \\cdot","\\norm":"\\left\\lVert#1\\right\\rVert","\\dArea":"\\text{ d}A","\\dVolume":"\\text{ d}V","\\total":"\\text{total}","\\internal":"\\text{internal}","\\external":"\\text{external}","\\elastic":"\\text{elastic}","\\fracture":"\\text{fracture}","\\critical":"\\text{critical}","\\activeenergy":"{\\left< A \\right>}","\\inactiveenergy":"{\\left< I \\right>}","\\Gc":"\\mathcal{G}_c","\\strain":"\\bs{\\varepsilon}","\\stress":"\\bs{\\sigma}","\\xstress":"\\widetilde{\\stress}","\\macaulay":"\\left<#1\\right>"}});</script></span> represents element-wise multiplication, i.e. <span tex="\vec{a}\vec{b}" bookmark="moose-equation-d534db2e-49ab-4ce4-82a0-8b9dc2e3ce03" recursive="True" class="moose-katex-inline-equation" id="moose-equation-d534db2e-49ab-4ce4-82a0-8b9dc2e3ce03"><script>var element = document.getElementById("moose-equation-d534db2e-49ab-4ce4-82a0-8b9dc2e3ce03");katex.render("\\vec{a}\\vec{b}", element, {displayMode:false,throwOnError:false,macros:{"\\bs":"\\boldsymbol{#1}","\\normal":"\\bs{n}","\\divergence":"\\nabla \\cdot","\\norm":"\\left\\lVert#1\\right\\rVert","\\dArea":"\\text{ d}A","\\dVolume":"\\text{ d}V","\\total":"\\text{total}","\\internal":"\\text{internal}","\\external":"\\text{external}","\\elastic":"\\text{elastic}","\\fracture":"\\text{fracture}","\\critical":"\\text{critical}","\\activeenergy":"{\\left< A \\right>}","\\inactiveenergy":"{\\left< I \\right>}","\\Gc":"\\mathcal{G}_c","\\strain":"\\bs{\\varepsilon}","\\stress":"\\bs{\\sigma}","\\xstress":"\\widetilde{\\stress}","\\macaulay":"\\left<#1\\right>"}});</script></span> is equal to vector whose <em>i</em>th element is <span tex="a_i \times b_i" bookmark="moose-equation-7322942e-7a15-4f00-b40b-26e0abe40899" recursive="True" class="moose-katex-inline-equation" id="moose-equation-7322942e-7a15-4f00-b40b-26e0abe40899"><script>var element = document.getElementById("moose-equation-7322942e-7a15-4f00-b40b-26e0abe40899");katex.render("a_i \\times b_i", element, {displayMode:false,throwOnError:false,macros:{"\\bs":"\\boldsymbol{#1}","\\normal":"\\bs{n}","\\divergence":"\\nabla \\cdot","\\norm":"\\left\\lVert#1\\right\\rVert","\\dArea":"\\text{ d}A","\\dVolume":"\\text{ d}V","\\total":"\\text{total}","\\internal":"\\text{internal}","\\external":"\\text{external}","\\elastic":"\\text{elastic}","\\fracture":"\\text{fracture}","\\critical":"\\text{critical}","\\activeenergy":"{\\left< A \\right>}","\\inactiveenergy":"{\\left< I \\right>}","\\Gc":"\\mathcal{G}_c","\\strain":"\\bs{\\varepsilon}","\\stress":"\\bs{\\sigma}","\\xstress":"\\widetilde{\\stress}","\\macaulay":"\\left<#1\\right>"}});</script></span>, where <span tex="a" bookmark="moose-equation-ac95fbe4-8f95-43a8-bee0-1332cba70d90" recursive="True" class="moose-katex-inline-equation" id="moose-equation-ac95fbe4-8f95-43a8-bee0-1332cba70d90"><script>var element = document.getElementById("moose-equation-ac95fbe4-8f95-43a8-bee0-1332cba70d90");katex.render("a", element, {displayMode:false,throwOnError:false,macros:{"\\bs":"\\boldsymbol{#1}","\\normal":"\\bs{n}","\\divergence":"\\nabla \\cdot","\\norm":"\\left\\lVert#1\\right\\rVert","\\dArea":"\\text{ d}A","\\dVolume":"\\text{ d}V","\\total":"\\text{total}","\\internal":"\\text{internal}","\\external":"\\text{external}","\\elastic":"\\text{elastic}","\\fracture":"\\text{fracture}","\\critical":"\\text{critical}","\\activeenergy":"{\\left< A \\right>}","\\inactiveenergy":"{\\left< I \\right>}","\\Gc":"\\mathcal{G}_c","\\strain":"\\bs{\\varepsilon}","\\stress":"\\bs{\\sigma}","\\xstress":"\\widetilde{\\stress}","\\macaulay":"\\left<#1\\right>"}});</script></span> and <span tex="b" bookmark="moose-equation-b6ebae11-05e2-420d-a01f-ee31e67fa349" recursive="True" class="moose-katex-inline-equation" id="moose-equation-b6ebae11-05e2-420d-a01f-ee31e67fa349"><script>var element = document.getElementById("moose-equation-b6ebae11-05e2-420d-a01f-ee31e67fa349");katex.render("b", element, {displayMode:false,throwOnError:false,macros:{"\\bs":"\\boldsymbol{#1}","\\normal":"\\bs{n}","\\divergence":"\\nabla \\cdot","\\norm":"\\left\\lVert#1\\right\\rVert","\\dArea":"\\text{ d}A","\\dVolume":"\\text{ d}V","\\total":"\\text{total}","\\internal":"\\text{internal}","\\external":"\\text{external}","\\elastic":"\\text{elastic}","\\fracture":"\\text{fracture}","\\critical":"\\text{critical}","\\activeenergy":"{\\left< A \\right>}","\\inactiveenergy":"{\\left< I \\right>}","\\Gc":"\\mathcal{G}_c","\\strain":"\\bs{\\varepsilon}","\\stress":"\\bs{\\sigma}","\\xstress":"\\widetilde{\\stress}","\\macaulay":"\\left<#1\\right>"}});</script></span> are two generic vectors.</p><div class="modal moose-modal" id="44777b15-792d-44cd-9cea-528782832e89"><div class="modal-content"><h4>/home/travis/build/hugary1995/moose/framework/src/kernels/ArrayDiffusion.C</h4><pre class="moose-pre"><code class="language-cpp">// This file is part of the MOOSE framework
+// https://www.mooseframework.org
+//
+// All rights reserved, see COPYRIGHT for full restrictions
+// https://github.com/idaholab/moose/blob/master/COPYRIGHT
+//
+// Licensed under LGPL 2.1, please see LICENSE for details
+// https://www.gnu.org/licenses/lgpl-2.1.html
+
+#include &quot;ArrayDiffusion.h&quot;
+
+registerMooseObject(&quot;MooseApp&quot;, ArrayDiffusion);
+
+defineLegacyParams(ArrayDiffusion);
+
+InputParameters
+ArrayDiffusion::validParams()
+{
+  InputParameters params = ArrayKernel::validParams();
+  params.addParam&lt;MaterialPropertyName&gt;(&quot;diffusion_coefficient&quot;,
+                                        &quot;The name of the diffusivity, &quot;
+                                        &quot;can be scalar, vector, or matrix.&quot;);
+  params.addClassDescription(
+      &quot;The array Laplacian operator ($-\\nabla \\cdot \\nabla u$), with the weak &quot;
+      &quot;form of $(\\nabla \\phi_i, \\nabla u_h)$.&quot;);
+  return params;
+}
+
+ArrayDiffusion::ArrayDiffusion(const InputParameters &amp; parameters)
+  : ArrayKernel(parameters),
+    _d(hasMaterialProperty&lt;Real&gt;(&quot;diffusion_coefficient&quot;)
+           ? &amp;getMaterialProperty&lt;Real&gt;(&quot;diffusion_coefficient&quot;)
+           : nullptr),
+    _d_array(hasMaterialProperty&lt;RealEigenVector&gt;(&quot;diffusion_coefficient&quot;)
+                 ? &amp;getMaterialProperty&lt;RealEigenVector&gt;(&quot;diffusion_coefficient&quot;)
+                 : nullptr),
+    _d_2d_array(hasMaterialProperty&lt;RealEigenMatrix&gt;(&quot;diffusion_coefficient&quot;)
+                    ? &amp;getMaterialProperty&lt;RealEigenMatrix&gt;(&quot;diffusion_coefficient&quot;)
+                    : nullptr)
+{
+  if (!_d &amp;&amp; !_d_array &amp;&amp; !_d_2d_array)
+  {
+    MaterialPropertyName mat = getParam&lt;MaterialPropertyName&gt;(&quot;diffusion_coefficient&quot;);
+    mooseError(&quot;Property &quot; + mat + &quot; is of unsupported type for ArrayDiffusion&quot;);
+  }
+}
+
+RealEigenVector
+ArrayDiffusion::computeQpResidual()
+{
+  if (_d)
+    return _grad_u[_qp] * _array_grad_test[_i][_qp] * (*_d)[_qp];
+
+  else if (_d_array)
+  {
+    mooseAssert((*_d_array)[_qp].size() == _var.count(),
+                &quot;diffusion_coefficient size is inconsistent with the number of components of array &quot;
+                &quot;variable&quot;);
+    return (*_d_array)[_qp].cwiseProduct(_grad_u[_qp] * _array_grad_test[_i][_qp]);
+  }
+
+  else
+  {
+    mooseAssert((*_d_2d_array)[_qp].cols() == _var.count(),
+                &quot;diffusion_coefficient size is inconsistent with the number of components of array &quot;
+                &quot;variable&quot;);
+    mooseAssert((*_d_2d_array)[_qp].rows() == _var.count(),
+                &quot;diffusion_coefficient size is inconsistent with the number of components of array &quot;
+                &quot;variable&quot;);
+    return (*_d_2d_array)[_qp] * (_grad_u[_qp] * _array_grad_test[_i][_qp]);
+  }
+}
+
+RealEigenVector
+ArrayDiffusion::computeQpJacobian()
+{
+  if (_d)
+    return RealEigenVector::Constant(_var.count(),
+                                     _grad_phi[_j][_qp] * _grad_test[_i][_qp] * (*_d)[_qp]);
+  else if (_d_array)
+    return _grad_phi[_j][_qp] * _grad_test[_i][_qp] * (*_d_array)[_qp];
+  else
+    return _grad_phi[_j][_qp] * _grad_test[_i][_qp] * (*_d_2d_array)[_qp].diagonal();
+}
+
+RealEigenMatrix
+ArrayDiffusion::computeQpOffDiagJacobian(MooseVariableFEBase &amp; jvar)
+{
+  if (jvar.number() == _var.number() &amp;&amp; _d_2d_array)
+    return _grad_phi[_j][_qp] * _grad_test[_i][_qp] * (*_d_2d_array)[_qp];
+  else
+    return ArrayKernel::computeQpOffDiagJacobian(jvar);
+}
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><p>In general, the diffusion coefficient <span tex="\mathbf{D}" bookmark="moose-equation-7ada21cc-8c97-4fd0-99ea-588c21ce237b" recursive="True" class="moose-katex-inline-equation" id="moose-equation-7ada21cc-8c97-4fd0-99ea-588c21ce237b"><script>var element = document.getElementById("moose-equation-7ada21cc-8c97-4fd0-99ea-588c21ce237b");katex.render("\\mathbf{D}", element, {displayMode:false,throwOnError:false,macros:{"\\bs":"\\boldsymbol{#1}","\\normal":"\\bs{n}","\\divergence":"\\nabla \\cdot","\\norm":"\\left\\lVert#1\\right\\rVert","\\dArea":"\\text{ d}A","\\dVolume":"\\text{ d}V","\\total":"\\text{total}","\\internal":"\\text{internal}","\\external":"\\text{external}","\\elastic":"\\text{elastic}","\\fracture":"\\text{fracture}","\\critical":"\\text{critical}","\\activeenergy":"{\\left< A \\right>}","\\inactiveenergy":"{\\left< I \\right>}","\\Gc":"\\mathcal{G}_c","\\strain":"\\bs{\\varepsilon}","\\stress":"\\bs{\\sigma}","\\xstress":"\\widetilde{\\stress}","\\macaulay":"\\left<#1\\right>"}});</script></span> is a square matrix with the size of the number of components. When it is a diagonal matrix, it can be represented by an array. In such a case, the components are not coupled with this array diffusion kernel. If all elements of the diffusion coefficient vector are the same, we can use a scalar diffusion coefficient. Thus this kernel gives users an option to set the type of diffusion coefficient with a parameter named as <em>diffusion_coefficient_type</em>. Users can set it to <em>scalar</em>, <em>array</em> or <em>full</em> cooresponding to scalar, diagonal matrix and full matrix respectively. Its default value is <em>array</em>.</p><p>With some further transformation, the kernel becomes <span class="moose-katex-block-equation"><span tex="(\nabla \vec{u}^\ast, \mathbf{D} \nabla \vec{u}) = \sum_{e} \sum_{i=1}^{N_{\text{dof}}} \sum_{j=1}^{N_{\text{dof}}} \sum_{\text{qp}=1}^{N_{qp}} (|J|w)_{\text{qp}} \vec{w}_p\vec{u}_i^\ast \underline{\mathbf{D}_{\text{qp}} \nabla b_{j,\text{qp}} \cdot \nabla b_{i,\text{qp}}} \vec{u}_j," bookmark="moose-equation-28c284b6-068d-48d3-af52-ecfeadf8d587" recursive="True" class="moose-katex-equation table-cell" id="moose-equation-28c284b6-068d-48d3-af52-ecfeadf8d587"></span><script>var element = document.getElementById("moose-equation-28c284b6-068d-48d3-af52-ecfeadf8d587");katex.render("(\\nabla \\vec{u}^\\ast, \\mathbf{D} \\nabla \\vec{u}) = \\sum_{e} \\sum_{i=1}^{N_{\\text{dof}}} \\sum_{j=1}^{N_{\\text{dof}}} \\sum_{\\text{qp}=1}^{N_{qp}} (|J|w)_{\\text{qp}} \\vec{w}_p\\vec{u}_i^\\ast \\underline{\\mathbf{D}_{\\text{qp}} \\nabla b_{j,\\text{qp}} \\cdot \\nabla b_{i,\\text{qp}}} \\vec{u}_j,", element, {displayMode:true,throwOnError:false,macros:{"\\bs":"\\boldsymbol{#1}","\\normal":"\\bs{n}","\\divergence":"\\nabla \\cdot","\\norm":"\\left\\lVert#1\\right\\rVert","\\dArea":"\\text{ d}A","\\dVolume":"\\text{ d}V","\\total":"\\text{total}","\\internal":"\\text{internal}","\\external":"\\text{external}","\\elastic":"\\text{elastic}","\\fracture":"\\text{fracture}","\\critical":"\\text{critical}","\\activeenergy":"{\\left< A \\right>}","\\inactiveenergy":"{\\left< I \\right>}","\\Gc":"\\mathcal{G}_c","\\strain":"\\bs{\\varepsilon}","\\stress":"\\bs{\\sigma}","\\xstress":"\\widetilde{\\stress}","\\macaulay":"\\left<#1\\right>"}});</script></span> where the underlined part is the local Jacobian evaluated by <a href="#2cb62a1c-3fa7-46a1-94f5-f05957379ebd" class="modal-trigger">ArrayDiffusion::computeQpJacobian</a> and <a href="#cfba7e1f-0311-499f-88c8-b2723466238f" class="modal-trigger">ArrayDiffusion::computeQpOffDiagJacobian</a>.</p><div class="modal moose-modal" id="2cb62a1c-3fa7-46a1-94f5-f05957379ebd"><div class="modal-content"><h4>/home/travis/build/hugary1995/moose/framework/src/kernels/ArrayDiffusion.C</h4><pre class="moose-pre"><code class="language-cpp">// This file is part of the MOOSE framework
+// https://www.mooseframework.org
+//
+// All rights reserved, see COPYRIGHT for full restrictions
+// https://github.com/idaholab/moose/blob/master/COPYRIGHT
+//
+// Licensed under LGPL 2.1, please see LICENSE for details
+// https://www.gnu.org/licenses/lgpl-2.1.html
+
+#include &quot;ArrayDiffusion.h&quot;
+
+registerMooseObject(&quot;MooseApp&quot;, ArrayDiffusion);
+
+defineLegacyParams(ArrayDiffusion);
+
+InputParameters
+ArrayDiffusion::validParams()
+{
+  InputParameters params = ArrayKernel::validParams();
+  params.addParam&lt;MaterialPropertyName&gt;(&quot;diffusion_coefficient&quot;,
+                                        &quot;The name of the diffusivity, &quot;
+                                        &quot;can be scalar, vector, or matrix.&quot;);
+  params.addClassDescription(
+      &quot;The array Laplacian operator ($-\\nabla \\cdot \\nabla u$), with the weak &quot;
+      &quot;form of $(\\nabla \\phi_i, \\nabla u_h)$.&quot;);
+  return params;
+}
+
+ArrayDiffusion::ArrayDiffusion(const InputParameters &amp; parameters)
+  : ArrayKernel(parameters),
+    _d(hasMaterialProperty&lt;Real&gt;(&quot;diffusion_coefficient&quot;)
+           ? &amp;getMaterialProperty&lt;Real&gt;(&quot;diffusion_coefficient&quot;)
+           : nullptr),
+    _d_array(hasMaterialProperty&lt;RealEigenVector&gt;(&quot;diffusion_coefficient&quot;)
+                 ? &amp;getMaterialProperty&lt;RealEigenVector&gt;(&quot;diffusion_coefficient&quot;)
+                 : nullptr),
+    _d_2d_array(hasMaterialProperty&lt;RealEigenMatrix&gt;(&quot;diffusion_coefficient&quot;)
+                    ? &amp;getMaterialProperty&lt;RealEigenMatrix&gt;(&quot;diffusion_coefficient&quot;)
+                    : nullptr)
+{
+  if (!_d &amp;&amp; !_d_array &amp;&amp; !_d_2d_array)
+  {
+    MaterialPropertyName mat = getParam&lt;MaterialPropertyName&gt;(&quot;diffusion_coefficient&quot;);
+    mooseError(&quot;Property &quot; + mat + &quot; is of unsupported type for ArrayDiffusion&quot;);
+  }
+}
+
+RealEigenVector
+ArrayDiffusion::computeQpResidual()
+{
+  if (_d)
+    return _grad_u[_qp] * _array_grad_test[_i][_qp] * (*_d)[_qp];
+
+  else if (_d_array)
+  {
+    mooseAssert((*_d_array)[_qp].size() == _var.count(),
+                &quot;diffusion_coefficient size is inconsistent with the number of components of array &quot;
+                &quot;variable&quot;);
+    return (*_d_array)[_qp].cwiseProduct(_grad_u[_qp] * _array_grad_test[_i][_qp]);
+  }
+
+  else
+  {
+    mooseAssert((*_d_2d_array)[_qp].cols() == _var.count(),
+                &quot;diffusion_coefficient size is inconsistent with the number of components of array &quot;
+                &quot;variable&quot;);
+    mooseAssert((*_d_2d_array)[_qp].rows() == _var.count(),
+                &quot;diffusion_coefficient size is inconsistent with the number of components of array &quot;
+                &quot;variable&quot;);
+    return (*_d_2d_array)[_qp] * (_grad_u[_qp] * _array_grad_test[_i][_qp]);
+  }
+}
+
+RealEigenVector
+ArrayDiffusion::computeQpJacobian()
+{
+  if (_d)
+    return RealEigenVector::Constant(_var.count(),
+                                     _grad_phi[_j][_qp] * _grad_test[_i][_qp] * (*_d)[_qp]);
+  else if (_d_array)
+    return _grad_phi[_j][_qp] * _grad_test[_i][_qp] * (*_d_array)[_qp];
+  else
+    return _grad_phi[_j][_qp] * _grad_test[_i][_qp] * (*_d_2d_array)[_qp].diagonal();
+}
+
+RealEigenMatrix
+ArrayDiffusion::computeQpOffDiagJacobian(MooseVariableFEBase &amp; jvar)
+{
+  if (jvar.number() == _var.number() &amp;&amp; _d_2d_array)
+    return _grad_phi[_j][_qp] * _grad_test[_i][_qp] * (*_d_2d_array)[_qp];
+  else
+    return ArrayKernel::computeQpOffDiagJacobian(jvar);
+}
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="modal moose-modal" id="cfba7e1f-0311-499f-88c8-b2723466238f"><div class="modal-content"><h4>/home/travis/build/hugary1995/moose/framework/src/kernels/ArrayDiffusion.C</h4><pre class="moose-pre"><code class="language-cpp">// This file is part of the MOOSE framework
+// https://www.mooseframework.org
+//
+// All rights reserved, see COPYRIGHT for full restrictions
+// https://github.com/idaholab/moose/blob/master/COPYRIGHT
+//
+// Licensed under LGPL 2.1, please see LICENSE for details
+// https://www.gnu.org/licenses/lgpl-2.1.html
+
+#include &quot;ArrayDiffusion.h&quot;
+
+registerMooseObject(&quot;MooseApp&quot;, ArrayDiffusion);
+
+defineLegacyParams(ArrayDiffusion);
+
+InputParameters
+ArrayDiffusion::validParams()
+{
+  InputParameters params = ArrayKernel::validParams();
+  params.addParam&lt;MaterialPropertyName&gt;(&quot;diffusion_coefficient&quot;,
+                                        &quot;The name of the diffusivity, &quot;
+                                        &quot;can be scalar, vector, or matrix.&quot;);
+  params.addClassDescription(
+      &quot;The array Laplacian operator ($-\\nabla \\cdot \\nabla u$), with the weak &quot;
+      &quot;form of $(\\nabla \\phi_i, \\nabla u_h)$.&quot;);
+  return params;
+}
+
+ArrayDiffusion::ArrayDiffusion(const InputParameters &amp; parameters)
+  : ArrayKernel(parameters),
+    _d(hasMaterialProperty&lt;Real&gt;(&quot;diffusion_coefficient&quot;)
+           ? &amp;getMaterialProperty&lt;Real&gt;(&quot;diffusion_coefficient&quot;)
+           : nullptr),
+    _d_array(hasMaterialProperty&lt;RealEigenVector&gt;(&quot;diffusion_coefficient&quot;)
+                 ? &amp;getMaterialProperty&lt;RealEigenVector&gt;(&quot;diffusion_coefficient&quot;)
+                 : nullptr),
+    _d_2d_array(hasMaterialProperty&lt;RealEigenMatrix&gt;(&quot;diffusion_coefficient&quot;)
+                    ? &amp;getMaterialProperty&lt;RealEigenMatrix&gt;(&quot;diffusion_coefficient&quot;)
+                    : nullptr)
+{
+  if (!_d &amp;&amp; !_d_array &amp;&amp; !_d_2d_array)
+  {
+    MaterialPropertyName mat = getParam&lt;MaterialPropertyName&gt;(&quot;diffusion_coefficient&quot;);
+    mooseError(&quot;Property &quot; + mat + &quot; is of unsupported type for ArrayDiffusion&quot;);
+  }
+}
+
+RealEigenVector
+ArrayDiffusion::computeQpResidual()
+{
+  if (_d)
+    return _grad_u[_qp] * _array_grad_test[_i][_qp] * (*_d)[_qp];
+
+  else if (_d_array)
+  {
+    mooseAssert((*_d_array)[_qp].size() == _var.count(),
+                &quot;diffusion_coefficient size is inconsistent with the number of components of array &quot;
+                &quot;variable&quot;);
+    return (*_d_array)[_qp].cwiseProduct(_grad_u[_qp] * _array_grad_test[_i][_qp]);
+  }
+
+  else
+  {
+    mooseAssert((*_d_2d_array)[_qp].cols() == _var.count(),
+                &quot;diffusion_coefficient size is inconsistent with the number of components of array &quot;
+                &quot;variable&quot;);
+    mooseAssert((*_d_2d_array)[_qp].rows() == _var.count(),
+                &quot;diffusion_coefficient size is inconsistent with the number of components of array &quot;
+                &quot;variable&quot;);
+    return (*_d_2d_array)[_qp] * (_grad_u[_qp] * _array_grad_test[_i][_qp]);
+  }
+}
+
+RealEigenVector
+ArrayDiffusion::computeQpJacobian()
+{
+  if (_d)
+    return RealEigenVector::Constant(_var.count(),
+                                     _grad_phi[_j][_qp] * _grad_test[_i][_qp] * (*_d)[_qp]);
+  else if (_d_array)
+    return _grad_phi[_j][_qp] * _grad_test[_i][_qp] * (*_d_array)[_qp];
+  else
+    return _grad_phi[_j][_qp] * _grad_test[_i][_qp] * (*_d_2d_array)[_qp].diagonal();
+}
+
+RealEigenMatrix
+ArrayDiffusion::computeQpOffDiagJacobian(MooseVariableFEBase &amp; jvar)
+{
+  if (jvar.number() == _var.number() &amp;&amp; _d_2d_array)
+    return _grad_phi[_j][_qp] * _grad_test[_i][_qp] * (*_d_2d_array)[_qp];
+  else
+    return ArrayKernel::computeQpOffDiagJacobian(jvar);
+}
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div></section><section class="scrollspy" id="8537c605-ae33-49c3-a773-c411383d27d3" data-section-level="2" data-section-text="Example Input Syntax"><h2 id="example-input-syntax">Example Input Syntax</h2><pre class="moose-pre"><code class="language-text">[Kernels]
+  [diff]
+    type = ArrayDiffusion
+    variable = u
+    diffusion_coefficient = dc
+  []
+[]
+</code></pre><a href="#94deb272-6afb-48e8-9a2c-36cb98f0eba4" class="modal-trigger">(../moose/test/tests/kernels/array_kernels/array_diffusion_test.i)</a><div class="modal moose-modal" id="94deb272-6afb-48e8-9a2c-36cb98f0eba4"><div class="modal-content"><h4>/home/travis/build/hugary1995/moose/test/tests/kernels/array_kernels/array_diffusion_test.i</h4><pre class="moose-pre"><code class="language-text">[Mesh]
+  type = GeneratedMesh
+  dim = 2
+  nx = 4
+  ny = 4
+[]
+
+[Variables]
+  [u]
+    order = FIRST
+    family = LAGRANGE
+    components = 2
+  []
+[]
+
+[Kernels]
+  [diff]
+    type = ArrayDiffusion
+    variable = u
+    diffusion_coefficient = dc
+  []
+[]
+
+[BCs]
+  [left]
+    type = ArrayDirichletBC
+    variable = u
+    boundary = 1
+    values = &#x27;0 0&#x27;
+  []
+
+  [right]
+    type = ArrayDirichletBC
+    variable = u
+    boundary = 2
+    values = &#x27;1 2&#x27;
+  []
+[]
+
+[Materials]
+  [dc]
+    type = GenericConstantArray
+    prop_name = dc
+    prop_value = &#x27;1 1&#x27;
+  []
+[]
+
+[Executioner]
+  type = Steady
+  solve_type = &#x27;NEWTON&#x27;
+[]
+
+[Outputs]
+  exodus = true
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div></section><section class="scrollspy" id="c664dac5-d35f-45f2-bf1d-1a4e7a17ef69" data-section-level="2" data-section-text="Input Parameters"><h2 id="input-parameters">Input Parameters</h2><section id="97359d5d-5100-45fa-baed-8fd57ce0f067" data-section-level="3" data-section-text="Required Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">variable</span><span class="moose-parameter-header-description">The name of the variable that this Kernel operates on</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>NonlinearVariableName</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The name of the variable that this Kernel operates on</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Required Parameters</h3></summary></details></section><section id="64bd7095-9c76-4056-bb16-7ef1467b5fab" data-section-level="3" data-section-text="Optional Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">block</span><span class="moose-parameter-header-description">The list of block ids (SubdomainID) that this object will be applied</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector<SubdomainName></p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The list of block ids (SubdomainID) that this object will be applied</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">diffusion_coefficient</span><span class="moose-parameter-header-description">The name of the diffusivity, can be scalar, vector, or matrix.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MaterialPropertyName</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The name of the diffusivity, can be scalar, vector, or matrix.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">displacements</span><span class="moose-parameter-header-description">The displacements</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector<VariableName></p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The displacements</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Optional Parameters</h3></summary></details></section><section id="1fddcd73-a3a3-4132-b881-885614b2a7c9" data-section-level="3" data-section-text="Advanced Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">control_tags</span><span class="moose-parameter-header-description">Adds user-defined labels for accessing object parameters via control logic.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector<std::string></p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Adds user-defined labels for accessing object parameters via control logic.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">diag_save_in</span><span class="moose-parameter-header-description">The name of auxiliary variables to save this Kernel's diagonal Jacobian contributions to. Everything about that variable must match everything about this variable (the type, what blocks it's on, etc.)</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector<AuxVariableName></p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The name of auxiliary variables to save this Kernel's diagonal Jacobian contributions to. Everything about that variable must match everything about this variable (the type, what blocks it's on, etc.)</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">enable</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">Set the enabled status of the MooseObject.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Set the enabled status of the MooseObject.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">implicit</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">Determines whether this object is calculated using an implicit or explicit form</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Determines whether this object is calculated using an implicit or explicit form</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">save_in</span><span class="moose-parameter-header-description">The name of auxiliary variables to save this Kernel's residual contributions to.  Everything about that variable must match everything about this variable (the type, what blocks it's on, etc.)</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector<AuxVariableName></p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The name of auxiliary variables to save this Kernel's residual contributions to.  Everything about that variable must match everything about this variable (the type, what blocks it's on, etc.)</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">seed</span><span class="moose-parameter-header-default">0</span><span class="moose-parameter-header-description">The seed for the master random number generator</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>0</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>unsigned int</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The seed for the master random number generator</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">use_displaced_mesh</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Whether or not this object should use the displaced mesh for computation. Note that in the case this is true but no displacements are provided in the Mesh block the undisplaced mesh will still be used.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Whether or not this object should use the displaced mesh for computation. Note that in the case this is true but no displacements are provided in the Mesh block the undisplaced mesh will still be used.</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Advanced Parameters</h3></summary></details></section><section id="baf987fa-2e12-47cc-bf3a-702ba77a5abf" data-section-level="3" data-section-text="Tagging Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">extra_matrix_tags</span><span class="moose-parameter-header-description">The extra tags for the matrices this Kernel should fill</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector<TagName></p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The extra tags for the matrices this Kernel should fill</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">extra_vector_tags</span><span class="moose-parameter-header-description">The extra tags for the vectors this Kernel should fill</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector<TagName></p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The extra tags for the vectors this Kernel should fill</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">matrix_tags</span><span class="moose-parameter-header-default">system</span><span class="moose-parameter-header-description">The tag for the matrices this Kernel should fill</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>system</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MultiMooseEnum</p><p class="moose-parameter-description-options"><span>Options:</span>nontime system</p><p class="moose-parameter-description"><span>Description:</span>The tag for the matrices this Kernel should fill</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">vector_tags</span><span class="moose-parameter-header-default">nontime</span><span class="moose-parameter-header-description">The tag for the vectors this Kernel should fill</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>nontime</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MultiMooseEnum</p><p class="moose-parameter-description-options"><span>Options:</span>nontime time</p><p class="moose-parameter-description"><span>Description:</span>The tag for the vectors this Kernel should fill</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Tagging Parameters</h3></summary></details></section></section></section></div><div class="col hide-on-med-and-down l2"><div class="toc-wrapper pin-top"><ul class="section table-of-contents"><li><a href="#253cacb4-d1d7-4ce3-bc45-05d56bdf0abc" class="tooltipped" data-position="left" data-tooltip="Description">Description</a></li><li><a href="#8537c605-ae33-49c3-a773-c411383d27d3" class="tooltipped" data-position="left" data-tooltip="Example Input Syntax">Example Input Syntax</a></li><li><a href="#c664dac5-d35f-45f2-bf1d-1a4e7a17ef69" class="tooltipped" data-position="left" data-tooltip="Input Parameters">Input Parameters</a></li></ul></div></div></div></div></main></div></body><script type="text/javascript" src="../../contrib/materialize/materialize.min.js"></script><script type="text/javascript" src="../../contrib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="../../contrib/prism/prism.min.js"></script><script type="text/javascript" src="../../js/init.js"></script><script type="text/javascript" src="../../js/navigation.js"></script><script type="text/javascript" src="../../contrib/fuse/fuse.min.js"></script><script type="text/javascript" src="../../js/search_index.js"></script><script type="text/javascript" src="../../js/sqa_moose.js"></script>
