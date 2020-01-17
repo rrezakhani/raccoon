@@ -1,4 +1,4 @@
-<!DOCTYPE html><head><meta charset="UTF-8"><link rel="icon" type="image/x-icon" href="../../media/raccoon_icon.png" sizes="16x16 32x32 64x64 128x128"></link><link href="../../contrib/materialize/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"></link><link href="../../contrib/prism/prism.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/alert_moose.css" type="text/css" rel="stylesheet"></link><link href="../../contrib/katex/katex.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/katex_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/content_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/sqa_moose.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../../contrib/jquery/jquery.min.js"></script><script type="text/javascript" src="../../contrib/katex/katex.min.js"></script><script type="text/javascript" src="../../contrib/plotly/plotly.min.js"></script><title>Irreversibility|RACCOON</title></head><body><div class="page-wrap"><header><nav><div class="nav-wrapper container"><a href="https://hugary1995.github.io/raccoon/index.html" class="left moose-logo hide-on-med-and-down">RACCOON</a><a href="https://github.com/hugary1995/raccoon" class="right"><img src="../../media/framework/github-logo.png" class="github-mark"></img><img src="../../media/framework/github-mark.png" class="github-logo"></img></a><ul class="right hide-on-med-and-down"><li><a href="../../install/index.html">Install</a></li><li class="moose-mega-menu-trigger" data-target="81217b28-9f02-45d0-9dc2-29dd07482b92"><a>Benchmarks<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../theory/index.html">Theory</a></li><li><a href="../../modules/index.html">Modules</a></li><li><a href="../../syntax/index.html">Syntax</a></li></ul><a href="#" class="sidenav-trigger" data-target="f51d178b-bddb-40b4-81d6-e15a54bf8f8f"><i class="material-icons">menu</i></a><ul class="sidenav" id="f51d178b-bddb-40b4-81d6-e15a54bf8f8f"><li><a href="../../install/index.html">Install</a></li><li><a href="../../benchmarks.menu.html">Benchmarks</a></li><li><a href="../../theory/index.html">Theory</a></li><li><a href="../../modules/index.html">Modules</a></li><li><a href="../../syntax/index.html">Syntax</a></li></ul><a href="#moose-search" class="modal-trigger"><i class="material-icons">search</i></a></div></nav><div class="moose-mega-menu-content" id="81217b28-9f02-45d0-9dc2-29dd07482b92"><div class="moose-mega-menu-wrapper"><div class="row row"><div class="col s12 m6 l4"><h2 id="mode-i-crack-propagation"><a href="../../benchmarks/mode1.html">Mode I crack propagation <i class="material-icons moose-inline-icon">link</i></a></h2><img src="../../media/mode1.gif" class="materialboxed moose-image" style="width:75%;float:left;padding-top:2.5%;"></img><p></p></div><div class="col s12 m6 l4"><h2 id="mode-ii-crack-propagation"><a href="../../benchmarks/mode2.html">Mode II crack propagation <i class="material-icons moose-inline-icon">link</i></a></h2><img src="../../media/mode2.gif" class="materialboxed moose-image" style="width:75%;float:left;padding-top:2.5%;"></img><p></p></div><div class="col s12 m6 l4"><h2 id="soil-desiccation"><a href="../../benchmarks/mud.html">Soil desiccation <i class="material-icons moose-inline-icon">link</i></a></h2><img src="../../media/soil.gif" class="materialboxed moose-image" style="width:75%;float:left;padding-top:2.5%;"></img><p></p></div></div></div></div><div class="modal modal-fixed-footer moose-search-modal" id="moose-search"><div class="modal-content container moose-search-modal-content"><div class="row"><div class="col l12"><div class="input-field"><input type_="text" onkeyup="mooseSearch()" placeholder="https://hugary1995.github.io/raccoon/index.html" id="moose-search-box"></input></div></div><div><div class="col s12" id="moose-search-results"></div></div></div></div><div class="modal-footer"><a href="#!" class="modal-close btn-flat">Close</a></div></div></header><main class="main"><div class="container"><div class="row"><div class="col hide-on-med-and-down l12"><nav class="breadcrumb-nav"><div class="nav-wrapper"><a href=".." class="breadcrumb">source</a><span class="breadcrumb">auxkernels</span><a href="#" class="breadcrumb">Irreversibility</a></div></nav></div></div><div class="row"><div class="moose-content col s12 m12 l10"><section id="641841e3-59e8-46ab-84ac-25be448952e1" data-section-level="1" data-section-text="Irreversibility"><h1 id="irreversibility">Irreversibility</h1><p>sets upper_bound and lower_bound in PETSc.</p><section class="scrollspy" id="96e01138-fe76-459b-a0cc-d1c6aad587ea" data-section-level="2" data-section-text="Description"><h2 id="description">Description</h2><p>PETSc provides interface for specifying lower and upper bounds used in variational inequality solvers. This AuxKernel creates the corresponding vectors, <code>lower_bound</code> and <code>upper_bound</code>, required by PETSc in its constructor. At times requested by <code>execute_on</code> flags, it loops through DoFs specified by <code>variable</code> and fills in the lower and upper bounds.</p><p>In the current implementation, the upper bound <code>upper</code> is provided by a real number, and the lower bound <code>lower</code> is provided by a coupled variable. If <code>lag</code> is set to true, then the old value of the coupled variable is used to set the lower bound.</p><div class="card moose-alert moose-alert-warning"><div class="card-title moose-alert-title"><span class="moose-alert-title-brand">warning</span></div><div class="card-content"><div class="moose-alert-content"><p><p>Irreversibility must be used on a nodal auxiliary variable!</p></p></div></div></div></section><section class="scrollspy" id="49fc3734-c488-4e92-b95c-d7dc8c60f27e" data-section-level="2" data-section-text="Input Parameters"><h2 id="input-parameters">Input Parameters</h2><section id="e1d47551-889e-46ac-a83e-4879a702d3ab" data-section-level="3" data-section-text="Required Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">bounded_variable</span><span class="moose-parameter-header-description">variable to be bounded</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector<VariableName></p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>variable to be bounded</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">lower</span><span class="moose-parameter-header-description">lower bound</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>VariableName</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>lower bound</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">variable</span><span class="moose-parameter-header-description">The name of the variable that this object applies to</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>AuxVariableName</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The name of the variable that this object applies to</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Required Parameters</h3></summary></details></section><section id="72bcbada-c328-4483-af40-4bde19f26c7c" data-section-level="3" data-section-text="Optional Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">block</span><span class="moose-parameter-header-description">The list of block ids (SubdomainID) that this object will be applied</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector<SubdomainName></p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The list of block ids (SubdomainID) that this object will be applied</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">boundary</span><span class="moose-parameter-header-description">The list of boundary IDs from the mesh where this boundary condition applies</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector<BoundaryName></p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The list of boundary IDs from the mesh where this boundary condition applies</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">execute_on</span><span class="moose-parameter-header-default">LINEAR TIMESTEP_END</span><span class="moose-parameter-header-description">The list of flag(s) indicating when this object should be executed, the available options include NONE, INITIAL, LINEAR, NONLINEAR, TIMESTEP_END, TIMESTEP_BEGIN, FINAL, CUSTOM, PRE_DISPLACE.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>LINEAR TIMESTEP_END</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>ExecFlagEnum</p><p class="moose-parameter-description-options"><span>Options:</span>NONE INITIAL LINEAR NONLINEAR TIMESTEP_END TIMESTEP_BEGIN FINAL CUSTOM PRE_DISPLACE</p><p class="moose-parameter-description"><span>Description:</span>The list of flag(s) indicating when this object should be executed, the available options include NONE, INITIAL, LINEAR, NONLINEAR, TIMESTEP_END, TIMESTEP_BEGIN, FINAL, CUSTOM, PRE_DISPLACE.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">lag</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">whether to use the last converged value of lower as the lower bound</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>whether to use the last converged value of lower as the lower bound</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">upper</span><span class="moose-parameter-header-default">1</span><span class="moose-parameter-header-description">upper bound</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>1</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>double</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>upper bound</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Optional Parameters</h3></summary></details></section><section id="41765b36-e3bd-4a10-90f8-0267d3f701e8" data-section-level="3" data-section-text="Advanced Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">control_tags</span><span class="moose-parameter-header-description">Adds user-defined labels for accessing object parameters via control logic.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector<std::string></p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Adds user-defined labels for accessing object parameters via control logic.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">enable</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">Set the enabled status of the MooseObject.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Set the enabled status of the MooseObject.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">seed</span><span class="moose-parameter-header-default">0</span><span class="moose-parameter-header-description">The seed for the master random number generator</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>0</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>unsigned int</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The seed for the master random number generator</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">use_displaced_mesh</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Whether or not this object should use the displaced mesh for computation.  Note that in the case this is true but no displacements are provided in the Mesh block the undisplaced mesh will still be used.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Whether or not this object should use the displaced mesh for computation.  Note that in the case this is true but no displacements are provided in the Mesh block the undisplaced mesh will still be used.</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Advanced Parameters</h3></summary></details></section></section><section class="scrollspy" id="df01aa90-5286-4fca-afdf-00ad84c7b159" data-section-level="2" data-section-text="Input Files"><h2 id="input-files">Input Files</h2><ul class="moose-list-inputs browser-default"><li><a href="#ad6790ba-0a9e-4eab-b40e-1ac30e1d1a2e" class="modal-trigger">benchmarks/mode2_geometric_notch/fracture.i</a></li><li><a href="#d11869bf-2875-4e27-a7c8-5fafa859ca1e" class="modal-trigger">benchmarks/soil_desiccation/mechanical_fracture.i</a></li><li><a href="#7e55eeed-00eb-4f92-9eee-81c3120fa765" class="modal-trigger">benchmarks/fixed_point_iteration/mechanical_fracture_uo.i</a></li><li><a href="#d817878b-016c-42f9-8e07-086554377211" class="modal-trigger">benchmarks/mode1_initial_damage/fracture.i</a></li><li><a href="#972f1769-d924-4074-a496-e7efe9f35411" class="modal-trigger">benchmarks/fixed_point_iteration/mechanical_fracture_var.i</a></li><li><a href="#291f6e8b-efcf-419d-a11c-c743b03e85f3" class="modal-trigger">benchmarks/mode2_initial_damage/fracture.i</a></li><li><a href="#010e6184-fdc0-4b8d-92ff-2891e342f6fd" class="modal-trigger">benchmarks/mode1_geometric_notch/fracture.i</a></li></ul><div class="modal moose-modal" id="ad6790ba-0a9e-4eab-b40e-1ac30e1d1a2e"><div class="modal-content"><h4>benchmarks/mode2_geometric_notch/fracture.i</h4><pre class="moose-pre"><code class="language-text">[Mesh]
+<!DOCTYPE html><head><meta charset="UTF-8"><link rel="icon" type="image/x-icon" href="../../media/raccoon_icon.png" sizes="16x16 32x32 64x64 128x128"></link><link href="../../contrib/materialize/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"></link><link href="../../contrib/prism/prism.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/alert_moose.css" type="text/css" rel="stylesheet"></link><link href="../../contrib/katex/katex.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/katex_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/content_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/sqa_moose.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../../contrib/jquery/jquery.min.js"></script><script type="text/javascript" src="../../contrib/katex/katex.min.js"></script><script type="text/javascript" src="../../contrib/plotly/plotly.min.js"></script><title>Irreversibility|RACCOON</title></head><body><div class="page-wrap"><header><nav><div class="nav-wrapper container"><a href="https://hugary1995.github.io/raccoon/index.html" class="left moose-logo hide-on-med-and-down">RACCOON</a><a href="https://github.com/hugary1995/raccoon" class="right"><img src="../../media/framework/github-logo.png" class="github-mark"></img><img src="../../media/framework/github-mark.png" class="github-logo"></img></a><ul class="right hide-on-med-and-down"><li><a href="../../install/index.html">Install</a></li><li class="moose-mega-menu-trigger" data-target="b0197d9c-5b78-4543-a734-5393b8a97178"><a>Benchmarks<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../theory/index.html">Theory</a></li><li><a href="../../modules/index.html">Modules</a></li><li><a href="../../syntax/index.html">Syntax</a></li></ul><a href="#" class="sidenav-trigger" data-target="4b7e2948-7ce3-443a-a643-78462bb9262f"><i class="material-icons">menu</i></a><ul class="sidenav" id="4b7e2948-7ce3-443a-a643-78462bb9262f"><li><a href="../../install/index.html">Install</a></li><li><a href="../../benchmarks.menu.html">Benchmarks</a></li><li><a href="../../theory/index.html">Theory</a></li><li><a href="../../modules/index.html">Modules</a></li><li><a href="../../syntax/index.html">Syntax</a></li></ul><a href="#moose-search" class="modal-trigger"><i class="material-icons">search</i></a></div></nav><div class="moose-mega-menu-content" id="b0197d9c-5b78-4543-a734-5393b8a97178"><div class="moose-mega-menu-wrapper"><div class="row row"><div class="col s12 m6 l4"><h2 id="mode-i-crack-propagation"><a href="../../benchmarks/mode1.html">Mode I crack propagation <i class="material-icons moose-inline-icon">link</i></a></h2><img src="../../media/mode1.gif" class="materialboxed moose-image" style="width:75%;float:left;padding-top:2.5%;"></img><p></p></div><div class="col s12 m6 l4"><h2 id="mode-ii-crack-propagation"><a href="../../benchmarks/mode2.html">Mode II crack propagation <i class="material-icons moose-inline-icon">link</i></a></h2><img src="../../media/mode2.gif" class="materialboxed moose-image" style="width:75%;float:left;padding-top:2.5%;"></img><p></p></div><div class="col s12 m6 l4"><h2 id="soil-desiccation"><a href="../../benchmarks/mud.html">Soil desiccation <i class="material-icons moose-inline-icon">link</i></a></h2><img src="../../media/soil.gif" class="materialboxed moose-image" style="width:75%;float:left;padding-top:2.5%;"></img><p></p></div></div></div></div><div class="modal modal-fixed-footer moose-search-modal" id="moose-search"><div class="modal-content container moose-search-modal-content"><div class="row"><div class="col l12"><div class="input-field"><input type_="text" onkeyup="mooseSearch()" placeholder="https://hugary1995.github.io/raccoon/index.html" id="moose-search-box"></input></div></div><div><div class="col s12" id="moose-search-results"></div></div></div></div><div class="modal-footer"><a href="#!" class="modal-close btn-flat">Close</a></div></div></header><main class="main"><div class="container"><div class="row"><div class="col hide-on-med-and-down l12"><nav class="breadcrumb-nav"><div class="nav-wrapper"><a href=".." class="breadcrumb">source</a><span class="breadcrumb">auxkernels</span><a href="#" class="breadcrumb">Irreversibility</a></div></nav></div></div><div class="row"><div class="moose-content col s12 m12 l10"><section id="277bef46-058e-4bb4-9229-c9b8f809315f" data-section-level="1" data-section-text="Irreversibility"><h1 id="irreversibility">Irreversibility</h1><p>sets upper_bound and lower_bound in PETSc.</p><section class="scrollspy" id="1c857f58-e0ad-4e57-bc95-1072a60e42b3" data-section-level="2" data-section-text="Description"><h2 id="description">Description</h2><p>PETSc provides interface for specifying lower and upper bounds used in variational inequality solvers. This AuxKernel creates the corresponding vectors, <code>lower_bound</code> and <code>upper_bound</code>, required by PETSc in its constructor. At times requested by <code>execute_on</code> flags, it loops through DoFs specified by <code>variable</code> and fills in the lower and upper bounds.</p><p>In the current implementation, the upper bound <code>upper</code> is provided by a real number, and the lower bound <code>lower</code> is provided by a coupled variable. If <code>lag</code> is set to true, then the old value of the coupled variable is used to set the lower bound.</p><div class="card moose-alert moose-alert-warning"><div class="card-title moose-alert-title"><span class="moose-alert-title-brand">warning</span></div><div class="card-content"><div class="moose-alert-content"><p><p>Irreversibility must be used on a nodal auxiliary variable!</p></p></div></div></div></section><section class="scrollspy" id="78664252-abde-4694-b104-35ee70b292e0" data-section-level="2" data-section-text="Input Parameters"><h2 id="input-parameters">Input Parameters</h2><section id="d962bb0b-4ac8-4a1e-a389-33a268f74f34" data-section-level="3" data-section-text="Required Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">bounded_variable</span><span class="moose-parameter-header-description">variable to be bounded</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector<VariableName></p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>variable to be bounded</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">lower</span><span class="moose-parameter-header-description">lower bound</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>VariableName</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>lower bound</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">variable</span><span class="moose-parameter-header-description">The name of the variable that this object applies to</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>AuxVariableName</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The name of the variable that this object applies to</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Required Parameters</h3></summary></details></section><section id="cf591ad1-688f-4ebf-b20f-f1490db6fb0f" data-section-level="3" data-section-text="Optional Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">block</span><span class="moose-parameter-header-description">The list of block ids (SubdomainID) that this object will be applied</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector<SubdomainName></p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The list of block ids (SubdomainID) that this object will be applied</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">boundary</span><span class="moose-parameter-header-description">The list of boundary IDs from the mesh where this boundary condition applies</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector<BoundaryName></p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The list of boundary IDs from the mesh where this boundary condition applies</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">execute_on</span><span class="moose-parameter-header-default">LINEAR TIMESTEP_END</span><span class="moose-parameter-header-description">The list of flag(s) indicating when this object should be executed, the available options include NONE, INITIAL, LINEAR, NONLINEAR, TIMESTEP_END, TIMESTEP_BEGIN, FINAL, CUSTOM, PRE_DISPLACE.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>LINEAR TIMESTEP_END</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>ExecFlagEnum</p><p class="moose-parameter-description-options"><span>Options:</span>NONE INITIAL LINEAR NONLINEAR TIMESTEP_END TIMESTEP_BEGIN FINAL CUSTOM PRE_DISPLACE</p><p class="moose-parameter-description"><span>Description:</span>The list of flag(s) indicating when this object should be executed, the available options include NONE, INITIAL, LINEAR, NONLINEAR, TIMESTEP_END, TIMESTEP_BEGIN, FINAL, CUSTOM, PRE_DISPLACE.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">lag</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">whether to use the last converged value of lower as the lower bound</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>whether to use the last converged value of lower as the lower bound</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">upper</span><span class="moose-parameter-header-default">1</span><span class="moose-parameter-header-description">upper bound</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>1</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>double</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>upper bound</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Optional Parameters</h3></summary></details></section><section id="51f5fb8b-d319-4526-89d5-314db8e2229c" data-section-level="3" data-section-text="Advanced Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">control_tags</span><span class="moose-parameter-header-description">Adds user-defined labels for accessing object parameters via control logic.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector<std::string></p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Adds user-defined labels for accessing object parameters via control logic.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">enable</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">Set the enabled status of the MooseObject.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Set the enabled status of the MooseObject.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">seed</span><span class="moose-parameter-header-default">0</span><span class="moose-parameter-header-description">The seed for the master random number generator</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>0</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>unsigned int</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The seed for the master random number generator</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">use_displaced_mesh</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">Whether or not this object should use the displaced mesh for computation.  Note that in the case this is true but no displacements are provided in the Mesh block the undisplaced mesh will still be used.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Whether or not this object should use the displaced mesh for computation.  Note that in the case this is true but no displacements are provided in the Mesh block the undisplaced mesh will still be used.</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Advanced Parameters</h3></summary></details></section></section><section class="scrollspy" id="635242e5-38d1-421f-a5a4-c499281c8924" data-section-level="2" data-section-text="Input Files"><h2 id="input-files">Input Files</h2><ul class="moose-list-inputs browser-default"><li><a href="#3d817d01-08dc-4850-8aca-fb2776f2ee92" class="modal-trigger">benchmarks/mode1_geometric_notch/fracture.i</a></li><li><a href="#675e2efb-a31f-4434-b55a-ad4480efe833" class="modal-trigger">benchmarks/mode1_initial_damage/fracture.i</a></li><li><a href="#4f9afe4b-234e-4ba5-92b1-abcdaab25384" class="modal-trigger">benchmarks/soil_desiccation/mechanical_fracture.i</a></li><li><a href="#51976c07-32b6-4f1f-9979-d6b8dc209e67" class="modal-trigger">benchmarks/fixed_point_iteration/mechanical_fracture_uo.i</a></li><li><a href="#708efebd-fc89-45b8-a42d-799791563ad5" class="modal-trigger">benchmarks/fixed_point_iteration/mechanical_fracture_var.i</a></li><li><a href="#a6d8c279-bacf-4f7b-898f-3271b603426a" class="modal-trigger">benchmarks/mode2_geometric_notch/fracture.i</a></li><li><a href="#a6403530-7a15-49e6-88cd-b7dfc1a76bb6" class="modal-trigger">benchmarks/mode2_initial_damage/fracture.i</a></li></ul><div class="modal moose-modal" id="3d817d01-08dc-4850-8aca-fb2776f2ee92"><div class="modal-content"><h4>benchmarks/mode1_geometric_notch/fracture.i</h4><pre class="moose-pre"><code class="language-text">[Mesh]
   type = FileMesh
   file = &#x27;gold/geo.msh&#x27;
 []
@@ -84,7 +84,93 @@
     outlier_variable_norms = false
   [../]
 []
-</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="modal moose-modal" id="d11869bf-2875-4e27-a7c8-5fafa859ca1e"><div class="modal-content"><h4>benchmarks/soil_desiccation/mechanical_fracture.i</h4><pre class="moose-pre"><code class="language-text">[Problem]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="modal moose-modal" id="675e2efb-a31f-4434-b55a-ad4480efe833"><div class="modal-content"><h4>benchmarks/mode1_initial_damage/fracture.i</h4><pre class="moose-pre"><code class="language-text">[Mesh]
+  type = FileMesh
+  file = &#x27;gold/geo.msh&#x27;
+[]
+
+[Variables]
+  [./d]
+  [../]
+[]
+
+[AuxVariables]
+  [./load]
+    family = SCALAR
+  [../]
+  [./E_el]
+    order = CONSTANT
+    family = MONOMIAL
+  [../]
+  [./d_ref]
+  [../]
+  [./bounds_dummy]
+  [../]
+[]
+
+[Bounds]
+  [./irreversibility]
+    type = Irreversibility
+    variable = &#x27;bounds_dummy&#x27;
+    bounded_variable = &#x27;d&#x27;
+    upper = 1
+    lower = &#x27;d_ref&#x27;
+  [../]
+[]
+
+[Kernels]
+  [./react]
+    type = PhaseFieldFractureEvolutionReaction
+    variable = &#x27;d&#x27;
+    driving_energy_var = &#x27;E_el&#x27;
+  [../]
+  [./diff]
+    type = PhaseFieldFractureEvolutionDiffusion
+    variable = &#x27;d&#x27;
+  [../]
+[]
+
+[Materials]
+  [./fracture_energy_barrier]
+    type = GenericFunctionMaterial
+    prop_names = &#x27;energy_release_rate phase_field_regularization_length critical_fracture_energy&#x27;
+    prop_values = &#x27;${Gc} ${l} ${psic}&#x27;
+  [../]
+  [./local_dissipation]
+    type = LinearLocalDissipation
+    d = d
+  [../]
+  [./fracture_properties]
+    type = FractureMaterial
+    local_dissipation_norm = 8/3
+  [../]
+  [./degradation]
+    type = LorentzDegradation
+    d = d
+    residual_degradation = ${k}
+  [../]
+[]
+
+[Executioner]
+  type = Transient
+  solve_type = &#x27;NEWTON&#x27;
+  petsc_options_iname = &#x27;-pc_type -snes_type&#x27;
+  petsc_options_value = &#x27;lu vinewtonrsls&#x27;
+  dt = 1e-6
+
+  nl_abs_tol = 1e-08
+  nl_rel_tol = 1e-06
+[]
+
+[Outputs]
+  print_linear_residuals = false
+  [./console]
+    type = Console
+    hide = &#x27;load&#x27;
+    outlier_variable_norms = false
+  [../]
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="modal moose-modal" id="4f9afe4b-234e-4ba5-92b1-abcdaab25384"><div class="modal-content"><h4>benchmarks/soil_desiccation/mechanical_fracture.i</h4><pre class="moose-pre"><code class="language-text">[Problem]
   type = FixedPointProblem
 []
 
@@ -282,7 +368,7 @@
     displacements = &#x27;disp_x disp_y&#x27;
   [../]
   [./stress]
-    type = SmallStrainDegradedPK2Stress_NoSplit
+    type = SmallStrainDegradedElasticPK2Stress_NoSplit
     d = &#x27;d&#x27;
     d_crit = 0.6
     history = false
@@ -352,7 +438,7 @@
     outlier_variable_norms = false
   [../]
 []
-</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="modal moose-modal" id="7e55eeed-00eb-4f92-9eee-81c3120fa765"><div class="modal-content"><h4>benchmarks/fixed_point_iteration/mechanical_fracture_uo.i</h4><pre class="moose-pre"><code class="language-text">[Problem]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="modal moose-modal" id="51976c07-32b6-4f1f-9979-d6b8dc209e67"><div class="modal-content"><h4>benchmarks/fixed_point_iteration/mechanical_fracture_uo.i</h4><pre class="moose-pre"><code class="language-text">[Problem]
   type = FixedPointProblem
 []
 
@@ -453,7 +539,7 @@
     displacements = &#x27;disp_x disp_y&#x27;
   [../]
   [./stress]
-    type = SmallStrainDegradedPK2Stress_StrainSpectral
+    type = SmallStrainDegradedElasticPK2Stress_StrainSpectral
     d = &#x27;d&#x27;
     d_crit = 2.0
   [../]
@@ -520,93 +606,7 @@
     outlier_variable_norms = false
   [../]
 []
-</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="modal moose-modal" id="d817878b-016c-42f9-8e07-086554377211"><div class="modal-content"><h4>benchmarks/mode1_initial_damage/fracture.i</h4><pre class="moose-pre"><code class="language-text">[Mesh]
-  type = FileMesh
-  file = &#x27;gold/geo.msh&#x27;
-[]
-
-[Variables]
-  [./d]
-  [../]
-[]
-
-[AuxVariables]
-  [./load]
-    family = SCALAR
-  [../]
-  [./E_el]
-    order = CONSTANT
-    family = MONOMIAL
-  [../]
-  [./d_ref]
-  [../]
-  [./bounds_dummy]
-  [../]
-[]
-
-[Bounds]
-  [./irreversibility]
-    type = Irreversibility
-    variable = &#x27;bounds_dummy&#x27;
-    bounded_variable = &#x27;d&#x27;
-    upper = 1
-    lower = &#x27;d_ref&#x27;
-  [../]
-[]
-
-[Kernels]
-  [./react]
-    type = PhaseFieldFractureEvolutionReaction
-    variable = &#x27;d&#x27;
-    driving_energy_var = &#x27;E_el&#x27;
-  [../]
-  [./diff]
-    type = PhaseFieldFractureEvolutionDiffusion
-    variable = &#x27;d&#x27;
-  [../]
-[]
-
-[Materials]
-  [./fracture_energy_barrier]
-    type = GenericFunctionMaterial
-    prop_names = &#x27;energy_release_rate phase_field_regularization_length critical_fracture_energy&#x27;
-    prop_values = &#x27;${Gc} ${l} ${psic}&#x27;
-  [../]
-  [./local_dissipation]
-    type = LinearLocalDissipation
-    d = d
-  [../]
-  [./fracture_properties]
-    type = FractureMaterial
-    local_dissipation_norm = 8/3
-  [../]
-  [./degradation]
-    type = LorentzDegradation
-    d = d
-    residual_degradation = ${k}
-  [../]
-[]
-
-[Executioner]
-  type = Transient
-  solve_type = &#x27;NEWTON&#x27;
-  petsc_options_iname = &#x27;-pc_type -snes_type&#x27;
-  petsc_options_value = &#x27;lu vinewtonrsls&#x27;
-  dt = 1e-6
-
-  nl_abs_tol = 1e-08
-  nl_rel_tol = 1e-06
-[]
-
-[Outputs]
-  print_linear_residuals = false
-  [./console]
-    type = Console
-    hide = &#x27;load&#x27;
-    outlier_variable_norms = false
-  [../]
-[]
-</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="modal moose-modal" id="972f1769-d924-4074-a496-e7efe9f35411"><div class="modal-content"><h4>benchmarks/fixed_point_iteration/mechanical_fracture_var.i</h4><pre class="moose-pre"><code class="language-text">[Problem]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="modal moose-modal" id="708efebd-fc89-45b8-a42d-799791563ad5"><div class="modal-content"><h4>benchmarks/fixed_point_iteration/mechanical_fracture_var.i</h4><pre class="moose-pre"><code class="language-text">[Problem]
   type = FixedPointProblem
 []
 
@@ -713,7 +713,7 @@
     displacements = &#x27;disp_x disp_y&#x27;
   [../]
   [./stress]
-    type = SmallStrainDegradedPK2Stress_StrainSpectral
+    type = SmallStrainDegradedElasticPK2Stress_StrainSpectral
     d = &#x27;d&#x27;
     d_crit = 2.0
   [../]
@@ -781,7 +781,7 @@
     outlier_variable_norms = false
   [../]
 []
-</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="modal moose-modal" id="291f6e8b-efcf-419d-a11c-c743b03e85f3"><div class="modal-content"><h4>benchmarks/mode2_initial_damage/fracture.i</h4><pre class="moose-pre"><code class="language-text">[Mesh]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="modal moose-modal" id="a6d8c279-bacf-4f7b-898f-3271b603426a"><div class="modal-content"><h4>benchmarks/mode2_geometric_notch/fracture.i</h4><pre class="moose-pre"><code class="language-text">[Mesh]
   type = FileMesh
   file = &#x27;gold/geo.msh&#x27;
 []
@@ -867,7 +867,7 @@
     outlier_variable_norms = false
   [../]
 []
-</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="modal moose-modal" id="010e6184-fdc0-4b8d-92ff-2891e342f6fd"><div class="modal-content"><h4>benchmarks/mode1_geometric_notch/fracture.i</h4><pre class="moose-pre"><code class="language-text">[Mesh]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><div class="modal moose-modal" id="a6403530-7a15-49e6-88cd-b7dfc1a76bb6"><div class="modal-content"><h4>benchmarks/mode2_initial_damage/fracture.i</h4><pre class="moose-pre"><code class="language-text">[Mesh]
   type = FileMesh
   file = &#x27;gold/geo.msh&#x27;
 []
@@ -953,4 +953,4 @@
     outlier_variable_norms = false
   [../]
 []
-</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div></section></section></div><div class="col hide-on-med-and-down l2"><div class="toc-wrapper pin-top"><ul class="section table-of-contents"><li><a href="#96e01138-fe76-459b-a0cc-d1c6aad587ea" class="tooltipped" data-position="left" data-tooltip="Description">Description</a></li><li><a href="#49fc3734-c488-4e92-b95c-d7dc8c60f27e" class="tooltipped" data-position="left" data-tooltip="Input Parameters">Input Parameters</a></li><li><a href="#df01aa90-5286-4fca-afdf-00ad84c7b159" class="tooltipped" data-position="left" data-tooltip="Input Files">Input Files</a></li></ul></div></div></div></div></main></div></body><script type="text/javascript" src="../../contrib/materialize/materialize.min.js"></script><script type="text/javascript" src="../../contrib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="../../contrib/prism/prism.min.js"></script><script type="text/javascript" src="../../js/init.js"></script><script type="text/javascript" src="../../js/navigation.js"></script><script type="text/javascript" src="../../contrib/fuse/fuse.min.js"></script><script type="text/javascript" src="../../js/search_index.js"></script><script type="text/javascript" src="../../js/sqa_moose.js"></script>
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div></section></section></div><div class="col hide-on-med-and-down l2"><div class="toc-wrapper pin-top"><ul class="section table-of-contents"><li><a href="#1c857f58-e0ad-4e57-bc95-1072a60e42b3" class="tooltipped" data-position="left" data-tooltip="Description">Description</a></li><li><a href="#78664252-abde-4694-b104-35ee70b292e0" class="tooltipped" data-position="left" data-tooltip="Input Parameters">Input Parameters</a></li><li><a href="#635242e5-38d1-421f-a5a4-c499281c8924" class="tooltipped" data-position="left" data-tooltip="Input Files">Input Files</a></li></ul></div></div></div></div></main></div></body><script type="text/javascript" src="../../contrib/materialize/materialize.min.js"></script><script type="text/javascript" src="../../contrib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="../../contrib/prism/prism.min.js"></script><script type="text/javascript" src="../../js/init.js"></script><script type="text/javascript" src="../../js/navigation.js"></script><script type="text/javascript" src="../../contrib/fuse/fuse.min.js"></script><script type="text/javascript" src="../../js/search_index.js"></script><script type="text/javascript" src="../../js/sqa_moose.js"></script>
