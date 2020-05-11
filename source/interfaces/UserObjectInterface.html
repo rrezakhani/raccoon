@@ -1,6 +1,88 @@
-<!DOCTYPE html><head><meta charset="UTF-8"><link rel="icon" type="image/x-icon" href="../../media/raccoon_icon.png" sizes="16x16 32x32 64x64 128x128"></link><link href="../../contrib/materialize/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"></link><link href="../../contrib/prism/prism.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/alert_moose.css" type="text/css" rel="stylesheet"></link><link href="../../contrib/katex/katex.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/katex_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/content_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/sqa_moose.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../../contrib/jquery/jquery.min.js"></script><script type="text/javascript" src="../../contrib/katex/katex.min.js"></script><script type="text/javascript" src="../../contrib/plotly/plotly.min.js"></script><title>UserObjectInterface|RACCOON</title></head><body><div class="page-wrap"><header><nav><div class="nav-wrapper container"><a href="https://hugary1995.github.io/raccoon/index.html" class="left moose-logo hide-on-med-and-down">RACCOON</a><a href="https://github.com/hugary1995/raccoon" class="right"><img src="../../media/framework/github-logo.png" class="github-mark"></img><img src="../../media/framework/github-mark.png" class="github-logo"></img></a><ul class="right hide-on-med-and-down"><li><a href="../../install/index.html">Install</a></li><li class="moose-mega-menu-trigger" data-target="9b330f7b-e654-42f0-ba85-655509df9b87"><a>Benchmarks<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../theory/index.html">Theory</a></li><li><a href="../../modules/index.html">Modules</a></li><li><a href="../../syntax/index.html">Syntax</a></li></ul><a href="#" class="sidenav-trigger" data-target="016be0d9-b47e-4187-aad9-fbe50c9f1e0e"><i class="material-icons">menu</i></a><ul class="sidenav" id="016be0d9-b47e-4187-aad9-fbe50c9f1e0e"><li><a href="../../install/index.html">Install</a></li><li><a href="../../benchmarks.menu.html">Benchmarks</a></li><li><a href="../../theory/index.html">Theory</a></li><li><a href="../../modules/index.html">Modules</a></li><li><a href="../../syntax/index.html">Syntax</a></li></ul><a href="#moose-search" class="modal-trigger"><i class="material-icons">search</i></a></div></nav><div class="moose-mega-menu-content" id="9b330f7b-e654-42f0-ba85-655509df9b87"><div class="moose-mega-menu-wrapper"><div class="row row"><div class="col s12 m6 l4"><h2 id="mode-i-crack-propagation"><a href="../../benchmarks/mode1.html">Mode I crack propagation <i class="material-icons moose-inline-icon">link</i></a></h2><img src="../../media/mode1.gif" class="materialboxed moose-image" style="width:75%;float:left;padding-top:2.5%;"></img><p></p></div><div class="col s12 m6 l4"><h2 id="mode-ii-crack-propagation"><a href="../../benchmarks/mode2.html">Mode II crack propagation <i class="material-icons moose-inline-icon">link</i></a></h2><img src="../../media/mode2.gif" class="materialboxed moose-image" style="width:75%;float:left;padding-top:2.5%;"></img><p></p></div><div class="col s12 m6 l4"><h2 id="soil-desiccation"><a href="../../benchmarks/mud.html">Soil desiccation <i class="material-icons moose-inline-icon">link</i></a></h2><img src="../../media/soil.gif" class="materialboxed moose-image" style="width:75%;float:left;padding-top:2.5%;"></img><p></p></div></div></div></div><div class="modal modal-fixed-footer moose-search-modal" id="moose-search"><div class="modal-content container moose-search-modal-content"><div class="row"><div class="col l12"><div class="input-field"><input type_="text" onkeyup="mooseSearch()" placeholder="https://hugary1995.github.io/raccoon/index.html" id="moose-search-box"></input></div></div><div><div class="col s12" id="moose-search-results"></div></div></div></div><div class="modal-footer"><a href="#!" class="modal-close btn-flat">Close</a></div></div></header><main class="main"><div class="container"><div class="row"><div class="col hide-on-med-and-down l12"><nav class="breadcrumb-nav"><div class="nav-wrapper"><a href=".." class="breadcrumb">source</a><span class="breadcrumb">interfaces</span><a href="#" class="breadcrumb">UserObjectInterface</a></div></nav></div></div><div class="row"><div class="moose-content col s12 m12 l10"><section id="73bf71c3-a40c-417b-b1ed-35c99a1d7437" data-section-level="1" data-section-text="UserObjectInterface"><h1 id="userobjectinterface">UserObjectInterface</h1><p>The UserObjectInterface defines the methods used for retrieving const references to the specific types of UserObjects. This is done with templated methods so that use of the UserObject does not require a dynamic cast. Many objects in MOOSE support the retrieval of these references so that custom UserObject APIs may be used in calculations. UserObjects are generally executed after most other systems in MOOSE so these values are often lagged when being used in another calculation.</p><section class="scrollspy" id="f32d16e9-13e5-45ca-97d8-c028b889a57e" data-section-level="2" data-section-text="End Use API"><h2 id="end-use-api">End Use API</h2><p>Most objects in MOOSE will retrieve UserObjects through special macro functions found here:</p><pre class="moose-pre"><code class="language-cpp">#define getUserObjectByName this-&gt;template getUserObjectByNameTempl
-#define getUserObject this-&gt;template getUserObjectTempl
-</code></pre><a href="#946d65f7-4e8e-4b7e-adfc-7fac449d697a" class="modal-trigger">(../moose/framework/include/utils/MemberTemplateMacros.h)</a><div class="modal moose-modal" id="946d65f7-4e8e-4b7e-adfc-7fac449d697a"><div class="modal-content"><h4>/home/travis/build/hugary1995/moose/framework/include/utils/MemberTemplateMacros.h</h4><pre class="moose-pre"><code class="language-cpp">// This file is part of the MOOSE framework
+<!DOCTYPE html><head><meta charset="UTF-8"><title>UserObjectInterface.md|RACCOON</title><link rel="icon" type="image/x-icon" href="../../media/raccoon_icon.png" sizes="16x16 32x32 64x64 128x128"></link><link href="../../contrib/materialize/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"></link><link href="../../contrib/prism/prism.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/alert_moose.css" type="text/css" rel="stylesheet"></link><link href="../../contrib/katex/katex.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/katex_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/content_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/sqa_moose.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../../contrib/jquery/jquery.min.js"></script><script type="text/javascript" src="../../contrib/katex/katex.min.js"></script><script type="text/javascript" src="../../contrib/plotly/plotly.min.js"></script></head><body><div class="page-wrap"><header><nav><div class="nav-wrapper container"><a href="https://hugary1995.github.io/raccoon/index.html" class="left moose-logo hide-on-med-and-down">RACCOON</a><a href="https://github.com/hugary1995/raccoon" class="right"><img src="../../media/framework/github-logo.png" class="github-mark"></img><img src="../../media/framework/github-mark.png" class="github-logo"></img></a><ul class="right hide-on-med-and-down"><li><a href="../../install/index.html">Install</a></li><li class="moose-mega-menu-trigger" data-target="9a3ea3b1-4955-4169-979b-86701338ef02"><a>Benchmarks<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../theory/index.html">Theory</a></li><li><a href="../../modules/index.html">Modules</a></li><li><a href="../../syntax/index.html">Syntax</a></li></ul><a href="#" class="sidenav-trigger" data-target="2e5dac41-e9a6-418f-a67f-7929d96d60ee"><i class="material-icons">menu</i></a><ul class="sidenav" id="2e5dac41-e9a6-418f-a67f-7929d96d60ee"><li><a href="../../install/index.html">Install</a></li><li><a href="../../benchmarks.menu.html">Benchmarks</a></li><li><a href="../../theory/index.html">Theory</a></li><li><a href="../../modules/index.html">Modules</a></li><li><a href="../../syntax/index.html">Syntax</a></li></ul><a href="#moose-search" class="modal-trigger"><i class="material-icons">search</i></a></div></nav><div class="moose-mega-menu-content" id="9a3ea3b1-4955-4169-979b-86701338ef02"><div class="moose-mega-menu-wrapper"><div class="row row"><div class="col s12 m6 l4"><h2 id="mode-i-crack-propagation"><a href="../../benchmarks/mode1.html">Mode I crack propagation <i class="material-icons moose-inline-icon">link</i></a></h2><img src="../../media/mode1.gif" class="materialboxed moose-image" style="width:75%;float:left;padding-top:2.5%;"></img><p></p></div><div class="col s12 m6 l4"><h2 id="mode-ii-crack-propagation"><a href="../../benchmarks/mode2.html">Mode II crack propagation <i class="material-icons moose-inline-icon">link</i></a></h2><img src="../../media/mode2.gif" class="materialboxed moose-image" style="width:75%;float:left;padding-top:2.5%;"></img><p></p></div><div class="col s12 m6 l4"><h2 id="soil-desiccation"><a href="../../benchmarks/mud.html">Soil desiccation <i class="material-icons moose-inline-icon">link</i></a></h2><img src="../../media/soil.gif" class="materialboxed moose-image" style="width:75%;float:left;padding-top:2.5%;"></img><p></p></div></div></div></div><div class="modal modal-fixed-footer moose-search-modal" id="moose-search"><div class="modal-content container moose-search-modal-content"><div class="row"><div class="col l12"><div class="input-field"><input type_="text" onkeyup="mooseSearch()" placeholder="https://hugary1995.github.io/raccoon/index.html" id="moose-search-box"></input></div></div><div><div class="col s12" id="moose-search-results"></div></div></div></div><div class="modal-footer"><a href="#!" class="modal-close btn-flat">Close</a></div></div></header><main class="main"><div class="container"><div class="row"><div class="col hide-on-med-and-down l12"><nav class="breadcrumb-nav"><div class="nav-wrapper"><a href=".." class="breadcrumb">source</a><span class="breadcrumb">interfaces</span><a href="#" class="breadcrumb">UserObjectInterface</a></div></nav></div></div><div class="row"><div class="moose-content col s12 m12 l10"><section id="cc498ae5-0182-4eac-b3f5-8b583b19118d" data-section-level="1" data-section-text="UserObjectInterface"><h1 id="userobjectinterface">UserObjectInterface</h1><p>The UserObjectInterface defines the methods used for retrieving const references to the specific types of UserObjects. This is done with templated methods so that use of the UserObject does not require a dynamic cast. Many objects in MOOSE support the retrieval of these references so that custom UserObject APIs may be used in calculations. UserObjects are generally executed after most other systems in MOOSE so these values are often lagged when being used in another calculation.</p><section class="scrollspy" id="c32af3ca-b706-4aab-a18f-58546feaeea1" data-section-level="2" data-section-text="End Use API"><h2 id="end-use-api">End Use API</h2><p>Most objects in MOOSE will retrieve UserObjects through special macro functions found here:</p><pre class="moose-pre"><code class="language-cpp">
+#pragma once
+
+// MOOSE includes
+#include &quot;FEProblemBase.h&quot;
+#include &quot;MooseTypes.h&quot;
+
+// Forward declarations
+class InputParameters;
+class UserObject;
+
+/**
+ * Interface for objects that need to use UserObjects.
+ */
+class UserObjectInterface
+{
+public:
+  /**
+   * @param params The parameters used by the object being instantiated. This
+   *        class needs them so it can get the user object named in the input file,
+   *        but the object calling getUserObject only needs to use the name on the
+   *        left hand side of the statement &quot;user_object = user_object_name&quot;
+   */
+  UserObjectInterface(const MooseObject * moose_object);
+
+  /**
+   * Get an user object with a given parameter name
+   * @param name The name of the parameter key of the user object to retrieve
+   * @return The user object with name associated with the parameter &#x27;name&#x27;
+   */
+  template &lt;class T&gt;
+  const T &amp; getUserObject(const std::string &amp; name) const;
+
+  /**
+   * Get an user object with a given name
+   * @param name The name of the user object to retrieve
+   * @return The user object with the name
+   */
+  template &lt;class T&gt;
+  const T &amp; getUserObjectByName(const std::string &amp; name) const;
+
+  /**
+   * Get an user object with a given parameter name
+   * @param name The name of the parameter key of the user object to retrieve
+   * @return The user object with name associated with the parameter &#x27;name&#x27;
+   */
+  const UserObject &amp; getUserObjectBase(const std::string &amp; name) const;
+
+  /**
+   * Get an user object with a given name
+   * @param name The name of the user object to retrieve
+   * @return The user object with the name
+   */
+  const UserObject &amp; getUserObjectBaseByName(const std::string &amp; name) const;
+
+private:
+  /// Parameters of the object with this interface
+  const InputParameters &amp; _uoi_params;
+
+  /// Reference to the FEProblemBase instance
+  FEProblemBase &amp; _uoi_feproblem;
+
+  /// Thread ID
+  THREAD_ID _uoi_tid;
+
+  /// Check if the threaded copy of the user object is needed
+  bool needThreadedCopy(const UserObject &amp; uo) const;
+};
+
+template &lt;class T&gt;
+const T &amp;
+UserObjectInterface::getUserObject(const std::string &amp; name) const
+{
+  unsigned int tid = needThreadedCopy(getUserObjectBase(name)) ? _uoi_tid : 0;
+  return _uoi_feproblem.getUserObject&lt;T&gt;(_uoi_params.get&lt;UserObjectName&gt;(name), tid);
+}
+
+template &lt;class T&gt;
+const T &amp;
+UserObjectInterface::getUserObjectByName(const std::string &amp; name) const
+{
+  unsigned int tid = needThreadedCopy(getUserObjectBaseByName(name)) ? _uoi_tid : 0;
+  return _uoi_feproblem.getUserObject&lt;T&gt;(name, tid);
+}
+</code></pre><a href="#56c04dc9-e9d7-4f2f-9b40-4151c1bfa80c" class="modal-trigger">(../moose/framework/include/userobject/UserObjectInterface.h)</a><div class="modal moose-modal" id="56c04dc9-e9d7-4f2f-9b40-4151c1bfa80c"><div class="modal-content"><h4>/home/travis/build/hugary1995/moose/framework/include/userobject/UserObjectInterface.h</h4><pre class="moose-pre"><code class="language-cpp">// This file is part of the MOOSE framework
 // https://www.mooseframework.org
 //
 // All rights reserved, see COPYRIGHT for full restrictions
@@ -11,122 +93,89 @@
 
 #pragma once
 
-// MooseObject
+// MOOSE includes
+#include &quot;FEProblemBase.h&quot;
+#include &quot;MooseTypes.h&quot;
 
-#define adGetParam                                                                                 \
-  _Pragma(&quot;GCC warning \&quot;adGetParam is deprecated. Simply use getParam\&quot;&quot;) this                    \
-      -&gt;template getParamTempl
+// Forward declarations
+class InputParameters;
+class UserObject;
 
-#define getParam this-&gt;template getParamTempl
+/**
+ * Interface for objects that need to use UserObjects.
+ */
+class UserObjectInterface
+{
+public:
+  /**
+   * @param params The parameters used by the object being instantiated. This
+   *        class needs them so it can get the user object named in the input file,
+   *        but the object calling getUserObject only needs to use the name on the
+   *        left hand side of the statement &quot;user_object = user_object_name&quot;
+   */
+  UserObjectInterface(const MooseObject * moose_object);
 
-// UserObjectInterface
+  /**
+   * Get an user object with a given parameter name
+   * @param name The name of the parameter key of the user object to retrieve
+   * @return The user object with name associated with the parameter &#x27;name&#x27;
+   */
+  template &lt;class T&gt;
+  const T &amp; getUserObject(const std::string &amp; name) const;
 
-#define adGetUserObject                                                                            \
-  _Pragma(&quot;GCC warning \&quot;adGetUserObject is deprecated. Simply use getUserObject\&quot;&quot;) this          \
-      -&gt;template getUserObjectTempl
-#define adGetUserObjectByName                                                                      \
-  _Pragma(                                                                                         \
-      &quot;GCC warning \&quot;adGetUserObjectByName is deprecated. Simply use getUserObjectByName\&quot;&quot;) this  \
-      -&gt;template getUserObjectByNameTempl
+  /**
+   * Get an user object with a given name
+   * @param name The name of the user object to retrieve
+   * @return The user object with the name
+   */
+  template &lt;class T&gt;
+  const T &amp; getUserObjectByName(const std::string &amp; name) const;
 
-// doco-user-object-interface-begin
-#define getUserObjectByName this-&gt;template getUserObjectByNameTempl
-#define getUserObject this-&gt;template getUserObjectTempl
-// doco-user-object-interface-end
+  /**
+   * Get an user object with a given parameter name
+   * @param name The name of the parameter key of the user object to retrieve
+   * @return The user object with name associated with the parameter &#x27;name&#x27;
+   */
+  const UserObject &amp; getUserObjectBase(const std::string &amp; name) const;
 
-// MaterialPropertyInterface
+  /**
+   * Get an user object with a given name
+   * @param name The name of the user object to retrieve
+   * @return The user object with the name
+   */
+  const UserObject &amp; getUserObjectBaseByName(const std::string &amp; name) const;
 
-#define adGetMaterialProperty                                                                      \
-  _Pragma(                                                                                         \
-      &quot;GCC warning \&quot;adGetMaterialProperty is deprecated. Simply use getMaterialProperty\&quot;&quot;) this  \
-      -&gt;template getMaterialPropertyTempl
-// clang-format off
-#define adGetMaterialPropertyOld \
-  _Pragma( \
-      &quot;GCC warning \&quot;adGetMaterialPropertyOld is deprecated. Simply use getMaterialPropertyOld\&quot;&quot;) \
-  this-&gt;template getMaterialPropertyOldTempl
-#define adGetMaterialPropertyOlder \
-  _Pragma( \
-      &quot;GCC warning \&quot;adGetMaterialPropertyOlder is deprecated. Simply use getMaterialPropertyOlder\&quot;&quot;) \
-  this-&gt;template getMaterialPropertyOlderTempl
-#define adGetADMaterialProperty \
-  _Pragma( \
-      &quot;GCC warning \&quot;adGetADMaterialProperty is deprecated. Simply use getADMaterialProperty\&quot;&quot;) \
-  this-&gt;template getADMaterialPropertyTempl
-#define adGetADMaterialPropertyByName \
-  _Pragma( \
-      &quot;GCC warning \&quot;adGetADMaterialPropertyByName is deprecated. Simply use getADMaterialPropertyByName\&quot;&quot;) \
-  this-&gt;template getADMaterialPropertyByNameTempl
-#define adGetMaterialPropertyByName \
-  _Pragma( \
-      &quot;GCC warning \&quot;adGetMaterialPropertyByName is deprecated. Simply use getMaterialPropertyByName\&quot;&quot;) \
-  this-&gt;template getMaterialPropertyByNameTempl
-#define adGetMaterialPropertyOldByName \
-  _Pragma( \
-      &quot;GCC warning \&quot;adGetMaterialPropertyOldByName is deprecated. Simply use getMaterialPropertyOldByName\&quot;&quot;) \
-  this-&gt;template getMaterialPropertyOldByNameTempl
-#define adGetMaterialPropertyOlderByName \
-  _Pragma( \
-      &quot;GCC warning \&quot;adGetMaterialPropertyOlderByName is deprecated. Simply use getMaterialPropertyOlderByName\&quot;&quot;) \
-  this-&gt;template getMaterialPropertyOlderByNameTempl
-#define adHasMaterialProperty \
-  _Pragma( \
-      &quot;GCC warning \&quot;adHasMaterialProperty is deprecated. Simply use hasMaterialProperty\&quot;&quot;) \
-  this-&gt;template hasMaterialPropertyTempl
-#define adHasMaterialPropertyByName \
-  _Pragma( \
-      &quot;GCC warning \&quot;adHasMaterialPropertyByName is deprecated. Simply use hasMaterialPropertyByName\&quot;&quot;) \
-  this-&gt;template hasMaterialPropertyByNameTempl
-// clang-format on
-#define adDeclareADProperty                                                                        \
-  _Pragma(&quot;GCC warning \&quot;adDeclareADProperty is deprecated. Simply use declareADProperty\&quot;&quot;) this  \
-      -&gt;template declareADPropertyTempl
-#define adDeclareProperty                                                                          \
-  _Pragma(&quot;GCC warning \&quot;adDeclareProperty is deprecated. Simply use declareProperty\&quot;&quot;) this      \
-      -&gt;template declarePropertyTempl
+private:
+  /// Parameters of the object with this interface
+  const InputParameters &amp; _uoi_params;
 
-#define getMaterialProperty this-&gt;template getMaterialPropertyTempl
-#define getMaterialPropertyOld this-&gt;template getMaterialPropertyOldTempl
-#define getMaterialPropertyOlder this-&gt;template getMaterialPropertyOlderTempl
-#define declareADProperty this-&gt;template declareADPropertyTempl
-#define declareProperty this-&gt;template declarePropertyTempl
-#define getADMaterialProperty this-&gt;template getADMaterialPropertyTempl
-#define getADMaterialPropertyByName this-&gt;template getADMaterialPropertyByNameTempl
-#define getMaterialPropertyByName this-&gt;template getMaterialPropertyByNameTempl
-#define getMaterialPropertyOldByName this-&gt;template getMaterialPropertyOldByNameTempl
-#define getMaterialPropertyOlderByName this-&gt;template getMaterialPropertyOlderByNameTempl
-#define hasMaterialProperty this-&gt;template hasMaterialPropertyTempl
-#define hasMaterialPropertyByName this-&gt;template hasMaterialPropertyByNameTempl
+  /// Reference to the FEProblemBase instance
+  FEProblemBase &amp; _uoi_feproblem;
 
-// TwoMaterialPropertyInterface
+  /// Thread ID
+  THREAD_ID _uoi_tid;
 
-// clang-format off
-#define adGetNeighborMaterialProperty \
-  _Pragma( \
-    &quot;GCC warning \&quot;adGetNeighborMaterialProperty is deprecated. Simply use getNeighborMaterialProperty\&quot;&quot;) \
-  this-&gt;template getNeighborMaterialPropertyTempl
-#define adGetNeighborADMaterialProperty \
-  _Pragma( \
-    &quot;GCC warning \&quot;adGetNeighborADMaterialProperty is deprecated. Simply use getNeighborADMaterialProperty\&quot;&quot;) \
-  this-&gt;template getNeighborADMaterialPropertyTempl
-// clang-format on
+  /// Check if the threaded copy of the user object is needed
+  bool needThreadedCopy(const UserObject &amp; uo) const;
+};
 
-#define getNeighborMaterialProperty this-&gt;template getNeighborMaterialPropertyTempl
-#define getNeighborADMaterialProperty this-&gt;template getNeighborADMaterialPropertyTempl
-#define getNeighborMaterialPropertyByName this-&gt;template getNeighborMaterialPropertyByNameTempl
+template &lt;class T&gt;
+const T &amp;
+UserObjectInterface::getUserObject(const std::string &amp; name) const
+{
+  unsigned int tid = needThreadedCopy(getUserObjectBase(name)) ? _uoi_tid : 0;
+  return _uoi_feproblem.getUserObject&lt;T&gt;(_uoi_params.get&lt;UserObjectName&gt;(name), tid);
+}
 
-// Restartable
-
-// clang-format off
-#define adDeclareRestartableData \
-  _Pragma( \
-    &quot;GCC warning \&quot;adDeclareRestartableData is deprecated. Simply use declareRestartableData\&quot;&quot;) \
-  this-&gt;template declareRestartableDataTempl
-// clang-format on
-
-#define declareRestartableData this-&gt;template declareRestartableDataTempl
+template &lt;class T&gt;
+const T &amp;
+UserObjectInterface::getUserObjectByName(const std::string &amp; name) const
+{
+  unsigned int tid = needThreadedCopy(getUserObjectBaseByName(name)) ? _uoi_tid : 0;
+  return _uoi_feproblem.getUserObject&lt;T&gt;(name, tid);
+}
 </code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><p>Typical usage looks like this:</p><pre class="moose-pre"><code class="language-cpp">    _elem_uo(getUserObject&lt;ElementUOProvider&gt;(&quot;element_user_object&quot;)),
-</code></pre><a href="#fd5eac18-e00e-44ed-8bd5-6eb7ad177fe5" class="modal-trigger">(../moose/test/src/auxkernels/ElementUOAux.C)</a><div class="modal moose-modal" id="fd5eac18-e00e-44ed-8bd5-6eb7ad177fe5"><div class="modal-content"><h4>/home/travis/build/hugary1995/moose/test/src/auxkernels/ElementUOAux.C</h4><pre class="moose-pre"><code class="language-cpp">// This file is part of the MOOSE framework
+</code></pre><a href="#989b6125-a566-4b47-9af3-62f80978c13c" class="modal-trigger">(../moose/test/src/auxkernels/ElementUOAux.C)</a><div class="modal moose-modal" id="989b6125-a566-4b47-9af3-62f80978c13c"><div class="modal-content"><h4>/home/travis/build/hugary1995/moose/test/src/auxkernels/ElementUOAux.C</h4><pre class="moose-pre"><code class="language-cpp">// This file is part of the MOOSE framework
 // https://www.mooseframework.org
 //
 // All rights reserved, see COPYRIGHT for full restrictions
@@ -186,4 +235,4 @@ ElementUOAux::computeValue()
   else
     return _elem_uo.getElementalValueReal(_current_elem-&gt;id(), _field_name);
 }
-</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div></section></section></div><div class="col hide-on-med-and-down l2"><div class="toc-wrapper pin-top"><ul class="section table-of-contents"><li><a href="#f32d16e9-13e5-45ca-97d8-c028b889a57e" class="tooltipped" data-position="left" data-tooltip="End Use API">End Use API</a></li></ul></div></div></div></div></main></div></body><script type="text/javascript" src="../../contrib/materialize/materialize.min.js"></script><script type="text/javascript" src="../../contrib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="../../contrib/prism/prism.min.js"></script><script type="text/javascript" src="../../js/init.js"></script><script type="text/javascript" src="../../js/navigation.js"></script><script type="text/javascript" src="../../contrib/fuse/fuse.min.js"></script><script type="text/javascript" src="../../js/search_index.js"></script><script type="text/javascript" src="../../js/sqa_moose.js"></script>
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div></section></section></div><div class="col hide-on-med-and-down l2"><div class="toc-wrapper pin-top"><ul class="section table-of-contents"><li><a href="#c32af3ca-b706-4aab-a18f-58546feaeea1" class="tooltipped" data-position="left" data-tooltip="End Use API">End Use API</a></li></ul></div></div></div></div></main></div></body><script type="text/javascript" src="../../contrib/materialize/materialize.min.js"></script><script type="text/javascript" src="../../contrib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="../../contrib/prism/prism.min.js"></script><script type="text/javascript" src="../../js/init.js"></script><script type="text/javascript" src="../../js/navigation.js"></script><script type="text/javascript" src="../../contrib/fuse/fuse.min.js"></script><script type="text/javascript" src="../../js/search_index.js"></script><script type="text/javascript" src="../../js/sqa_moose.js"></script>

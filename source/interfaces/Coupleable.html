@@ -1,4 +1,4 @@
-<!DOCTYPE html><head><meta charset="UTF-8"><link rel="icon" type="image/x-icon" href="../../media/raccoon_icon.png" sizes="16x16 32x32 64x64 128x128"></link><link href="../../contrib/materialize/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"></link><link href="../../contrib/prism/prism.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/alert_moose.css" type="text/css" rel="stylesheet"></link><link href="../../contrib/katex/katex.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/katex_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/content_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/sqa_moose.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../../contrib/jquery/jquery.min.js"></script><script type="text/javascript" src="../../contrib/katex/katex.min.js"></script><script type="text/javascript" src="../../contrib/plotly/plotly.min.js"></script><title>Coupleable|RACCOON</title></head><body><div class="page-wrap"><header><nav><div class="nav-wrapper container"><a href="https://hugary1995.github.io/raccoon/index.html" class="left moose-logo hide-on-med-and-down">RACCOON</a><a href="https://github.com/hugary1995/raccoon" class="right"><img src="../../media/framework/github-logo.png" class="github-mark"></img><img src="../../media/framework/github-mark.png" class="github-logo"></img></a><ul class="right hide-on-med-and-down"><li><a href="../../install/index.html">Install</a></li><li class="moose-mega-menu-trigger" data-target="71fa6a78-2894-4cff-8f56-fee5a2d20820"><a>Benchmarks<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../theory/index.html">Theory</a></li><li><a href="../../modules/index.html">Modules</a></li><li><a href="../../syntax/index.html">Syntax</a></li></ul><a href="#" class="sidenav-trigger" data-target="8dd51fee-1a1d-4f01-91a7-5f1501bdc43e"><i class="material-icons">menu</i></a><ul class="sidenav" id="8dd51fee-1a1d-4f01-91a7-5f1501bdc43e"><li><a href="../../install/index.html">Install</a></li><li><a href="../../benchmarks.menu.html">Benchmarks</a></li><li><a href="../../theory/index.html">Theory</a></li><li><a href="../../modules/index.html">Modules</a></li><li><a href="../../syntax/index.html">Syntax</a></li></ul><a href="#moose-search" class="modal-trigger"><i class="material-icons">search</i></a></div></nav><div class="moose-mega-menu-content" id="71fa6a78-2894-4cff-8f56-fee5a2d20820"><div class="moose-mega-menu-wrapper"><div class="row row"><div class="col s12 m6 l4"><h2 id="mode-i-crack-propagation"><a href="../../benchmarks/mode1.html">Mode I crack propagation <i class="material-icons moose-inline-icon">link</i></a></h2><img src="../../media/mode1.gif" class="materialboxed moose-image" style="width:75%;float:left;padding-top:2.5%;"></img><p></p></div><div class="col s12 m6 l4"><h2 id="mode-ii-crack-propagation"><a href="../../benchmarks/mode2.html">Mode II crack propagation <i class="material-icons moose-inline-icon">link</i></a></h2><img src="../../media/mode2.gif" class="materialboxed moose-image" style="width:75%;float:left;padding-top:2.5%;"></img><p></p></div><div class="col s12 m6 l4"><h2 id="soil-desiccation"><a href="../../benchmarks/mud.html">Soil desiccation <i class="material-icons moose-inline-icon">link</i></a></h2><img src="../../media/soil.gif" class="materialboxed moose-image" style="width:75%;float:left;padding-top:2.5%;"></img><p></p></div></div></div></div><div class="modal modal-fixed-footer moose-search-modal" id="moose-search"><div class="modal-content container moose-search-modal-content"><div class="row"><div class="col l12"><div class="input-field"><input type_="text" onkeyup="mooseSearch()" placeholder="https://hugary1995.github.io/raccoon/index.html" id="moose-search-box"></input></div></div><div><div class="col s12" id="moose-search-results"></div></div></div></div><div class="modal-footer"><a href="#!" class="modal-close btn-flat">Close</a></div></div></header><main class="main"><div class="container"><div class="row"><div class="col hide-on-med-and-down l12"><nav class="breadcrumb-nav"><div class="nav-wrapper"><a href=".." class="breadcrumb">source</a><span class="breadcrumb">interfaces</span><a href="#" class="breadcrumb">Coupleable</a></div></nav></div></div><div class="row"><div class="moose-content col s12 m12 l10"><section id="24d79ab0-cd36-4f8b-8fa0-98b8e3216b1c" data-section-level="1" data-section-text="Coupleable"><h1 id="coupleable">Coupleable</h1><p>This class provides API for coupling different kinds of variables values into MOOSE systems. The following table summarizes the methods and kinds of values they provide:</p><div form="['center', 'center']" recursive="True" class="moose-table-div"><table><thead><tr><th style=";text-align:center">Method</th><th style=";text-align:center">Description</th></tr></thead><tbody><tr><td style=";text-align:center">coupledValue</td><td style=";text-align:center">Values of a coupled variable in q-points</td></tr></tbody><tbody><tr><td style=";text-align:center">coupledGradient</td><td style=";text-align:center">Gradients of a coupled variable in q-points</td></tr></tbody><tbody><tr><td style=";text-align:center">coupledSecond</td><td style=";text-align:center">Second derivatives of a coupled variable in q-points</td></tr></tbody><tbody><tr><td style=";text-align:center">coupledNodalValue</td><td style=";text-align:center">Values of a coupled variable at nodes.</td></tr></tbody><tbody><tr><td style=";text-align:center">coupledVectorValue</td><td style=";text-align:center">Values of a coupled vector variable in q-points</td></tr></tbody><tbody><tr><td style=";text-align:center">coupledCurl</td><td style=";text-align:center">Curl of a coupled vector variable in q-points</td></tr></tbody><tbody><tr><td style=";text-align:center">coupledDot</td><td style=";text-align:center">Time derivative of a coupled variable</td></tr></tbody><tbody><tr><td style=";text-align:center">coupledDotDu</td><td style=";text-align:center">Derivative of a time derivative of a coupled variable</td></tr></tbody><tbody><tr><td style=";text-align:center">coupledNodalDot</td><td style=";text-align:center">Nodal value of the time derivative of a coupled variable</td></tr></tbody><tbody><tr><td style=";text-align:center">coupledVectorDot</td><td style=";text-align:center">Time derivative of a coupled vector variable</td></tr></tbody><tbody><tr><td style=";text-align:center">coupledVectorDotDu</td><td style=";text-align:center">Derivative of a time derivative of a coupled vector variable</td></tr></tbody></table></div><p>For values, gradients and second derivatives, users can request old and older values in case they are running a transient simulation. In case of old and older values, the methods are called <code>coupledValueOld</code> and <code>coupledValueOlder</code>, respectively. Similarly,</p><section class="scrollspy" id="34958bf9-cfc0-44a7-bbdf-ec4eecbecf37" data-section-level="2" data-section-text="Optional Coupling"><h2 id="optional-coupling">Optional Coupling</h2><p>To determine if a variable was coupled, users can use <code>isCoupled</code> method. The typical use case looks like this:</p><pre class="moose-pre"><code class="language-text">
+<!DOCTYPE html><head><meta charset="UTF-8"><title>Coupleable.md|RACCOON</title><link rel="icon" type="image/x-icon" href="../../media/raccoon_icon.png" sizes="16x16 32x32 64x64 128x128"></link><link href="../../contrib/materialize/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"></link><link href="../../contrib/prism/prism.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/alert_moose.css" type="text/css" rel="stylesheet"></link><link href="../../contrib/katex/katex.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/katex_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/content_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/sqa_moose.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../../contrib/jquery/jquery.min.js"></script><script type="text/javascript" src="../../contrib/katex/katex.min.js"></script><script type="text/javascript" src="../../contrib/plotly/plotly.min.js"></script></head><body><div class="page-wrap"><header><nav><div class="nav-wrapper container"><a href="https://hugary1995.github.io/raccoon/index.html" class="left moose-logo hide-on-med-and-down">RACCOON</a><a href="https://github.com/hugary1995/raccoon" class="right"><img src="../../media/framework/github-logo.png" class="github-mark"></img><img src="../../media/framework/github-mark.png" class="github-logo"></img></a><ul class="right hide-on-med-and-down"><li><a href="../../install/index.html">Install</a></li><li class="moose-mega-menu-trigger" data-target="dd47c22a-20c0-40f3-acaf-c5928054265c"><a>Benchmarks<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../theory/index.html">Theory</a></li><li><a href="../../modules/index.html">Modules</a></li><li><a href="../../syntax/index.html">Syntax</a></li></ul><a href="#" class="sidenav-trigger" data-target="ae1d5edb-cb37-40b9-9edc-418f0ecdd55d"><i class="material-icons">menu</i></a><ul class="sidenav" id="ae1d5edb-cb37-40b9-9edc-418f0ecdd55d"><li><a href="../../install/index.html">Install</a></li><li><a href="../../benchmarks.menu.html">Benchmarks</a></li><li><a href="../../theory/index.html">Theory</a></li><li><a href="../../modules/index.html">Modules</a></li><li><a href="../../syntax/index.html">Syntax</a></li></ul><a href="#moose-search" class="modal-trigger"><i class="material-icons">search</i></a></div></nav><div class="moose-mega-menu-content" id="dd47c22a-20c0-40f3-acaf-c5928054265c"><div class="moose-mega-menu-wrapper"><div class="row row"><div class="col s12 m6 l4"><h2 id="mode-i-crack-propagation"><a href="../../benchmarks/mode1.html">Mode I crack propagation <i class="material-icons moose-inline-icon">link</i></a></h2><img src="../../media/mode1.gif" class="materialboxed moose-image" style="width:75%;float:left;padding-top:2.5%;"></img><p></p></div><div class="col s12 m6 l4"><h2 id="mode-ii-crack-propagation"><a href="../../benchmarks/mode2.html">Mode II crack propagation <i class="material-icons moose-inline-icon">link</i></a></h2><img src="../../media/mode2.gif" class="materialboxed moose-image" style="width:75%;float:left;padding-top:2.5%;"></img><p></p></div><div class="col s12 m6 l4"><h2 id="soil-desiccation"><a href="../../benchmarks/mud.html">Soil desiccation <i class="material-icons moose-inline-icon">link</i></a></h2><img src="../../media/soil.gif" class="materialboxed moose-image" style="width:75%;float:left;padding-top:2.5%;"></img><p></p></div></div></div></div><div class="modal modal-fixed-footer moose-search-modal" id="moose-search"><div class="modal-content container moose-search-modal-content"><div class="row"><div class="col l12"><div class="input-field"><input type_="text" onkeyup="mooseSearch()" placeholder="https://hugary1995.github.io/raccoon/index.html" id="moose-search-box"></input></div></div><div><div class="col s12" id="moose-search-results"></div></div></div></div><div class="modal-footer"><a href="#!" class="modal-close btn-flat">Close</a></div></div></header><main class="main"><div class="container"><div class="row"><div class="col hide-on-med-and-down l12"><nav class="breadcrumb-nav"><div class="nav-wrapper"><a href=".." class="breadcrumb">source</a><span class="breadcrumb">interfaces</span><a href="#" class="breadcrumb">Coupleable</a></div></nav></div></div><div class="row"><div class="moose-content col s12 m12 l10"><section id="0018488d-5d46-49b1-8428-b88c764b6cab" data-section-level="1" data-section-text="Coupleable"><h1 id="coupleable">Coupleable</h1><p>This class provides API for coupling different kinds of variables values into MOOSE systems. The following table summarizes the methods and kinds of values they provide:</p><div form="['center', 'center']" recursive="True" class="moose-table-div"><table><thead><tr><th style=";text-align:center">Method</th><th style=";text-align:center">Description</th></tr></thead><tbody><tr><td style=";text-align:center">coupledValue</td><td style=";text-align:center">Values of a coupled variable in q-points</td></tr></tbody><tbody><tr><td style=";text-align:center">coupledGradient</td><td style=";text-align:center">Gradients of a coupled variable in q-points</td></tr></tbody><tbody><tr><td style=";text-align:center">coupledSecond</td><td style=";text-align:center">Second derivatives of a coupled variable in q-points</td></tr></tbody><tbody><tr><td style=";text-align:center">coupledNodalValue</td><td style=";text-align:center">Values of a coupled variable at nodes.</td></tr></tbody><tbody><tr><td style=";text-align:center">coupledVectorValue</td><td style=";text-align:center">Values of a coupled vector variable in q-points</td></tr></tbody><tbody><tr><td style=";text-align:center">coupledCurl</td><td style=";text-align:center">Curl of a coupled vector variable in q-points</td></tr></tbody><tbody><tr><td style=";text-align:center">coupledDot</td><td style=";text-align:center">Time derivative of a coupled variable</td></tr></tbody><tbody><tr><td style=";text-align:center">coupledDotDu</td><td style=";text-align:center">Derivative of a time derivative of a coupled variable</td></tr></tbody><tbody><tr><td style=";text-align:center">coupledNodalDot</td><td style=";text-align:center">Nodal value of the time derivative of a coupled variable</td></tr></tbody><tbody><tr><td style=";text-align:center">coupledVectorDot</td><td style=";text-align:center">Time derivative of a coupled vector variable</td></tr></tbody><tbody><tr><td style=";text-align:center">coupledVectorDotDu</td><td style=";text-align:center">Derivative of a time derivative of a coupled vector variable</td></tr></tbody></table></div><p>For values, gradients and second derivatives, users can request old and older values in case they are running a transient simulation. In case of old and older values, the methods are called <code>coupledValueOld</code> and <code>coupledValueOlder</code>, respectively. Similarly,</p><section class="scrollspy" id="09e0413f-bd9d-4efd-b756-af1abc7ff215" data-section-level="2" data-section-text="Optional Coupling"><h2 id="optional-coupling">Optional Coupling</h2><p>To determine if a variable was coupled, users can use <code>isCoupled</code> method. The typical use case looks like this:</p><pre class="moose-pre"><code class="language-text">
 _value(isCoupled(&quot;v&quot;) ? coupledValue(&quot;v&quot;) : _zero)
 </code></pre><p>However, this use case became obsolete and now it is recommended to use default values for optionally coupled variables, see the following example:</p><pre class="moose-pre"><code class="language-text">
 validParams&lt;Class&gt;()
@@ -10,7 +10,7 @@ validParams&lt;Class&gt;()
 
 Class::Class(...) : BaseClass(...),
   _v(coupledValue(&#x27;v&#x27;))
-</code></pre><p>The advantage here is that users can provide arbitrary default values to their variables.</p></section><section class="scrollspy" id="bf3444e3-4b08-43fa-bd0c-fd5ec91986df" data-section-level="2" data-section-text="Coupling of Vectors of Variables"><h2 id="coupling-of-vectors-of-variables">Coupling of Vectors of Variables</h2><p>Users can couple a vector of variables using the following syntax:</p><pre class="moose-pre"><code class="language-text">
+</code></pre><p>The advantage here is that users can provide arbitrary default values to their variables.</p></section><section class="scrollspy" id="c241ec87-38dd-43cc-8416-16e4a7e8464a" data-section-level="2" data-section-text="Coupling of Vectors of Variables"><h2 id="coupling-of-vectors-of-variables">Coupling of Vectors of Variables</h2><p>Users can couple a vector of variables using the following syntax:</p><pre class="moose-pre"><code class="language-text">
 v = &#x27;a b c&#x27;
 </code></pre><p>This syntax provides 3 variables coupled as a variable <code>v</code> in a MOOSE object using the <code>Coupleable</code> interface. The number of components coupled into can be obtained by <code>coupledComponents</code> method. Then, individual components can be obtained by calling <code>coupledValue</code> (or any other method mentioned above) passing in the variable name (as usual) and the component index. See the following example:</p><p>Declarations:</p><pre class="moose-pre"><code class="language-text">
 class B : public A
@@ -34,7 +34,7 @@ B::B(...) : A(...),
   for (unsigned int i = 0; i &lt; _n_vars; i++)
     _vars.push_back(dynamic_cast&lt;MooseVariable *&gt;(getVar(&quot;v&quot;, i)));
 }
-</code></pre></section><section class="scrollspy" id="b658a124-0109-47ce-bacc-bd4abe77b0c2" data-section-level="2" data-section-text="Defaults for Coupling of Vectors of Variables"><h2 id="defaults-for-coupling-of-vectors-of-variables">Defaults for Coupling of Vectors of Variables</h2><p>Vectors of variables can be added using <code>params.addCoupledVar</code> as described above. The parameter class allows providing defaults for vector variables as follows:</p><pre class="moose-pre"><code class="language-text">
+</code></pre></section><section class="scrollspy" id="6e46f4a7-37ea-474a-9d00-1befd2899b34" data-section-level="2" data-section-text="Defaults for Coupling of Vectors of Variables"><h2 id="defaults-for-coupling-of-vectors-of-variables">Defaults for Coupling of Vectors of Variables</h2><p>Vectors of variables can be added using <code>params.addCoupledVar</code> as described above. The parameter class allows providing defaults for vector variables as follows:</p><pre class="moose-pre"><code class="language-text">
 validParams&lt;B&gt;()
 {
   InputParameters params = validParams&lt;A&gt;();
@@ -47,7 +47,7 @@ v = &#x27;1&#x27;
 v = &#x27;1 2 3&#x27;
 </code></pre><p>for a vector of coupled variables. Currently mixing actual variable assignments and defaults like this:</p><pre class="moose-pre"><code class="language-text">
 v = &#x27;1 actual_var 3&#x27;
-</code></pre><p>is not supported.</p></section><section class="scrollspy" id="a68af87b-4226-4126-966b-77e2e55bf9b3" data-section-level="2" data-section-text="Coupled Solution DOFs"><h2 id="coupled-solution-dofs">Coupled Solution DOFs</h2><p>It is possible to retrieve the solution DOFs of an element in an elemental loop. This is different than the &quot;value&quot; type coupling which holds the interpolated values of the shape functions themselves. Obtaining the raw DOFs all the user to perform their own integration or other evaluation without going through the interpolation process. These functions can be found here:</p><pre class="moose-pre"><code class="language-cpp">  /**
+</code></pre><p>is not supported.</p></section><section class="scrollspy" id="ff583264-e6b0-49a9-a72f-71ef2689dbdf" data-section-level="2" data-section-text="Coupled Solution DOFs"><h2 id="coupled-solution-dofs">Coupled Solution DOFs</h2><p>It is possible to retrieve the solution DOFs of an element in an elemental loop. This is different than the &quot;value&quot; type coupling which holds the interpolated values of the shape functions themselves. Obtaining the raw DOFs all the user to perform their own integration or other evaluation without going through the interpolation process. These functions can be found here:</p><pre class="moose-pre"><code class="language-cpp">  /**
    * Returns DoFs in the current solution vector of a coupled variable for the local element
    * @param var_name Name of coupled variable
    * @param comp Component number for vector of coupled variables
@@ -73,7 +73,7 @@ v = &#x27;1 actual_var 3&#x27;
    */
   virtual const VariableValue &amp; coupledDofValuesOlder(const std::string &amp; var_name,
                                                       unsigned int comp = 0);
-</code></pre><a href="#57e4fa99-9079-4749-9541-0536830d6c50" class="modal-trigger">(../moose/framework/include/interfaces/Coupleable.h)</a><div class="modal moose-modal" id="57e4fa99-9079-4749-9541-0536830d6c50"><div class="modal-content"><h4>/home/travis/build/hugary1995/moose/framework/include/interfaces/Coupleable.h</h4><pre class="moose-pre"><code class="language-cpp">// This file is part of the MOOSE framework
+</code></pre><a href="#b700e27b-3a1d-401b-9d90-62847936430b" class="modal-trigger">(../moose/framework/include/interfaces/Coupleable.h)</a><div class="modal moose-modal" id="b700e27b-3a1d-401b-9d90-62847936430b"><div class="modal-content"><h4>/home/travis/build/hugary1995/moose/framework/include/interfaces/Coupleable.h</h4><pre class="moose-pre"><code class="language-cpp">// This file is part of the MOOSE framework
 // https://www.mooseframework.org
 //
 // All rights reserved, see COPYRIGHT for full restrictions
@@ -90,21 +90,6 @@ v = &#x27;1 actual_var 3&#x27;
 #include &quot;MooseVariableFE.h&quot;
 #include &quot;InputParameters.h&quot;
 
-#define usingCoupleableMembers                                                                     \
-  using Coupleable::_zero;                                                                         \
-  using Coupleable::_grad_zero;                                                                    \
-  using Coupleable::_coupled_standard_moose_vars;                                                  \
-  using Coupleable::isCoupled;                                                                     \
-  using Coupleable::coupledComponents;                                                             \
-  using Coupleable::coupled;                                                                       \
-  using Coupleable::coupledValue;                                                                  \
-  using Coupleable::coupledValueOld;                                                               \
-  using Coupleable::coupledValueOlder;                                                             \
-  using Coupleable::coupledGradient;                                                               \
-  using Coupleable::coupledGradientOld;                                                            \
-  using Coupleable::coupledGradientOlder;                                                          \
-  using Coupleable::getVar
-
 // Forward declarations
 class MooseVariableScalar;
 class MooseObject;
@@ -114,21 +99,6 @@ namespace libMesh
 template &lt;typename T&gt;
 class DenseVector;
 }
-
-#define adCoupledValue this-&gt;template adCoupledValueTemplate&lt;compute_stage&gt;
-#define adCoupledGradient this-&gt;template adCoupledGradientTemplate&lt;compute_stage&gt;
-#define adCoupledSecond this-&gt;template adCoupledSecondTemplate&lt;compute_stage&gt;
-#define adCoupledDot this-&gt;template adCoupledDotTemplate&lt;compute_stage&gt;
-#define adCoupledVectorDot this-&gt;template adCoupledVectorDotTemplate&lt;compute_stage&gt;
-#define adCoupledVectorValue this-&gt;template adCoupledVectorValueTemplate&lt;compute_stage&gt;
-#define adCoupledVectorGradient this-&gt;template adCoupledVectorGradientTemplate&lt;compute_stage&gt;
-#define adCoupledVectorSecond this-&gt;template adCoupledVectorSecondTemplate&lt;compute_stage&gt;
-#define adZeroValue this-&gt;template adZeroValueTemplate&lt;compute_stage&gt;
-#define adZeroGradient this-&gt;template adZeroGradientTemplate&lt;compute_stage&gt;
-#define adZeroSecond this-&gt;template adZeroSecondTemplate&lt;compute_stage&gt;
-#define adCoupledNodalValue this-&gt;template adCoupledNodalValueTemplate&lt;Real, compute_stage&gt;
-#define adCoupledNodalVectorValue                                                                  \
-  this-&gt;template adCoupledNodalValueTemplate&lt;RealVectorValue, compute_stage&gt;
 
 /**
  * Interface for objects that needs coupling capabilities
@@ -244,9 +214,7 @@ protected:
    * @return Reference to a VariableValue for the coupled variable
    * @see Kernel::value
    */
-  template &lt;ComputeStage compute_stage&gt;
-  const ADVariableValue &amp; adCoupledValueTemplate(const std::string &amp; var_name,
-                                                 unsigned int comp = 0);
+  const ADVariableValue &amp; adCoupledValue(const std::string &amp; var_name, unsigned int comp = 0);
 
   /**
    * Returns value of a coupled vector variable for use in Automatic Differentiation
@@ -255,9 +223,8 @@ protected:
    * @return Reference to a VariableValue for the coupled variable
    * @see Kernel::value
    */
-  template &lt;ComputeStage compute_stage&gt;
-  const ADVectorVariableValue &amp; adCoupledVectorValueTemplate(const std::string &amp; var_name,
-                                                             unsigned int comp = 0);
+  const ADVectorVariableValue &amp; adCoupledVectorValue(const std::string &amp; var_name,
+                                                     unsigned int comp = 0);
 
   /**
    * Returns value of a coupled variable for a given tag
@@ -399,9 +366,7 @@ protected:
    * @return Reference to a VariableGradient containing the gradient of the coupled variable
    * @see Kernel::gradient
    */
-  template &lt;ComputeStage compute_stage&gt;
-  const ADVariableGradient &amp; adCoupledGradientTemplate(const std::string &amp; var_name,
-                                                       unsigned int comp = 0);
+  const ADVariableGradient &amp; adCoupledGradient(const std::string &amp; var_name, unsigned int comp = 0);
 
   /**
    * Returns gradient of a coupled vector variable for use in Automatic Differentation
@@ -410,9 +375,8 @@ protected:
    * @return Reference to a VectorVariableGradient containing the gradient of the coupled variable
    * @see Kernel::gradient
    */
-  template &lt;ComputeStage compute_stage&gt;
-  const ADVectorVariableGradient &amp; adCoupledVectorGradientTemplate(const std::string &amp; var_name,
-                                                                   unsigned int comp = 0);
+  const ADVectorVariableGradient &amp; adCoupledVectorGradient(const std::string &amp; var_name,
+                                                           unsigned int comp = 0);
 
   /**
    * Returns second derivatives of a coupled variable for use in Automatic Differentation
@@ -420,9 +384,7 @@ protected:
    * @param comp Component number for vector of coupled variables
    * @return Reference to a VariableSecond containing the second derivatives of the coupled variable
    */
-  template &lt;ComputeStage compute_stage&gt;
-  const ADVariableSecond &amp; adCoupledSecondTemplate(const std::string &amp; var_name,
-                                                   unsigned int comp = 0);
+  const ADVariableSecond &amp; adCoupledSecond(const std::string &amp; var_name, unsigned int comp = 0);
 
   /**
    * Returns second derivatives of a coupled vector variable for use in Automatic Differentation
@@ -431,9 +393,8 @@ protected:
    * @return Reference to a VectorVariableSecond containing the second derivatives of the coupled
    * variable
    */
-  template &lt;ComputeStage compute_stage&gt;
-  const ADVectorVariableSecond &amp; adCoupledVectorSecondTemplate(const std::string &amp; var_name,
-                                                               unsigned int comp = 0);
+  const ADVectorVariableSecond &amp; adCoupledVectorSecond(const std::string &amp; var_name,
+                                                       unsigned int comp = 0);
 
   /**
    * Returns an old gradient from previous time step of a coupled variable
@@ -654,8 +615,7 @@ protected:
    * @return Reference to a VariableValue containing the time derivative of the coupled variable
    * @see Kernel::dot
    */
-  template &lt;ComputeStage compute_stage&gt;
-  const ADVariableValue &amp; adCoupledDotTemplate(const std::string &amp; var_name, unsigned int comp = 0);
+  const ADVariableValue &amp; adCoupledDot(const std::string &amp; var_name, unsigned int comp = 0);
 
   /**
    * Time derivative of a vector coupled variable for ad simulations
@@ -665,9 +625,8 @@ protected:
    * variable
    * @see Kernel::dot
    */
-  template &lt;ComputeStage compute_stage&gt;
-  const ADVectorVariableValue &amp; adCoupledVectorDotTemplate(const std::string &amp; var_name,
-                                                           unsigned int comp = 0);
+  const ADVectorVariableValue &amp; adCoupledVectorDot(const std::string &amp; var_name,
+                                                   unsigned int comp = 0);
 
   /**
    * Time derivative of a coupled vector variable
@@ -803,9 +762,9 @@ protected:
    * @param comp Component number for vector of coupled variables
    * @return Reference to a VariableValue for the coupled variable
    */
-  template &lt;typename T, ComputeStage compute_stage&gt;
-  const typename Moose::ValueType&lt;T, compute_stage&gt;::type &amp;
-  adCoupledNodalValueTemplate(const std::string &amp; var_name, unsigned int comp = 0);
+  template &lt;typename T&gt;
+  const typename Moose::ADType&lt;T&gt;::type &amp; adCoupledNodalValue(const std::string &amp; var_name,
+                                                              unsigned int comp = 0);
 
   /**
    * Returns an old nodal value from previous time step  of a coupled variable
@@ -903,24 +862,21 @@ protected:
   // coupled-dof-values-end
 
   /**
-   * Template method that returns _zero to RESIDUAL computing objects and _ad_zero to JACOBIAN
+   *  method that returns _zero to RESIDUAL computing objects and _ad_zero to JACOBIAN
    * computing objects
    */
-  template &lt;ComputeStage compute_stage&gt;
-  const ADVariableValue &amp; adZeroValueTemplate();
+  const ADVariableValue &amp; adZeroValue();
 
   /**
-   * Template method that returns _grad_zero to RESIDUAL computing objects and _ad_grad_zero to
+   *  method that returns _grad_zero to RESIDUAL computing objects and _ad_grad_zero to
    * JACOBIAN computing objects
    */
-  template &lt;ComputeStage compute_stage&gt;
-  const ADVariableGradient &amp; adZeroGradientTemplate();
+  const ADVariableGradient &amp; adZeroGradient();
 
   /**
    * Retrieve a zero second for automatic differentiation
    */
-  template &lt;ComputeStage compute_stage&gt;
-  const ADVariableSecond &amp; adZeroSecondTemplate();
+  const ADVariableSecond &amp; adZeroSecond();
 
 protected:
   // Reference to the interface&#x27;s input parameters
@@ -969,7 +925,7 @@ protected:
   std::map&lt;std::string, ArrayVariableValue *&gt; _default_array_value;
 
   /// Will hold the default value for optional vector coupled variables for automatic differentiation.
-  std::unordered_map&lt;std::string, std::unique_ptr&lt;MooseArray&lt;DualRealVectorValue&gt;&gt;&gt;
+  std::unordered_map&lt;std::string, std::unique_ptr&lt;MooseArray&lt;ADRealVectorValue&gt;&gt;&gt;
       _ad_default_vector_value;
 
   /**
@@ -982,16 +938,16 @@ protected:
   VariableGradient _default_gradient;
 
   /// This will always be zero because the default values for optionally coupled variables is always constant
-  MooseArray&lt;DualRealVectorValue&gt; _ad_default_gradient;
+  MooseArray&lt;ADRealVectorValue&gt; _ad_default_gradient;
 
   /// This will always be zero because the default values for optionally coupled vector variables is always constant
-  MooseArray&lt;DualRealTensorValue&gt; _ad_default_vector_gradient;
+  MooseArray&lt;ADRealTensorValue&gt; _ad_default_vector_gradient;
 
   /// This will always be zero because the default values for optionally coupled variables is always constant
   VariableSecond _default_second;
 
   /// This will always be zero because the default values for optionally coupled variables is always constant
-  MooseArray&lt;DualRealTensorValue&gt; _ad_default_second;
+  MooseArray&lt;ADRealTensorValue&gt; _ad_default_second;
 
   /// Zero value of a variable
   const VariableValue &amp; _zero;
@@ -999,11 +955,11 @@ protected:
 
   /// Zero gradient of a variable
   const VariableGradient &amp; _grad_zero;
-  const MooseArray&lt;DualRealVectorValue&gt; &amp; _ad_grad_zero;
+  const MooseArray&lt;ADRealVectorValue&gt; &amp; _ad_grad_zero;
 
   /// Zero second derivative of a variable
   const VariableSecond &amp; _second_zero;
-  const MooseArray&lt;DualRealTensorValue&gt; &amp; _ad_second_zero;
+  const MooseArray&lt;ADRealTensorValue&gt; &amp; _ad_second_zero;
   /// Zero second derivative of a test function
   const VariablePhiSecond &amp; _second_phi_zero;
   /// Zero value of a vector variable
@@ -1117,7 +1073,6 @@ public:
    * @param var_name the name of the variable for which to retrieve a default value
    * @return VariableValue * a pointer to the associated VarirableValue.
    */
-  template &lt;ComputeStage compute_stage&gt;
   ADVariableValue * getADDefaultValue(const std::string &amp; var_name);
 
   /**
@@ -1126,7 +1081,6 @@ public:
    * @param var_name the name of the vector variable for which to retrieve a default value
    * @return VariableVectorValue * a pointer to the associated VarirableVectorValue.
    */
-  template &lt;ComputeStage compute_stage&gt;
   ADVectorVariableValue * getADDefaultVectorValue(const std::string &amp; var_name);
 
   /**
@@ -1135,7 +1089,6 @@ public:
    * @param var_name the name of the variable for which to retrieve a default gradient
    * @return VariableGradient * a pointer to the associated VariableGradient.
    */
-  template &lt;ComputeStage compute_stage&gt;
   ADVariableGradient &amp; getADDefaultGradient();
 
   /**
@@ -1144,7 +1097,6 @@ public:
    * @param var_name the name of the vector variable for which to retrieve a default gradient
    * @return VariableGradient * a pointer to the associated VectorVariableGradient.
    */
-  template &lt;ComputeStage compute_stage&gt;
   ADVectorVariableGradient &amp; getADDefaultVectorGradient();
 
   /**
@@ -1153,7 +1105,6 @@ public:
    * @param var_name the name of the variable for which to retrieve a default second derivative
    * @return VariableSecond * a pointer to the associated VariableSecond.
    */
-  template &lt;ComputeStage compute_stage&gt;
   ADVariableSecond &amp; getADDefaultSecond();
 
 private:
@@ -1203,233 +1154,4 @@ private:
 private:
   const MooseObject * _obj;
 };
-
-template &lt;ComputeStage compute_stage&gt;
-const ADVariableValue &amp;
-Coupleable::adCoupledValueTemplate(const std::string &amp; var_name, unsigned int comp)
-{
-  MooseVariable * var = getVar(var_name, comp);
-  if (!var)
-    return *getADDefaultValue&lt;compute_stage&gt;(var_name);
-  checkFuncType(var_name, VarType::Ignore, FuncAge::Curr);
-
-  if (_c_nodal)
-    mooseError(&quot;Not implemented&quot;);
-  if (!_c_is_implicit)
-    mooseError(&quot;Not implemented&quot;);
-
-  if (!_coupleable_neighbor)
-    return var-&gt;adSln&lt;compute_stage&gt;();
-  return var-&gt;adSlnNeighbor&lt;compute_stage&gt;();
-}
-
-template &lt;ComputeStage compute_stage&gt;
-const ADVariableGradient &amp;
-Coupleable::adCoupledGradientTemplate(const std::string &amp; var_name, unsigned int comp)
-{
-  MooseVariable * var = getVar(var_name, comp);
-  if (!var)
-    return getADDefaultGradient&lt;compute_stage&gt;();
-  checkFuncType(var_name, VarType::Gradient, FuncAge::Curr);
-
-  if (!_c_is_implicit)
-    mooseError(&quot;Not implemented&quot;);
-
-  if (!_coupleable_neighbor)
-    return var-&gt;adGradSln&lt;compute_stage&gt;();
-  return var-&gt;adGradSlnNeighbor&lt;compute_stage&gt;();
-}
-
-template &lt;ComputeStage compute_stage&gt;
-const ADVariableSecond &amp;
-Coupleable::adCoupledSecondTemplate(const std::string &amp; var_name, unsigned int comp)
-{
-  MooseVariable * var = getVar(var_name, comp);
-  if (!var)
-    return getADDefaultSecond&lt;compute_stage&gt;();
-  checkFuncType(var_name, VarType::Gradient, FuncAge::Curr);
-
-  if (!_c_is_implicit)
-    mooseError(&quot;Not implemented&quot;);
-
-  if (!_coupleable_neighbor)
-    return var-&gt;adSecondSln&lt;compute_stage&gt;();
-  else
-    return var-&gt;adSecondSlnNeighbor&lt;compute_stage&gt;();
-}
-
-template &lt;ComputeStage compute_stage&gt;
-const ADVectorVariableSecond &amp;
-adCoupledVectorSecondTemplate(const std::string &amp; /*var_name*/, unsigned int /*comp = 0*/)
-{
-  mooseError(
-      &quot;Automatic differentiation using second derivatives of vector variables is not implemented.&quot;);
-}
-
-template &lt;ComputeStage compute_stage&gt;
-const ADVariableValue &amp;
-Coupleable::adCoupledDotTemplate(const std::string &amp; var_name, unsigned int comp)
-{
-  MooseVariable * var = getVar(var_name, comp);
-  if (!var)
-    return *getADDefaultValue&lt;compute_stage&gt;(var_name);
-  checkFuncType(var_name, VarType::Dot, FuncAge::Curr);
-
-  if (_c_nodal)
-    mooseError(&quot;Not implemented&quot;);
-
-  if (!_coupleable_neighbor)
-    return var-&gt;adUDot&lt;compute_stage&gt;();
-  return var-&gt;adUDotNeighbor&lt;compute_stage&gt;();
-}
-
-template &lt;ComputeStage compute_stage&gt;
-const ADVectorVariableValue &amp;
-Coupleable::adCoupledVectorDotTemplate(const std::string &amp; var_name, unsigned int comp)
-{
-  VectorMooseVariable * var = getVectorVar(var_name, comp);
-  if (!var)
-    return *getADDefaultVectorValue&lt;compute_stage&gt;(var_name);
-  checkFuncType(var_name, VarType::Dot, FuncAge::Curr);
-
-  if (_c_nodal)
-    mooseError(&quot;Not implemented&quot;);
-
-  if (!_coupleable_neighbor)
-    return var-&gt;adUDot&lt;compute_stage&gt;();
-  return var-&gt;adUDotNeighbor&lt;compute_stage&gt;();
-}
-
-template &lt;ComputeStage compute_stage&gt;
-const ADVectorVariableValue &amp;
-Coupleable::adCoupledVectorValueTemplate(const std::string &amp; var_name, unsigned int comp)
-{
-  VectorMooseVariable * var = getVectorVar(var_name, comp);
-  if (!var)
-    return *getADDefaultVectorValue&lt;compute_stage&gt;(var_name);
-  checkFuncType(var_name, VarType::Ignore, FuncAge::Curr);
-
-  if (_c_nodal)
-    mooseError(&quot;Not implemented&quot;);
-  if (!_c_is_implicit)
-    mooseError(&quot;Not implemented&quot;);
-
-  if (!_coupleable_neighbor)
-    return var-&gt;adSln&lt;compute_stage&gt;();
-  return var-&gt;adSlnNeighbor&lt;compute_stage&gt;();
-}
-
-template &lt;ComputeStage compute_stage&gt;
-const ADVectorVariableGradient &amp;
-Coupleable::adCoupledVectorGradientTemplate(const std::string &amp; var_name, unsigned int comp)
-{
-  VectorMooseVariable * var = getVectorVar(var_name, comp);
-  if (!var)
-    return getADDefaultVectorGradient&lt;compute_stage&gt;();
-  checkFuncType(var_name, VarType::Gradient, FuncAge::Curr);
-
-  if (!_c_is_implicit)
-    mooseError(&quot;Not implemented&quot;);
-
-  if (!_coupleable_neighbor)
-    return var-&gt;adGradSln&lt;compute_stage&gt;();
-  return var-&gt;adGradSlnNeighbor&lt;compute_stage&gt;();
-}
-
-template &lt;ComputeStage compute_stage&gt;
-ADVariableValue *
-Coupleable::getADDefaultValue(const std::string &amp; var_name)
-{
-  auto default_value_it = _ad_default_value.find(var_name);
-  if (default_value_it == _ad_default_value.end())
-  {
-    auto value = libmesh_make_unique&lt;ADVariableValue&gt;(_coupleable_max_qps,
-                                                      _c_parameters.defaultCoupledValue(var_name));
-    default_value_it = _ad_default_value.insert(std::make_pair(var_name, std::move(value))).first;
-  }
-
-  return default_value_it-&gt;second.get();
-}
-
-template &lt;&gt;
-VariableValue * Coupleable::getADDefaultValue&lt;RESIDUAL&gt;(const std::string &amp; var_name);
-
-template &lt;ComputeStage compute_stage&gt;
-ADVectorVariableValue *
-Coupleable::getADDefaultVectorValue(const std::string &amp; var_name)
-{
-  auto default_value_it = _ad_default_vector_value.find(var_name);
-  if (default_value_it == _ad_default_vector_value.end())
-  {
-    RealVectorValue default_vec;
-    for (unsigned int i = 0; i &lt; _c_parameters.numberDefaultCoupledValues(var_name); ++i)
-      default_vec(i) = _c_parameters.defaultCoupledValue(var_name, i);
-    auto value = libmesh_make_unique&lt;ADVectorVariableValue&gt;(_coupleable_max_qps, default_vec);
-    default_value_it =
-        _ad_default_vector_value.insert(std::make_pair(var_name, std::move(value))).first;
-  }
-
-  return default_value_it-&gt;second.get();
-}
-
-template &lt;&gt;
-VectorVariableValue * Coupleable::getADDefaultVectorValue&lt;RESIDUAL&gt;(const std::string &amp; var_name);
-
-template &lt;ComputeStage compute_stage&gt;
-ADVariableGradient &amp;
-Coupleable::getADDefaultGradient()
-{
-  return _ad_default_gradient;
-}
-
-template &lt;&gt;
-VariableGradient &amp; Coupleable::getADDefaultGradient&lt;RESIDUAL&gt;();
-
-template &lt;ComputeStage compute_stage&gt;
-ADVectorVariableGradient &amp;
-Coupleable::getADDefaultVectorGradient()
-{
-  return _ad_default_vector_gradient;
-}
-
-template &lt;&gt;
-VectorVariableGradient &amp; Coupleable::getADDefaultVectorGradient&lt;RESIDUAL&gt;();
-
-template &lt;ComputeStage compute_stage&gt;
-ADVariableSecond &amp;
-Coupleable::getADDefaultSecond()
-{
-  return _ad_default_second;
-}
-
-template &lt;&gt;
-VariableSecond &amp; Coupleable::getADDefaultSecond&lt;RESIDUAL&gt;();
-
-template &lt;ComputeStage compute_stage&gt;
-const ADVariableValue &amp;
-Coupleable::adZeroValueTemplate()
-{
-  return _ad_zero;
-}
-
-template &lt;ComputeStage compute_stage&gt;
-const ADVariableGradient &amp;
-Coupleable::adZeroGradientTemplate()
-{
-  return _ad_grad_zero;
-}
-
-template &lt;ComputeStage compute_stage&gt;
-const ADVariableSecond &amp;
-Coupleable::adZeroSecondTemplate()
-{
-  return _ad_second_zero;
-}
-
-template &lt;&gt;
-const VariableValue &amp; Coupleable::adZeroValueTemplate&lt;RESIDUAL&gt;();
-template &lt;&gt;
-const VariableGradient &amp; Coupleable::adZeroGradientTemplate&lt;RESIDUAL&gt;();
-template &lt;&gt;
-const VariableSecond &amp; Coupleable::adZeroSecondTemplate&lt;RESIDUAL&gt;();
-</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div></section></section></div><div class="col hide-on-med-and-down l2"><div class="toc-wrapper pin-top"><ul class="section table-of-contents"><li><a href="#34958bf9-cfc0-44a7-bbdf-ec4eecbecf37" class="tooltipped" data-position="left" data-tooltip="Optional Coupling">Optional Coupling</a></li><li><a href="#bf3444e3-4b08-43fa-bd0c-fd5ec91986df" class="tooltipped" data-position="left" data-tooltip="Coupling of Vectors of Variables">Coupling of Vectors of Variables</a></li><li><a href="#b658a124-0109-47ce-bacc-bd4abe77b0c2" class="tooltipped" data-position="left" data-tooltip="Defaults for Coupling of Vectors of Variables">Defaults for Coupling of Vectors of Variables</a></li><li><a href="#a68af87b-4226-4126-966b-77e2e55bf9b3" class="tooltipped" data-position="left" data-tooltip="Coupled Solution DOFs">Coupled Solution DOFs</a></li></ul></div></div></div></div></main></div></body><script type="text/javascript" src="../../contrib/materialize/materialize.min.js"></script><script type="text/javascript" src="../../contrib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="../../contrib/prism/prism.min.js"></script><script type="text/javascript" src="../../js/init.js"></script><script type="text/javascript" src="../../js/navigation.js"></script><script type="text/javascript" src="../../contrib/fuse/fuse.min.js"></script><script type="text/javascript" src="../../js/search_index.js"></script><script type="text/javascript" src="../../js/sqa_moose.js"></script>
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div></section></section></div><div class="col hide-on-med-and-down l2"><div class="toc-wrapper pin-top"><ul class="section table-of-contents"><li><a href="#09e0413f-bd9d-4efd-b756-af1abc7ff215" class="tooltipped" data-position="left" data-tooltip="Optional Coupling">Optional Coupling</a></li><li><a href="#c241ec87-38dd-43cc-8416-16e4a7e8464a" class="tooltipped" data-position="left" data-tooltip="Coupling of Vectors of Variables">Coupling of Vectors of Variables</a></li><li><a href="#6e46f4a7-37ea-474a-9d00-1befd2899b34" class="tooltipped" data-position="left" data-tooltip="Defaults for Coupling of Vectors of Variables">Defaults for Coupling of Vectors of Variables</a></li><li><a href="#ff583264-e6b0-49a9-a72f-71ef2689dbdf" class="tooltipped" data-position="left" data-tooltip="Coupled Solution DOFs">Coupled Solution DOFs</a></li></ul></div></div></div></div></main></div></body><script type="text/javascript" src="../../contrib/materialize/materialize.min.js"></script><script type="text/javascript" src="../../contrib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="../../contrib/prism/prism.min.js"></script><script type="text/javascript" src="../../js/init.js"></script><script type="text/javascript" src="../../js/navigation.js"></script><script type="text/javascript" src="../../contrib/fuse/fuse.min.js"></script><script type="text/javascript" src="../../js/search_index.js"></script><script type="text/javascript" src="../../js/sqa_moose.js"></script>

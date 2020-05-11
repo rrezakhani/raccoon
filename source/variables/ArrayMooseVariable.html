@@ -1,4 +1,4 @@
-<!DOCTYPE html><head><meta charset="UTF-8"><link rel="icon" type="image/x-icon" href="../../media/raccoon_icon.png" sizes="16x16 32x32 64x64 128x128"></link><link href="../../contrib/materialize/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"></link><link href="../../contrib/prism/prism.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/alert_moose.css" type="text/css" rel="stylesheet"></link><link href="../../contrib/katex/katex.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/katex_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/content_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/sqa_moose.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../../contrib/jquery/jquery.min.js"></script><script type="text/javascript" src="../../contrib/katex/katex.min.js"></script><script type="text/javascript" src="../../contrib/plotly/plotly.min.js"></script><title>ArrayMooseVariable|RACCOON</title></head><body><div class="page-wrap"><header><nav><div class="nav-wrapper container"><a href="https://hugary1995.github.io/raccoon/index.html" class="left moose-logo hide-on-med-and-down">RACCOON</a><a href="https://github.com/hugary1995/raccoon" class="right"><img src="../../media/framework/github-logo.png" class="github-mark"></img><img src="../../media/framework/github-mark.png" class="github-logo"></img></a><ul class="right hide-on-med-and-down"><li><a href="../../install/index.html">Install</a></li><li class="moose-mega-menu-trigger" data-target="6c34ce2e-a0e6-4019-85d9-e6968ef1edc2"><a>Benchmarks<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../theory/index.html">Theory</a></li><li><a href="../../modules/index.html">Modules</a></li><li><a href="../../syntax/index.html">Syntax</a></li></ul><a href="#" class="sidenav-trigger" data-target="13c40a32-d884-41fd-82ae-5a9c49ae0d47"><i class="material-icons">menu</i></a><ul class="sidenav" id="13c40a32-d884-41fd-82ae-5a9c49ae0d47"><li><a href="../../install/index.html">Install</a></li><li><a href="../../benchmarks.menu.html">Benchmarks</a></li><li><a href="../../theory/index.html">Theory</a></li><li><a href="../../modules/index.html">Modules</a></li><li><a href="../../syntax/index.html">Syntax</a></li></ul><a href="#moose-search" class="modal-trigger"><i class="material-icons">search</i></a></div></nav><div class="moose-mega-menu-content" id="6c34ce2e-a0e6-4019-85d9-e6968ef1edc2"><div class="moose-mega-menu-wrapper"><div class="row row"><div class="col s12 m6 l4"><h2 id="mode-i-crack-propagation"><a href="../../benchmarks/mode1.html">Mode I crack propagation <i class="material-icons moose-inline-icon">link</i></a></h2><img src="../../media/mode1.gif" class="materialboxed moose-image" style="width:75%;float:left;padding-top:2.5%;"></img><p></p></div><div class="col s12 m6 l4"><h2 id="mode-ii-crack-propagation"><a href="../../benchmarks/mode2.html">Mode II crack propagation <i class="material-icons moose-inline-icon">link</i></a></h2><img src="../../media/mode2.gif" class="materialboxed moose-image" style="width:75%;float:left;padding-top:2.5%;"></img><p></p></div><div class="col s12 m6 l4"><h2 id="soil-desiccation"><a href="../../benchmarks/mud.html">Soil desiccation <i class="material-icons moose-inline-icon">link</i></a></h2><img src="../../media/soil.gif" class="materialboxed moose-image" style="width:75%;float:left;padding-top:2.5%;"></img><p></p></div></div></div></div><div class="modal modal-fixed-footer moose-search-modal" id="moose-search"><div class="modal-content container moose-search-modal-content"><div class="row"><div class="col l12"><div class="input-field"><input type_="text" onkeyup="mooseSearch()" placeholder="https://hugary1995.github.io/raccoon/index.html" id="moose-search-box"></input></div></div><div><div class="col s12" id="moose-search-results"></div></div></div></div><div class="modal-footer"><a href="#!" class="modal-close btn-flat">Close</a></div></div></header><main class="main"><div class="container"><div class="row"><div class="col hide-on-med-and-down l12"><nav class="breadcrumb-nav"><div class="nav-wrapper"><a href=".." class="breadcrumb">source</a><span class="breadcrumb">variables</span><a href="#" class="breadcrumb">ArrayMooseVariable</a></div></nav></div></div><div class="row"><div class="moose-content col s12 m12 l10"><section id="9fe7f8a8-9591-4bfb-92b6-c0d5d95b8318" data-section-level="1" data-section-text="ArrayMooseVariable"><h1 id="arraymoosevariable">ArrayMooseVariable</h1><p>Used for grouping standard field variables with the same finite element family and order</p><p>An array variable is define as a set of standard field variables with the same finite element family and order. Each standard variable of an array variable is referred to as a component of the array variable. An array kernel is a MOOSE kernel operating on an array variable and assembles the residuals and Jacobians for all the components of the array variable. A sample array kernel can be found at <a href="../kernels/ArrayDiffusion.html">ArrayDiffusion</a>. The purpose of having array kernels is to reduce the number of kernels when the number of components of an array variable is large (potentially hundreds or thousands) and to avoid duplicated operations otherwise with lots of standard kernels. Array kernel can be useful for radiation transport where an extra independent direction variable can result into large number of standard variables. Similarly as array kernel, we have array initial conditions, array boundary conditions, array DG kernels, array interface kernels, array constraints, etc.</p><p>The design:</p><ul class="browser-default"><li><p>to use variable groups in <a href="http://libmesh.github.io/">libMesh</a> to group components in an array variable together. </p></li><li><p>to use template to avoid code duplication with standard and vector variables. </p></li><li><p>to use <a href="https://eigen.tuxfamily.org/dox/group__QuickRefPage.html">Eigen</a>::Matrix to hold local dofs, solutions on quadrature points for an array variable to ease the local operations. </p></li><li><p>to use dense matrices or vectors as standard or vector variables with proper sizes for holding the local Jacobians and residuals that are to be assembled into a global Jacobian matrix and a global residual vector.</p></li></ul><p>The following map is useful for understanding the template:</p><div form="['left', 'left', 'left']" recursive="True" class="moose-table-div"><table><thead><tr><th style=";text-align:left">OutputType</th><th style=";text-align:left">OutputShape</th><th style=";text-align:left">OutputData</th></tr></thead><tbody><tr><td style=";text-align:left">Real</td><td style=";text-align:left">Real</td><td style=";text-align:left">Real</td></tr></tbody><tbody><tr><td style=";text-align:left">RealVectorValue</td><td style=";text-align:left">RealVectorValue</td><td style=";text-align:left">Real</td></tr></tbody><tbody><tr><td style=";text-align:left">RealEigenVector</td><td style=";text-align:left">Real</td><td style=";text-align:left">RealEigenVector</td></tr></tbody></table></div><p>The three rows correspond to standard, vector and array variables. OutputType is the data type used for templating. RealEigenVector is a typedef in <a href="#6f77ed99-d4f2-4485-80cd-5884cefa98a7" class="modal-trigger">MooseTypes.h</a> as <em>Eigen::Matrix&lt;Real, Eigen::Dynamic, 1&gt;</em>. OutputShape is for the type of shape functions and OutputData is the type of basis function expansion coefficients that are stored in the moose array variable grabbed from the solution vector.</p><div class="modal moose-modal" id="6f77ed99-d4f2-4485-80cd-5884cefa98a7"><div class="modal-content"><h4>/home/travis/build/hugary1995/moose/framework/include/utils/MooseTypes.h</h4><pre class="moose-pre"><code class="language-cpp">// This file is part of the MOOSE framework
+<!DOCTYPE html><head><meta charset="UTF-8"><title>ArrayMooseVariable.md|RACCOON</title><link rel="icon" type="image/x-icon" href="../../media/raccoon_icon.png" sizes="16x16 32x32 64x64 128x128"></link><link href="../../contrib/materialize/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"></link><link href="../../contrib/prism/prism.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/alert_moose.css" type="text/css" rel="stylesheet"></link><link href="../../contrib/katex/katex.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/katex_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/content_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/sqa_moose.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../../contrib/jquery/jquery.min.js"></script><script type="text/javascript" src="../../contrib/katex/katex.min.js"></script><script type="text/javascript" src="../../contrib/plotly/plotly.min.js"></script></head><body><div class="page-wrap"><header><nav><div class="nav-wrapper container"><a href="https://hugary1995.github.io/raccoon/index.html" class="left moose-logo hide-on-med-and-down">RACCOON</a><a href="https://github.com/hugary1995/raccoon" class="right"><img src="../../media/framework/github-logo.png" class="github-mark"></img><img src="../../media/framework/github-mark.png" class="github-logo"></img></a><ul class="right hide-on-med-and-down"><li><a href="../../install/index.html">Install</a></li><li class="moose-mega-menu-trigger" data-target="0694aa2d-57bc-4a00-817b-d00cb3c931ce"><a>Benchmarks<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../theory/index.html">Theory</a></li><li><a href="../../modules/index.html">Modules</a></li><li><a href="../../syntax/index.html">Syntax</a></li></ul><a href="#" class="sidenav-trigger" data-target="d870ca8c-c1b3-4461-94e2-5990793cb206"><i class="material-icons">menu</i></a><ul class="sidenav" id="d870ca8c-c1b3-4461-94e2-5990793cb206"><li><a href="../../install/index.html">Install</a></li><li><a href="../../benchmarks.menu.html">Benchmarks</a></li><li><a href="../../theory/index.html">Theory</a></li><li><a href="../../modules/index.html">Modules</a></li><li><a href="../../syntax/index.html">Syntax</a></li></ul><a href="#moose-search" class="modal-trigger"><i class="material-icons">search</i></a></div></nav><div class="moose-mega-menu-content" id="0694aa2d-57bc-4a00-817b-d00cb3c931ce"><div class="moose-mega-menu-wrapper"><div class="row row"><div class="col s12 m6 l4"><h2 id="mode-i-crack-propagation"><a href="../../benchmarks/mode1.html">Mode I crack propagation <i class="material-icons moose-inline-icon">link</i></a></h2><img src="../../media/mode1.gif" class="materialboxed moose-image" style="width:75%;float:left;padding-top:2.5%;"></img><p></p></div><div class="col s12 m6 l4"><h2 id="mode-ii-crack-propagation"><a href="../../benchmarks/mode2.html">Mode II crack propagation <i class="material-icons moose-inline-icon">link</i></a></h2><img src="../../media/mode2.gif" class="materialboxed moose-image" style="width:75%;float:left;padding-top:2.5%;"></img><p></p></div><div class="col s12 m6 l4"><h2 id="soil-desiccation"><a href="../../benchmarks/mud.html">Soil desiccation <i class="material-icons moose-inline-icon">link</i></a></h2><img src="../../media/soil.gif" class="materialboxed moose-image" style="width:75%;float:left;padding-top:2.5%;"></img><p></p></div></div></div></div><div class="modal modal-fixed-footer moose-search-modal" id="moose-search"><div class="modal-content container moose-search-modal-content"><div class="row"><div class="col l12"><div class="input-field"><input type_="text" onkeyup="mooseSearch()" placeholder="https://hugary1995.github.io/raccoon/index.html" id="moose-search-box"></input></div></div><div><div class="col s12" id="moose-search-results"></div></div></div></div><div class="modal-footer"><a href="#!" class="modal-close btn-flat">Close</a></div></div></header><main class="main"><div class="container"><div class="row"><div class="col hide-on-med-and-down l12"><nav class="breadcrumb-nav"><div class="nav-wrapper"><a href=".." class="breadcrumb">source</a><span class="breadcrumb">variables</span><a href="#" class="breadcrumb">ArrayMooseVariable</a></div></nav></div></div><div class="row"><div class="moose-content col s12 m12 l10"><section id="2ff8315e-a811-4dd2-8e17-d3009dbdfbdc" data-section-level="1" data-section-text="ArrayMooseVariable"><h1 id="arraymoosevariable">ArrayMooseVariable</h1><p>Used for grouping standard field variables with the same finite element family and order</p><p>An array variable is define as a set of standard field variables with the same finite element family and order. Each standard variable of an array variable is referred to as a component of the array variable. An array kernel is a MOOSE kernel operating on an array variable and assembles the residuals and Jacobians for all the components of the array variable. A sample array kernel can be found at <a href="../kernels/ArrayDiffusion.html">ArrayDiffusion</a>. The purpose of having array kernels is to reduce the number of kernels when the number of components of an array variable is large (potentially hundreds or thousands) and to avoid duplicated operations otherwise with lots of standard kernels. Array kernel can be useful for radiation transport where an extra independent direction variable can result into large number of standard variables. Similarly as array kernel, we have array initial conditions, array boundary conditions, array DG kernels, array interface kernels, array constraints, etc.</p><p>The design:</p><ul class="browser-default"><li><p>to use variable groups in <a href="http://libmesh.github.io/">libMesh</a> to group components in an array variable together. </p></li><li><p>to use template to avoid code duplication with standard and vector variables. </p></li><li><p>to use <a href="https://eigen.tuxfamily.org/dox/group__QuickRefPage.html">Eigen</a>::Matrix to hold local dofs, solutions on quadrature points for an array variable to ease the local operations. </p></li><li><p>to use dense matrices or vectors as standard or vector variables with proper sizes for holding the local Jacobians and residuals that are to be assembled into a global Jacobian matrix and a global residual vector.</p></li></ul><p>The following map is useful for understanding the template:</p><div form="['left', 'left', 'left']" recursive="True" class="moose-table-div"><table><thead><tr><th style=";text-align:left">OutputType</th><th style=";text-align:left">OutputShape</th><th style=";text-align:left">OutputData</th></tr></thead><tbody><tr><td style=";text-align:left">Real</td><td style=";text-align:left">Real</td><td style=";text-align:left">Real</td></tr></tbody><tbody><tr><td style=";text-align:left">RealVectorValue</td><td style=";text-align:left">RealVectorValue</td><td style=";text-align:left">Real</td></tr></tbody><tbody><tr><td style=";text-align:left">RealEigenVector</td><td style=";text-align:left">Real</td><td style=";text-align:left">RealEigenVector</td></tr></tbody></table></div><p>The three rows correspond to standard, vector and array variables. OutputType is the data type used for templating. RealEigenVector is a typedef in <a href="#fa413cbf-8e24-4e5b-b5b1-28fb65262c93" class="modal-trigger">MooseTypes.h</a> as <em>Eigen::Matrix&lt;Real, Eigen::Dynamic, 1&gt;</em>. OutputShape is for the type of shape functions and OutputData is the type of basis function expansion coefficients that are stored in the moose array variable grabbed from the solution vector.</p><div class="modal moose-modal" id="fa413cbf-8e24-4e5b-b5b1-28fb65262c93"><div class="modal-content"><h4>/home/travis/build/hugary1995/moose/framework/include/utils/MooseTypes.h</h4><pre class="moose-pre"><code class="language-cpp">// This file is part of the MOOSE framework
 // https://www.mooseframework.org
 //
 // All rights reserved, see COPYRIGHT for full restrictions
@@ -10,7 +10,7 @@
 #pragma once
 
 #include &quot;Moose.h&quot;
-#include &quot;DualReal.h&quot;
+#include &quot;ADReal.h&quot;
 
 #include &quot;libmesh/libmesh.h&quot;
 #include &quot;libmesh/id_types.h&quot;
@@ -121,7 +121,7 @@ typedef RankFourTensorTempl&lt;DualReal&gt; DualRankFourTensor;
 template &lt;typename&gt;
 class MaterialProperty;
 template &lt;typename&gt;
-class ADMaterialPropertyObject;
+class ADMaterialProperty;
 class InputParameters;
 
 namespace libMesh
@@ -144,6 +144,10 @@ class TypeTensor;
 template &lt;unsigned int, typename&gt;
 class TypeNTensor;
 class Point;
+template &lt;typename&gt;
+class DenseMatrix;
+template &lt;typename&gt;
+class DenseVector;
 
 namespace TensorTools
 {
@@ -168,17 +172,7 @@ struct DecrementRank&lt;Eigen::Matrix&lt;Real, Eigen::Dynamic, LIBMESH_DIM&gt;&g
 }
 
 /**
- * Convenience macros for automatic dual/non-dual typing
- */
-#define ADReal typename Moose::RealType&lt;compute_stage&gt;::type
-#define ADRealVectorValue typename RealVectorValueType&lt;compute_stage&gt;::type
-#define ADPoint typename PointType&lt;compute_stage&gt;::type
-#define ADRealTensorValue typename RealTensorValueType&lt;compute_stage&gt;::type
-#define ADRankTwoTensor typename RankTwoTensorType&lt;compute_stage&gt;::type
-#define ADRankFourTensor typename RankFourTensorType&lt;compute_stage&gt;::type
-
-/**
- * MOOSE typedefs
+ * various MOOSE typedefs
  */
 typedef Real PostprocessorValue;
 typedef std::vector&lt;Real&gt; VectorPostprocessorValue;
@@ -190,47 +184,43 @@ typedef unsigned int MooseObjectID;
 typedef unsigned int THREAD_ID;
 typedef unsigned int TagID;
 typedef unsigned int PerfID;
+using RestartableDataMapName = std::string; // see MooseApp.h
 
-typedef StoredRange&lt;std::vector&lt;dof_id_type&gt;::iterator, dof_id_type&gt; NodeIdRange;
-typedef StoredRange&lt;std::vector&lt;const Elem *&gt;::iterator, const Elem *&gt; ConstElemPointerRange;
-
-enum ComputeStage
-{
-  RESIDUAL,
-  JACOBIAN
-};
-
-namespace Moose
-{
-template &lt;ComputeStage compute_stage&gt;
-struct RealType
+template &lt;bool is_ad&gt;
+struct GenericRealStruct
 {
   typedef Real type;
 };
 template &lt;&gt;
-struct RealType&lt;JACOBIAN&gt;
+struct GenericRealStruct&lt;true&gt;
 {
-  typedef DualReal type;
+  typedef ADReal type;
 };
+template &lt;bool is_ad&gt;
+using GenericReal = typename GenericRealStruct&lt;is_ad&gt;::type;
 
-template &lt;typename T, ComputeStage compute_stage&gt;
-struct ValueType
+typedef StoredRange&lt;std::vector&lt;dof_id_type&gt;::iterator, dof_id_type&gt; NodeIdRange;
+typedef StoredRange&lt;std::vector&lt;const Elem *&gt;::iterator, const Elem *&gt; ConstElemPointerRange;
+
+namespace Moose
 {
-  typedef typename RealType&lt;compute_stage&gt;::type type;
-};
-
-template &lt;ComputeStage compute_stage&gt;
-struct ValueType&lt;Real, compute_stage&gt;
+template &lt;typename T&gt;
+struct ADType;
+template &lt;&gt;
+struct ADType&lt;Real&gt;
 {
-  typedef typename RealType&lt;compute_stage&gt;::type type;
+  typedef ADReal type;
 };
-
-template &lt;ComputeStage compute_stage, template &lt;typename&gt; class W&gt;
-struct ValueType&lt;W&lt;Real&gt;, compute_stage&gt;
+template &lt;template &lt;typename&gt; class W&gt;
+struct ADType&lt;W&lt;Real&gt;&gt;
 {
-  typedef W&lt;typename RealType&lt;compute_stage&gt;::type&gt; type;
+  typedef W&lt;ADReal&gt; type;
 };
-
+template &lt;&gt;
+struct ADType&lt;RealEigenVector&gt;
+{
+  typedef RealEigenVector type;
+};
 template &lt;typename OutputType&gt;
 struct ShapeType
 {
@@ -333,129 +323,38 @@ typedef typename OutputTools&lt;RealEigenVector&gt;::VariableTestGradient ArrayV
 typedef typename OutputTools&lt;RealEigenVector&gt;::VariableTestSecond ArrayVariableTestSecond;
 typedef typename OutputTools&lt;RealEigenVector&gt;::VariableTestCurl ArrayVariableTestCurl;
 
-template &lt;template &lt;class&gt; class W&gt;
-using TemplateDN = W&lt;DualReal&gt;;
+/**
+ * AD typedefs
+ */
+typedef libMesh::VectorValue&lt;ADReal&gt; ADRealVectorValue;
+typedef ADRealVectorValue ADRealGradient;
+typedef libMesh::VectorValue&lt;ADReal&gt; ADPoint;
+typedef libMesh::TensorValue&lt;ADReal&gt; ADRealTensorValue;
+typedef libMesh::DenseMatrix&lt;ADReal&gt; ADDenseMatrix;
+typedef libMesh::DenseVector&lt;ADReal&gt; ADDenseVector;
+typedef MooseArray&lt;ADReal&gt; ADVariableValue;
+typedef MooseArray&lt;ADRealVectorValue&gt; ADVariableGradient;
+typedef MooseArray&lt;ADRealTensorValue&gt; ADVariableSecond;
+typedef MooseArray&lt;ADRealVectorValue&gt; ADVectorVariableValue;
+typedef MooseArray&lt;ADRealTensorValue&gt; ADVectorVariableGradient;
+typedef MooseArray&lt;libMesh::TypeNTensor&lt;3, DualReal&gt;&gt; ADVectorVariableSecond;
 
-typedef TemplateDN&lt;VectorValue&gt; DualRealVectorValue;
-typedef TemplateDN&lt;TensorValue&gt; DualRealTensorValue;
+/**
+ * some AD typedefs for backwards compatability
+ */
+typedef ADRealVectorValue DualRealVectorValue;
+typedef ADRealTensorValue DualRealTensorValue;
+typedef ADRealGradient DualRealGradient;
 
-typedef DualRealVectorValue DualRealGradient;
-typedef DualRealTensorValue ADRealTensor;
-
-template &lt;typename T, ComputeStage compute_stage&gt;
-struct VariableValueType
-{
-  typedef
-      typename OutputTools&lt;typename Moose::ValueType&lt;T, compute_stage&gt;::type&gt;::VariableValue type;
-};
-typedef typename VariableValueType&lt;Real, ComputeStage::JACOBIAN&gt;::type DualVariableValue;
-
-template &lt;typename T, ComputeStage compute_stage&gt;
-struct VariableGradientType
-{
-  typedef typename OutputTools&lt;typename Moose::ValueType&lt;T, compute_stage&gt;::type&gt;::VariableGradient
-      type;
-};
-template &lt;typename T, ComputeStage compute_stage&gt;
-struct VariableTestGradientType
-{
-  typedef
-      typename OutputTools&lt;typename Moose::ValueType&lt;T, compute_stage&gt;::type&gt;::VariableTestGradient
-          type;
-};
-template &lt;typename T, ComputeStage compute_stage&gt;
-struct VariableSecondType
-{
-  typedef
-      typename OutputTools&lt;typename Moose::ValueType&lt;T, compute_stage&gt;::type&gt;::VariableSecond type;
-};
-template &lt;typename T, ComputeStage compute_stage&gt;
-struct VariablePhiGradientType
-{
-  typedef
-      typename OutputTools&lt;typename Moose::ValueType&lt;T, compute_stage&gt;::type&gt;::VariablePhiGradient
-          type;
-};
-
-template &lt;ComputeStage compute_stage&gt;
-struct RealVectorValueType
-{
-  typedef RealVectorValue type;
-};
-template &lt;&gt;
-struct RealVectorValueType&lt;JACOBIAN&gt;
-{
-  typedef DualRealVectorValue type;
-};
-template &lt;ComputeStage compute_stage&gt;
-struct RealTensorValueType
-{
-  typedef RealTensorValue type;
-};
-template &lt;&gt;
-struct RealTensorValueType&lt;JACOBIAN&gt;
-{
-  typedef DualRealTensorValue type;
-};
-template &lt;ComputeStage compute_stage&gt;
-struct RankTwoTensorType
-{
-  typedef RankTwoTensor type;
-};
-template &lt;&gt;
-struct RankTwoTensorType&lt;JACOBIAN&gt;
-{
-  typedef DualRankTwoTensor type;
-};
-template &lt;ComputeStage compute_stage&gt;
-struct RankFourTensorType
-{
-  typedef RankFourTensor type;
-};
-template &lt;&gt;
-struct RankFourTensorType&lt;JACOBIAN&gt;
-{
-  typedef DualRankFourTensor type;
-};
-
-template &lt;typename mat_prop_type, ComputeStage compute_stage&gt;
-struct MaterialPropertyType
-{
-  typedef MaterialProperty&lt;mat_prop_type&gt; type;
-};
-template &lt;typename mat_prop_type&gt;
-struct MaterialPropertyType&lt;mat_prop_type, JACOBIAN&gt;
-{
-  typedef ADMaterialPropertyObject&lt;mat_prop_type&gt; type;
-};
-
-template &lt;ComputeStage compute_stage&gt;
-struct PointType
-{
-  typedef MooseArray&lt;Point&gt; type;
-};
-template &lt;&gt;
-struct PointType&lt;JACOBIAN&gt;
-{
-  typedef MooseArray&lt;VectorValue&lt;DualReal&gt;&gt; type;
-};
-
-#define ADVariableValue typename VariableValueType&lt;Real, compute_stage&gt;::type
-#define ADVariableGradient typename VariableGradientType&lt;Real, compute_stage&gt;::type
-#define ADVariableSecond typename VariableSecondType&lt;Real, compute_stage&gt;::type
-
-#define ADVectorVariableValue typename VariableValueType&lt;RealVectorValue, compute_stage&gt;::type
-#define ADVectorVariableGradient typename VariableGradientType&lt;RealVectorValue, compute_stage&gt;::type
-#define ADVectorVariableSecond typename VariableSecondType&lt;RealVectorValue, compute_stage&gt;::type
-
-#define ADTemplateVariableValue typename VariableValueType&lt;T, compute_stage&gt;::type
-#define ADTemplateVariableGradient typename VariableGradientType&lt;T, compute_stage&gt;::type
-#define ADTemplateVariableSecond typename VariableSecondType&lt;T, compute_stage&gt;::type
-
-#define ADTemplateVariablePhiGradient typename VariablePhiGradientType&lt;T, compute_stage&gt;::type
-#define ADVariablePhiGradient typename VariablePhiGradientType&lt;Real, compute_stage&gt;::type
-
-#define ADMaterialProperty(Type) typename MaterialPropertyType&lt;Type, compute_stage&gt;::type
+template &lt;typename T&gt;
+using ADTemplateVariableValue =
+    typename OutputTools&lt;typename Moose::ADType&lt;T&gt;::type&gt;::VariableValue;
+template &lt;typename T&gt;
+using ADTemplateVariableGradient =
+    typename OutputTools&lt;typename Moose::ADType&lt;T&gt;::type&gt;::VariableGradient;
+template &lt;typename T&gt;
+using ADTemplateVariableSecond =
+    typename OutputTools&lt;typename Moose::ADType&lt;T&gt;::type&gt;::VariableSecond;
 
 typedef VariableTestValue ADVariableTestValue;
 typedef VariableTestGradient ADVariableTestGradient;
@@ -463,28 +362,38 @@ typedef VariableTestSecond ADVariableTestSecond;
 typedef VectorVariableTestValue ADVectorVariableTestValue;
 typedef VectorVariableTestGradient ADVectorVariableTestGradient;
 typedef VectorVariableTestSecond ADVectorVariableTestSecond;
-#define ADTemplateVariableTestValue typename OutputTools&lt;T&gt;::VariableTestValue
-#define ADTemplateVariableTestSecond typename OutputTools&lt;T&gt;::VariableTestSecond
-#define ADTemplateVariablePhiValue typename OutputTools&lt;T&gt;::VariablePhiValue
+
+// We can  use the non-ad version for test values because these don&#x27;t depend on the mesh
+// displacements  (unless the location of the quadrature points depend on the mesh displacements...)
+template &lt;typename T&gt;
+using ADTemplateVariableTestValue = typename OutputTools&lt;T&gt;::VariableTestValue;
+template &lt;typename T&gt;
+using ADTemplateVariablePhiValue = typename OutputTools&lt;T&gt;::VariablePhiValue;
+
+// We need to use the AD version for test gradients and seconds because these *do* depend on the
+// mesh displacements
+template &lt;typename T&gt;
+using ADTemplateVariableTestGradient =
+    typename OutputTools&lt;typename Moose::ADType&lt;T&gt;::type&gt;::VariableTestGradient;
+template &lt;typename T&gt;
+using ADTemplateVariableTestSecond =
+    typename OutputTools&lt;typename Moose::ADType&lt;T&gt;::type&gt;::VariableTestSecond;
+template &lt;typename T&gt;
+using ADTemplateVariablePhiGradient =
+    typename OutputTools&lt;typename Moose::ADType&lt;T&gt;::type&gt;::VariablePhiGradient;
+using ADVariablePhiGradient = ADTemplateVariablePhiGradient&lt;Real&gt;;
 
 #define declareADValidParams(ADObjectType)                                                         \
   template &lt;&gt;                                                                                      \
-  InputParameters validParams&lt;ADObjectType&lt;RESIDUAL&gt;&gt;();                                           \
-  template &lt;&gt;                                                                                      \
-  InputParameters validParams&lt;ADObjectType&lt;JACOBIAN&gt;&gt;()
+  InputParameters validParams&lt;ADObjectType&gt;()
 
 #define defineADValidParams(ADObjectType, ADBaseObjectType, addedParamCode)                        \
   template &lt;&gt;                                                                                      \
-  InputParameters validParams&lt;ADObjectType&lt;RESIDUAL&gt;&gt;()                                            \
+  InputParameters validParams&lt;ADObjectType&gt;()                                                      \
   {                                                                                                \
-    InputParameters params = validParams&lt;ADBaseObjectType&lt;RESIDUAL&gt;&gt;();                            \
+    InputParameters params = validParams&lt;ADBaseObjectType&gt;();                                      \
     addedParamCode;                                                                                \
     return params;                                                                                 \
-  }                                                                                                \
-  template &lt;&gt;                                                                                      \
-  InputParameters validParams&lt;ADObjectType&lt;JACOBIAN&gt;&gt;()                                            \
-  {                                                                                                \
-    return validParams&lt;ADObjectType&lt;RESIDUAL&gt;&gt;();                                                  \
   }                                                                                                \
   void mooseClangFormatFunction()
 
@@ -498,44 +407,29 @@ typedef VectorVariableTestSecond ADVectorVariableTestSecond;
 
 #define defineADLegacyParams(ADObjectType)                                                         \
   template &lt;&gt;                                                                                      \
-  InputParameters validParams&lt;ADObjectType&lt;RESIDUAL&gt;&gt;()                                            \
+  InputParameters validParams&lt;ADObjectType&gt;()                                                      \
   {                                                                                                \
-    return ADObjectType&lt;RESIDUAL&gt;::validParams();                                                  \
-  }                                                                                                \
-  template &lt;&gt;                                                                                      \
-  InputParameters validParams&lt;ADObjectType&lt;JACOBIAN&gt;&gt;()                                            \
-  {                                                                                                \
-    return ADObjectType&lt;JACOBIAN&gt;::validParams();                                                  \
+    return ADObjectType::validParams();                                                            \
   }                                                                                                \
   void mooseClangFormatFunction()
 
 #define defineADBaseValidParams(ADObjectType, BaseObjectType, addedParamCode)                      \
   template &lt;&gt;                                                                                      \
-  InputParameters validParams&lt;ADObjectType&lt;RESIDUAL&gt;&gt;()                                            \
+  InputParameters validParams&lt;ADObjectType&gt;()                                                      \
   {                                                                                                \
     InputParameters params = validParams&lt;BaseObjectType&gt;();                                        \
     addedParamCode;                                                                                \
     return params;                                                                                 \
   }                                                                                                \
-  template &lt;&gt;                                                                                      \
-  InputParameters validParams&lt;ADObjectType&lt;JACOBIAN&gt;&gt;()                                            \
-  {                                                                                                \
-    return validParams&lt;ADObjectType&lt;RESIDUAL&gt;&gt;();                                                  \
-  }                                                                                                \
   void mooseClangFormatFunction()
 
 #define defineADValidParamsFromEmpty(ADObjectType, addedParamCode)                                 \
   template &lt;&gt;                                                                                      \
-  InputParameters validParams&lt;ADObjectType&lt;RESIDUAL&gt;&gt;()                                            \
+  InputParameters validParams&lt;ADObjectType&gt;()                                                      \
   {                                                                                                \
     InputParameters params = emptyInputParameters();                                               \
     addedParamCode;                                                                                \
     return params;                                                                                 \
-  }                                                                                                \
-  template &lt;&gt;                                                                                      \
-  InputParameters validParams&lt;ADObjectType&lt;JACOBIAN&gt;&gt;()                                            \
-  {                                                                                                \
-    return validParams&lt;ADObjectType&lt;RESIDUAL&gt;&gt;();                                                  \
   }                                                                                                \
   void mooseClangFormatFunction()
 
@@ -976,4 +870,4 @@ DerivativeStringClass(ExtraElementIDName);
     return _grad_phi[_j][_qp] * _grad_test[_i][_qp] * (*_d_2d_array)[_qp].diagonal();
 </code></pre><p>for a matrix diffusion coefficient.</p><p>It is noted that only the diagonal entries of the diffusion coefficients are used in the fully-coupled case because <code>computeQpJacobian</code> is supposed to only assemble the block-diagonal part of the Jacobian. The full local Jacobian is assembled in function <code>computeQpOffDiagJacobian</code>, where when the off-diagonal variable is the array variable, we have</p><pre class="moose-pre"><code class="language-text">
   return _grad_phi[_j][_qp] * _grad_test[_i][_qp] * (*_d_2d_array)[_qp];
-</code></pre><p>The retuned value is in type of an Eigen matrix with number of rows and columns equal to the number of components.</p><p>Future work:</p><ul class="browser-default"><li><p>To profile the code with large number of variables to find the hot spots and fix them if there are any. </p></li><li><p>To change the current dof ordering for elemental variables so that we can avoid bunch of if statements with <code>isNodal()</code> in <code>MooseVariableFE.C</code>, (refer to <a href="https://github.com/libMesh/libmesh/issues/2114">libMesh Issue 2114</a>. </p></li><li><p>To use Eigen::Map for faster solution vector access. </p></li><li><p>To implement ArrayInterfaceKernel and ArrayConstraints.</p></li></ul><section class="scrollspy" id="029da7b8-5706-459e-8837-2e67b1f4e01e" data-section-level="2" data-section-text="Input Parameters"><h2 id="input-parameters">Input Parameters</h2><section id="b9a9ba24-4b77-4a71-9f6d-d7f4f892455b" data-section-level="3" data-section-text="Optional Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">block</span><span class="moose-parameter-header-description">The list of block ids (SubdomainID) that this object will be applied</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector<SubdomainName></p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The list of block ids (SubdomainID) that this object will be applied</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">components</span><span class="moose-parameter-header-default">1</span><span class="moose-parameter-header-description">Number of components for an array variable</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>1</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>unsigned int</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Number of components for an array variable</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">family</span><span class="moose-parameter-header-default">LAGRANGE</span><span class="moose-parameter-header-description">Specifies the family of FE shape functions to use for this variable.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>LAGRANGE</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MooseEnum</p><p class="moose-parameter-description-options"><span>Options:</span>LAGRANGE MONOMIAL HERMITE SCALAR HIERARCHIC CLOUGH XYZ SZABAB BERNSTEIN L2_LAGRANGE L2_HIERARCHIC NEDELEC_ONE LAGRANGE_VEC MONOMIAL_VEC</p><p class="moose-parameter-description"><span>Description:</span>Specifies the family of FE shape functions to use for this variable.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">initial_condition</span><span class="moose-parameter-header-description">Specifies the initial condition for this variable</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector<double></p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Specifies the initial condition for this variable</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">order</span><span class="moose-parameter-header-default">FIRST</span><span class="moose-parameter-header-description">Order of the FE shape function to use for this variable (additional orders not listed here are allowed, depending on the family).</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>FIRST</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MooseEnum</p><p class="moose-parameter-description-options"><span>Options:</span>CONSTANT FIRST SECOND THIRD FOURTH FIFTH SIXTH SEVENTH EIGHTH NINTH TENTH ELEVENTH TWELFTH THIRTEENTH FOURTEENTH FIFTEENTH SIXTEENTH SEVENTEENTH EIGHTTEENTH NINETEENTH TWENTIETH TWENTYFIRST TWENTYSECOND TWENTYTHIRD TWENTYFOURTH TWENTYFIFTH TWENTYSIXTH TWENTYSEVENTH TWENTYEIGHTH TWENTYNINTH THIRTIETH THIRTYFIRST THIRTYSECOND THIRTYTHIRD THIRTYFOURTH THIRTYFIFTH THIRTYSIXTH THIRTYSEVENTH THIRTYEIGHTH THIRTYNINTH FORTIETH FORTYFIRST FORTYSECOND FORTYTHIRD</p><p class="moose-parameter-description"><span>Description:</span>Order of the FE shape function to use for this variable (additional orders not listed here are allowed, depending on the family).</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Optional Parameters</h3></summary></details></section><section id="0b54f251-2839-4d64-ba29-4c4919b4ad97" data-section-level="3" data-section-text="Advanced Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">control_tags</span><span class="moose-parameter-header-description">Adds user-defined labels for accessing object parameters via control logic.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector<std::string></p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Adds user-defined labels for accessing object parameters via control logic.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">eigen</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">True to make this variable an eigen variable</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>True to make this variable an eigen variable</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">enable</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">Set the enabled status of the MooseObject.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Set the enabled status of the MooseObject.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">outputs</span><span class="moose-parameter-header-description">Vector of output names were you would like to restrict the output of variables(s) associated with this object</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector<OutputName></p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Vector of output names were you would like to restrict the output of variables(s) associated with this object</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">scaling</span><span class="moose-parameter-header-description">Specifies a scaling factor to apply to this variable</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector<double></p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Specifies a scaling factor to apply to this variable</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Advanced Parameters</h3></summary></details></section></section></section></div><div class="col hide-on-med-and-down l2"><div class="toc-wrapper pin-top"><ul class="section table-of-contents"><li><a href="#029da7b8-5706-459e-8837-2e67b1f4e01e" class="tooltipped" data-position="left" data-tooltip="Input Parameters">Input Parameters</a></li></ul></div></div></div></div></main></div></body><script type="text/javascript" src="../../contrib/materialize/materialize.min.js"></script><script type="text/javascript" src="../../contrib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="../../contrib/prism/prism.min.js"></script><script type="text/javascript" src="../../js/init.js"></script><script type="text/javascript" src="../../js/navigation.js"></script><script type="text/javascript" src="../../contrib/fuse/fuse.min.js"></script><script type="text/javascript" src="../../js/search_index.js"></script><script type="text/javascript" src="../../js/sqa_moose.js"></script>
+</code></pre><p>The retuned value is in type of an Eigen matrix with number of rows and columns equal to the number of components.</p><p>Future work:</p><ul class="browser-default"><li><p>To profile the code with large number of variables to find the hot spots and fix them if there are any. </p></li><li><p>To change the current dof ordering for elemental variables so that we can avoid bunch of if statements with <code>isNodal()</code> in <code>MooseVariableFE.C</code>, (refer to <a href="https://github.com/libMesh/libmesh/issues/2114">libMesh Issue 2114</a>. </p></li><li><p>To use Eigen::Map for faster solution vector access. </p></li><li><p>To implement ArrayInterfaceKernel and ArrayConstraints.</p></li></ul><section class="scrollspy" id="6e993d8e-5e5d-4756-8162-965ff77165d2" data-section-level="2" data-section-text="Input Parameters"><h2 id="input-parameters">Input Parameters</h2><section id="a09a2d15-e15d-40ab-bd7f-e1cfefcf424f" data-section-level="3" data-section-text="Optional Parameters" data-details-open="open"><details class="moose-section-content" open="open"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">block</span><span class="moose-parameter-header-description">The list of block ids (SubdomainID) that this object will be applied</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector<SubdomainName></p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>The list of block ids (SubdomainID) that this object will be applied</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">components</span><span class="moose-parameter-header-default">1</span><span class="moose-parameter-header-description">Number of components for an array variable</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>1</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>unsigned int</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Number of components for an array variable</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">family</span><span class="moose-parameter-header-default">LAGRANGE</span><span class="moose-parameter-header-description">Specifies the family of FE shape functions to use for this variable.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>LAGRANGE</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MooseEnum</p><p class="moose-parameter-description-options"><span>Options:</span>LAGRANGE MONOMIAL HERMITE SCALAR HIERARCHIC CLOUGH XYZ SZABAB BERNSTEIN L2_LAGRANGE L2_HIERARCHIC NEDELEC_ONE LAGRANGE_VEC MONOMIAL_VEC</p><p class="moose-parameter-description"><span>Description:</span>Specifies the family of FE shape functions to use for this variable.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">initial_condition</span><span class="moose-parameter-header-description">Specifies the initial condition for this variable</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector<double></p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Specifies the initial condition for this variable</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">order</span><span class="moose-parameter-header-default">FIRST</span><span class="moose-parameter-header-description">Order of the FE shape function to use for this variable (additional orders not listed here are allowed, depending on the family).</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>FIRST</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>MooseEnum</p><p class="moose-parameter-description-options"><span>Options:</span>CONSTANT FIRST SECOND THIRD FOURTH FIFTH SIXTH SEVENTH EIGHTH NINTH TENTH ELEVENTH TWELFTH THIRTEENTH FOURTEENTH FIFTEENTH SIXTEENTH SEVENTEENTH EIGHTTEENTH NINETEENTH TWENTIETH TWENTYFIRST TWENTYSECOND TWENTYTHIRD TWENTYFOURTH TWENTYFIFTH TWENTYSIXTH TWENTYSEVENTH TWENTYEIGHTH TWENTYNINTH THIRTIETH THIRTYFIRST THIRTYSECOND THIRTYTHIRD THIRTYFOURTH THIRTYFIFTH THIRTYSIXTH THIRTYSEVENTH THIRTYEIGHTH THIRTYNINTH FORTIETH FORTYFIRST FORTYSECOND FORTYTHIRD</p><p class="moose-parameter-description"><span>Description:</span>Order of the FE shape function to use for this variable (additional orders not listed here are allowed, depending on the family).</p></div></li></ul><summary><h3 data-details-open="open"><span class="moose-section-icon"></span>Optional Parameters</h3></summary></details></section><section id="8336f085-2ac7-432d-857f-90c6f61389f4" data-section-level="3" data-section-text="Advanced Parameters" data-details-open="close"><details class="moose-section-content"><ul class="collapsible" data-collapsible="expandable"><li><div class="collapsible-header"><span class="moose-parameter-name">control_tags</span><span class="moose-parameter-header-description">Adds user-defined labels for accessing object parameters via control logic.</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector<std::string></p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Adds user-defined labels for accessing object parameters via control logic.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">eigen</span><span class="moose-parameter-header-default">False</span><span class="moose-parameter-header-description">True to make this variable an eigen variable</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>False</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>True to make this variable an eigen variable</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">enable</span><span class="moose-parameter-header-default">True</span><span class="moose-parameter-header-description">Set the enabled status of the MooseObject.</span></div><div class="collapsible-body"><p class="moose-parameter-description-default"><span>Default:</span>True</p><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>bool</p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Set the enabled status of the MooseObject.</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">outputs</span><span class="moose-parameter-header-description">Vector of output names were you would like to restrict the output of variables(s) associated with this object</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector<OutputName></p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Vector of output names were you would like to restrict the output of variables(s) associated with this object</p></div></li><li><div class="collapsible-header"><span class="moose-parameter-name">scaling</span><span class="moose-parameter-header-description">Specifies a scaling factor to apply to this variable</span></div><div class="collapsible-body"><p class="moose-parameter-description-cpptype"><span>C++ Type:</span>std::vector<double></p><p class="moose-parameter-description-options"><span>Options:</span></p><p class="moose-parameter-description"><span>Description:</span>Specifies a scaling factor to apply to this variable</p></div></li></ul><summary><h3 data-details-open="close"><span class="moose-section-icon"></span>Advanced Parameters</h3></summary></details></section></section></section></div><div class="col hide-on-med-and-down l2"><div class="toc-wrapper pin-top"><ul class="section table-of-contents"><li><a href="#6e993d8e-5e5d-4756-8162-965ff77165d2" class="tooltipped" data-position="left" data-tooltip="Input Parameters">Input Parameters</a></li></ul></div></div></div></div></main></div></body><script type="text/javascript" src="../../contrib/materialize/materialize.min.js"></script><script type="text/javascript" src="../../contrib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="../../contrib/prism/prism.min.js"></script><script type="text/javascript" src="../../js/init.js"></script><script type="text/javascript" src="../../js/navigation.js"></script><script type="text/javascript" src="../../contrib/fuse/fuse.min.js"></script><script type="text/javascript" src="../../js/search_index.js"></script><script type="text/javascript" src="../../js/sqa_moose.js"></script>
