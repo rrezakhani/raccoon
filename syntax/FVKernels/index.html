@@ -1,0 +1,341 @@
+<!DOCTYPE html><head><meta charset="UTF-8"><title>index.md|RACCOON</title><link rel="icon" type="image/x-icon" href="../../media/raccoon_icon.png" sizes="16x16 32x32 64x64 128x128"></link><link href="../../contrib/materialize/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"></link><link href="../../contrib/prism/prism.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/alert_moose.css" type="text/css" rel="stylesheet"></link><link href="../../contrib/katex/katex.min.css" type="text/css" rel="stylesheet"></link><link href="../../css/katex_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/content_moose.css" type="text/css" rel="stylesheet"></link><link href="../../css/sqa_moose.css" type="text/css" rel="stylesheet"></link><script type="text/javascript" src="../../contrib/jquery/jquery.min.js"></script><script type="text/javascript" src="../../contrib/katex/katex.min.js"></script><script type="text/javascript" src="../../contrib/plotly/plotly.min.js"></script></head><body><div class="page-wrap"><header><nav><div class="nav-wrapper container"><a href="https://hugary1995.github.io/raccoon/index.html" class="left moose-logo hide-on-med-and-down">RACCOON</a><a href="https://github.com/hugary1995/raccoon" class="right"><img src="../../media/framework/github-logo.png" class="github-mark"></img><img src="../../media/framework/github-mark.png" class="github-logo"></img></a><ul class="right hide-on-med-and-down"><li><a href="../../install/index.html">Install</a></li><li class="moose-mega-menu-trigger" data-target="931c305f-b7ec-40e6-80b0-9fe7f1255429"><a>Benchmarks<i class="material-icons right">arrow_drop_down</i></a></li><li><a href="../../theory/index.html">Theory</a></li><li><a href="../../modules/index.html">Modules</a></li><li><a href="../index.html">Syntax</a></li></ul><a href="#" class="sidenav-trigger" data-target="5abe18a4-0895-47b1-831c-ba03fb7eaece"><i class="material-icons">menu</i></a><ul class="sidenav" id="5abe18a4-0895-47b1-831c-ba03fb7eaece"><li><a href="../../install/index.html">Install</a></li><li><a href="../../benchmarks.menu.html">Benchmarks</a></li><li><a href="../../theory/index.html">Theory</a></li><li><a href="../../modules/index.html">Modules</a></li><li><a href="../index.html">Syntax</a></li></ul><a href="#moose-search" class="modal-trigger"><i class="material-icons">search</i></a></div></nav><div class="moose-mega-menu-content" id="931c305f-b7ec-40e6-80b0-9fe7f1255429"><div class="moose-mega-menu-wrapper"><div class="row row"><div class="col s12 m6 l4"><h2 id="mode-i-crack-propagation"><a href="../../benchmarks/mode1.html">Mode I crack propagation <i class="material-icons moose-inline-icon">link</i></a></h2><img src="../../media/mode1.gif" class="materialboxed moose-image" style="width:75%;float:left;padding-top:2.5%;"></img><p></p></div><div class="col s12 m6 l4"><h2 id="mode-ii-crack-propagation"><a href="../../benchmarks/mode2.html">Mode II crack propagation <i class="material-icons moose-inline-icon">link</i></a></h2><img src="../../media/mode2.gif" class="materialboxed moose-image" style="width:75%;float:left;padding-top:2.5%;"></img><p></p></div><div class="col s12 m6 l4"><h2 id="soil-desiccation"><a href="../../benchmarks/mud.html">Soil desiccation <i class="material-icons moose-inline-icon">link</i></a></h2><img src="../../media/soil.gif" class="materialboxed moose-image" style="width:75%;float:left;padding-top:2.5%;"></img><p></p></div></div></div></div><div class="modal modal-fixed-footer moose-search-modal" id="moose-search"><div class="modal-content container moose-search-modal-content"><div class="row"><div class="col l12"><div class="input-field"><input type_="text" onkeyup="mooseSearch()" placeholder="https://hugary1995.github.io/raccoon/index.html" id="moose-search-box"></input></div></div><div><div class="col s12" id="moose-search-results"></div></div></div></div><div class="modal-footer"><a href="#!" class="modal-close btn-flat">Close</a></div></div></header><main class="main"><div class="container"><div class="row"><div class="col hide-on-med-and-down l12"><nav class="breadcrumb-nav"><div class="nav-wrapper"><a href=".." class="breadcrumb">syntax</a><a href="." class="breadcrumb">FVKernels</a></div></nav></div></div><div class="row"><div class="moose-content col s12 m12 l10"><section id="f191803c-f19e-494b-826b-b7521ddb9bf9" data-section-level="1" data-section-text="FVKernels System"><h1 id="fvkernels-system">FVKernels System</h1><p>For the finite volume method (FVM), <code>FVKernels</code> are the base class for <code>FVFluxKernel</code>, <code>FVElementalKernel</code>. These specialized objects satisfy the following tasks:</p><p>* <code>FVFluxKernel</code> represents numerical fluxes evaluate on the element faces.   These terms originate from applying Gauss&#x27; divergence theorem.</p><p>* <code>FVElementalKernel</code> represents terms that do not contain a spatial   derivative so that Gauss&#x27; theorem cannot be applied. These terms include   time derivatives, externally imposed source terms, and reaction terms.</p><p>Note: Currently, the <code>FVElementalKernel</code> category only contains kernels (subclasses) representing time derivatives. Kernels representing externally imposed sources or reaction terms will be added in the near future.</p><div class="card moose-alert moose-alert-note"><div class="card-title moose-alert-title"><span class="moose-alert-title-brand">note</span></div><div class="card-content"><div class="moose-alert-content"><p><p>In the documentation that follows, we will use &#x27;-&#x27; and &#x27;<strong>&#x27; to represent different sides of a face. This is purely notation. In the MOOSE code base, the &#x27;-&#x27; side is represented with an <code>_elem</code> suffix and the &#x27;</strong>&#x27; side is represented with a <code>_neighbor</code> suffix. We could just as well have chosen <code>_left</code> and <code>_right</code>, or <code>_1</code> and <code>_2</code>, or <code>_minus</code> and <code>_plus</code>, but for consistency with previous MOOSE framework code such as discontinuous Galerkin kernels and node-face constraints, we have elected to go with the <code>_elem</code> and <code>_neighbor</code> suffixes.</p></p></div></div></div><section class="scrollspy" id="7c5caeaf-2b56-4789-be68-213367993268" data-section-level="2" data-section-text="FVKernels block"><h2 id="fvkernels-block">FVKernels block</h2><p>FVM kernels are added to simulation input files in the <code>FVKernels</code> block.  The <code>FVKernels</code> block in the example below sets up a transient diffusion problem defined by the equation:</p><p><span class="moose-katex-block-equation"><span tex="\frac{\partial v}{\partial t} - \nabla \cdot D \nabla v = 0." bookmark="moose-equation-e7cf923d-4d00-4a0d-9c41-3e4d6d03e438" recursive="True" class="moose-katex-equation table-cell" id="moose-equation-e7cf923d-4d00-4a0d-9c41-3e4d6d03e438"></span><script>var element = document.getElementById("moose-equation-e7cf923d-4d00-4a0d-9c41-3e4d6d03e438");katex.render("  \\frac{\\partial v}{\\partial t} - \\nabla \\cdot D \\nabla v = 0.", element, {displayMode:true,throwOnError:false,macros:{"\\bs":"\\boldsymbol{#1}","\\normal":"\\bs{n}","\\divergence":"\\nabla \\cdot","\\norm":"\\left\\lVert#1\\right\\rVert","\\dArea":"\\text{ d}A","\\dVolume":"\\text{ d}V","\\total":"\\text{total}","\\internal":"\\text{internal}","\\external":"\\text{external}","\\elastic":"\\text{elastic}","\\fracture":"\\text{fracture}","\\critical":"\\text{critical}","\\activeenergy":"{\\left< A \\right>}","\\inactiveenergy":"{\\left< I \\right>}","\\Gc":"\\mathcal{G}_c","\\strain":"\\bs{\\varepsilon}","\\stress":"\\bs{\\sigma}","\\xstress":"\\widetilde{\\stress}","\\macaulay":"\\left<#1\\right>","\\body":"\\Omega","\\bodyboundary":"\\partial\\body","\\grad":"\\bs{\\nabla}"}});</script></span></p><p>The time derivative term corresponds to the kernel named <code>time</code>, while the diffusion term is represented by the kernel named <code>diff</code>.</p><div class="card moose-float"><div class="card-content"><p class="moose-caption"><span class="moose-caption-heading">Listing 1: </span><span class="moose-caption-text">Example of the FVKernels block in a <a href="http://www.mooseframework.org">MOOSE</a> input file.</span></p><pre class="moose-pre" style="max-height:350px;"><code class="language-text">[FVKernels]
+  [./time]
+    type = FVTimeKernel
+    variable = v
+  [../]
+  [diff]
+    type = FVDiffusion
+    variable = v
+    coeff = coeff
+  []
+[]
+</code></pre><a href="#8423edf2-ade8-4296-87e4-658f19cd9416" class="modal-trigger">(moose/test/tests/fvkernels/fv_simple_diffusion/transient.i)</a></div></div><div class="modal moose-modal" id="8423edf2-ade8-4296-87e4-658f19cd9416"><div class="modal-content"><h4>/home/travis/build/hugary1995/raccoon/moose/test/tests/fvkernels/fv_simple_diffusion/transient.i</h4><pre class="moose-pre"><code class="language-text">[Mesh]
+  type = GeneratedMesh
+  dim = 2
+  nx = 10
+  ny = 10
+[]
+
+[Variables]
+  [v]
+    family = MONOMIAL
+    order = CONSTANT
+    fv = true
+    initial_condition = 7
+  []
+[]
+
+[Kernels]
+[]
+
+[FVKernels]
+  [./time]
+    type = FVTimeKernel
+    variable = v
+  [../]
+  [diff]
+    type = FVDiffusion
+    variable = v
+    coeff = coeff
+  []
+[]
+
+[FVBCs]
+  [left]
+    type = FVDirichletBC
+    variable = v
+    boundary = left
+    value = 7
+  []
+  [right]
+    type = FVDirichletBC
+    variable = v
+    boundary = right
+    value = 42
+  []
+[]
+
+[Materials]
+  [diff]
+    type = ADGenericConstantMaterial
+    prop_names = &#x27;coeff&#x27;
+    prop_values = &#x27;.2&#x27;
+  []
+[]
+
+[Problem]
+  kernel_coverage_check = off
+[]
+
+[Executioner]
+  type = Transient
+  solve_type = &#x27;PJFNK&#x27;
+  petsc_options_iname = &#x27;-pc_type -pc_hypre_type&#x27;
+  petsc_options_value = &#x27;hypre boomeramg&#x27;
+  num_steps = 20
+  dt = 0.1
+[]
+
+[Outputs]
+  exodus = true
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><p>The <code>FVTimeKernel</code> in the example derives from <code>FVElementalKernel</code> so it&#x27;s a volumetric contribution to the residual, while the <code>FVDiffusion</code> kernel is an <code>FVFluxKernel</code> and it&#x27;s a face contribution to the residual. The remaining MOOSE syntax is what you would expect to see in finite element kernel objects:</p><p>* <code>variable</code> refers to the variable that this kernel is acting on (i.e. into   which equation does the residual of this term go).  This must be a   finite-volume variable (defined with <code>fv = true</code>) for all FVM kernels.</p><p>* <code>coeff</code> in kernel <code>diff</code> is a material property corresponding to the heat conduction or diffusion coefficient.</p><p>The next example shows an <code>FVKernels</code> block that solves the one-dimensional Burgers&#x27; equation. The Burgers&#x27; equation for speed <code>v</code> is given by:</p><p><span class="moose-katex-block-equation"><span tex="\frac{\partial v}{\partial t} + \frac{1}{2}\frac{\partial }{\partial x} v^2 = 0." bookmark="moose-equation-22800fca-9cbb-438a-af7b-a14aaa79b5b4" recursive="True" class="moose-katex-equation table-cell" id="moose-equation-22800fca-9cbb-438a-af7b-a14aaa79b5b4"></span><script>var element = document.getElementById("moose-equation-22800fca-9cbb-438a-af7b-a14aaa79b5b4");katex.render("  \\frac{\\partial v}{\\partial t} + \\frac{1}{2}\\frac{\\partial }{\\partial x} v^2 = 0.", element, {displayMode:true,throwOnError:false,macros:{"\\bs":"\\boldsymbol{#1}","\\normal":"\\bs{n}","\\divergence":"\\nabla \\cdot","\\norm":"\\left\\lVert#1\\right\\rVert","\\dArea":"\\text{ d}A","\\dVolume":"\\text{ d}V","\\total":"\\text{total}","\\internal":"\\text{internal}","\\external":"\\text{external}","\\elastic":"\\text{elastic}","\\fracture":"\\text{fracture}","\\critical":"\\text{critical}","\\activeenergy":"{\\left< A \\right>}","\\inactiveenergy":"{\\left< I \\right>}","\\Gc":"\\mathcal{G}_c","\\strain":"\\bs{\\varepsilon}","\\stress":"\\bs{\\sigma}","\\xstress":"\\widetilde{\\stress}","\\macaulay":"\\left<#1\\right>","\\body":"\\Omega","\\bodyboundary":"\\partial\\body","\\grad":"\\bs{\\nabla}"}});</script></span></p><div class="card moose-float"><div class="card-content"><p class="moose-caption"><span class="moose-caption-heading">Listing 2: </span><span class="moose-caption-text">Example of the FVKernels block in a <a href="http://www.mooseframework.org">MOOSE</a> input file for solving one-dimensional Burgers&#x27; equation.</span></p><pre class="moose-pre" style="max-height:350px;"><code class="language-text">[FVKernels]
+  [./burgers]
+    type = FVBurgers1D
+    variable = v
+  [../]
+  [./time]
+    type = FVTimeKernel
+    variable = v
+  [../]
+[]
+</code></pre><a href="#00bab412-7b30-4405-9371-3f9175c1f137" class="modal-trigger">(moose/test/tests/fvkernels/fv_burgers/fv_burgers.i)</a></div></div><div class="modal moose-modal" id="00bab412-7b30-4405-9371-3f9175c1f137"><div class="modal-content"><h4>/home/travis/build/hugary1995/raccoon/moose/test/tests/fvkernels/fv_burgers/fv_burgers.i</h4><pre class="moose-pre"><code class="language-text">[Mesh]
+  [./gen_mesh]
+    type = GeneratedMeshGenerator
+    dim = 1
+    xmin = 0
+    xmax = 10
+    nx = 50
+  [../]
+[]
+
+[Problem]
+  kernel_coverage_check = off
+[]
+
+[Variables]
+  [./v]
+    family = MONOMIAL
+    order = CONSTANT
+    fv = true
+  [../]
+[]
+
+[ICs]
+  [./v_ic]
+    type = FunctionIC
+    variable = v
+    function = &#x27;if (x &gt; 2 &amp; x &lt; 3, 0.5, 0)&#x27;
+  [../]
+[]
+
+[FVKernels]
+  [./burgers]
+    type = FVBurgers1D
+    variable = v
+  [../]
+  [./time]
+    type = FVTimeKernel
+    variable = v
+  [../]
+[]
+
+[FVBCs]
+  [./fv_burgers_outflow]
+    type = FVBurgersOutflowBC
+    variable = v
+    boundary = &#x27;left right&#x27;
+  [../]
+[]
+
+[Executioner]
+  type = Transient
+  petsc_options_iname = &#x27;-pc_type&#x27;
+  petsc_options_value = &#x27;lu&#x27;
+  petsc_options = &#x27;-snes_converged_reason&#x27;
+  nl_abs_tol = 1e-7
+  nl_rel_tol = 1e-8
+  num_steps = 5
+  dt = 0.05
+[]
+
+[Outputs]
+  exodus = true
+[]
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><p>Note that the <code>FVBurgers1D</code> kernel only works for one-dimensional problems. In this example, the exact same time derivative kernels as for the diffusion example is used, but the spatial derivative term is different.</p><p>Boundary conditions are not discussed in these examples. Look at <a href="../FVBCs/index.html">syntax files</a> for details about boundary conditions.</p></section><section class="scrollspy" id="e41d0be2-a15c-49f4-bb56-588e3f04a9de" data-section-level="2" data-section-text="Available Objects"><h2 id="available-objects">Available Objects</h2><ul class="moose-syntax-list collection with-header"><li class="collection-header">Moose App</li><li class="collection-item"><a href="../../source/fvkernels/FVAdvection.html">FVAdvection</a></li><li class="collection-item"><a href="../../source/fvkernels/FVBodyForce.html">FVBodyForce</a>Demonstrates the multiple ways that scalar values can be introduced into finite volume kernels, e.g. (controllable) constants, functions, and postprocessors.</li><li class="collection-item"><a href="../../source/fvkernels/FVCoupledForce.html">FVCoupledForce</a>Implements a source term proportional to the value of a coupled variable.</li><li class="collection-item"><a href="../../source/fvkernels/FVDiffusion.html">FVDiffusion</a></li><li class="collection-item"><a href="../../source/fvkernels/FVMatAdvection.html">FVMatAdvection</a></li><li class="collection-item"><a href="../../source/fvkernels/FVReaction.html">FVReaction</a></li><li class="collection-item"><a href="../../source/fvkernels/FVTimeKernel.html">FVTimeKernel</a></li></ul></section><section class="scrollspy" id="a713b13d-99f0-416e-9f89-ef0987242e90" data-section-level="2" data-section-text="FVKernel source code : FVDiffusion example"><h2 id="fvkernel-source-code-fvdiffusion-example">FVKernel source code: FVDiffusion example</h2><p>First, <code>FVFluxKernels</code> are discussed.  <code>FVFluxKernels</code> are used to calculate numerical flux contributions from face (surface integral) terms to the residual. The residual contribution is implemented by overriding the <code>computeQpResidual</code> function.</p><p>In the FVM, one solves for the averages of the variables over each element. The values of the variables on the faces are unknown and must be computed from the cell average values. This interpolation/reconstruction determines the accuracy of the FVM. The discussion is based on the example of <code>FVDiffusion</code> that discretizes the diffusion term using a central difference approximation.</p><div class="card moose-float"><div class="card-content"><p class="moose-caption"><span class="moose-caption-heading">Listing 3: </span><span class="moose-caption-text">Example source code for a finite volume kernel discretizing the diffusion term using a central difference.</span></p><pre class="moose-pre" style="max-height:350px;"><code class="language-cpp">
+#include &quot;FVDiffusion.h&quot;
+
+registerMooseObject(&quot;MooseApp&quot;, FVDiffusion);
+
+InputParameters
+FVDiffusion::validParams()
+{
+  InputParameters params = FVFluxKernel::validParams();
+  params.addRequiredParam&lt;MaterialPropertyName&gt;(&quot;coeff&quot;, &quot;diffusion coefficient&quot;);
+  return params;
+}
+
+FVDiffusion::FVDiffusion(const InputParameters &amp; params)
+  : FVFluxKernel(params),
+    _coeff_elem(getADMaterialProperty&lt;Real&gt;(&quot;coeff&quot;)),
+    _coeff_neighbor(getNeighborADMaterialProperty&lt;Real&gt;(&quot;coeff&quot;))
+{
+}
+
+ADReal
+FVDiffusion::computeQpResidual()
+{
+  auto dudn = gradUDotNormal();
+
+  // Eventually, it will be nice to offer automatic-switching triggered by
+  // input parameters to change between different interpolation methods for
+  // this.
+  ADReal k;
+  interpolate(InterpMethod::Average, k, _coeff_elem[_qp], _coeff_neighbor[_qp]);
+
+  return -1 * k * dudn;
+}
+</code></pre><a href="#fc02acc9-4f57-4ca2-9cd0-9530983ef4eb" class="modal-trigger">(moose/framework/src/fvkernels/FVDiffusion.C)</a></div></div><div class="modal moose-modal" id="fc02acc9-4f57-4ca2-9cd0-9530983ef4eb"><div class="modal-content"><h4>/home/travis/build/hugary1995/raccoon/moose/framework/src/fvkernels/FVDiffusion.C</h4><pre class="moose-pre"><code class="language-cpp">// This file is part of the MOOSE framework
+// https://www.mooseframework.org
+//
+// All rights reserved, see COPYRIGHT for full restrictions
+// https://github.com/idaholab/moose/blob/master/COPYRIGHT
+//
+// Licensed under LGPL 2.1, please see LICENSE for details
+// https://www.gnu.org/licenses/lgpl-2.1.html
+
+#include &quot;FVDiffusion.h&quot;
+
+registerMooseObject(&quot;MooseApp&quot;, FVDiffusion);
+
+InputParameters
+FVDiffusion::validParams()
+{
+  InputParameters params = FVFluxKernel::validParams();
+  params.addRequiredParam&lt;MaterialPropertyName&gt;(&quot;coeff&quot;, &quot;diffusion coefficient&quot;);
+  return params;
+}
+
+FVDiffusion::FVDiffusion(const InputParameters &amp; params)
+  : FVFluxKernel(params),
+    _coeff_elem(getADMaterialProperty&lt;Real&gt;(&quot;coeff&quot;)),
+    _coeff_neighbor(getNeighborADMaterialProperty&lt;Real&gt;(&quot;coeff&quot;))
+{
+}
+
+ADReal
+FVDiffusion::computeQpResidual()
+{
+  auto dudn = gradUDotNormal();
+
+  // Eventually, it will be nice to offer automatic-switching triggered by
+  // input parameters to change between different interpolation methods for
+  // this.
+  ADReal k;
+  interpolate(InterpMethod::Average, k, _coeff_elem[_qp], _coeff_neighbor[_qp]);
+
+  return -1 * k * dudn;
+}
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><p>The kernel <code>FVDiffusion</code> discretizes the diffusion term <span tex="-\nabla \cdot D(v,\vec{r}) \nabla v" bookmark="moose-equation-96afa3e8-1197-41fc-b9b0-0295cfd828d4" recursive="True" class="moose-katex-inline-equation" id="moose-equation-96afa3e8-1197-41fc-b9b0-0295cfd828d4"><script>var element = document.getElementById("moose-equation-96afa3e8-1197-41fc-b9b0-0295cfd828d4");katex.render("-\\nabla \\cdot D(v,\\vec{r}) \\nabla v", element, {displayMode:false,throwOnError:false,macros:{"\\bs":"\\boldsymbol{#1}","\\normal":"\\bs{n}","\\divergence":"\\nabla \\cdot","\\norm":"\\left\\lVert#1\\right\\rVert","\\dArea":"\\text{ d}A","\\dVolume":"\\text{ d}V","\\total":"\\text{total}","\\internal":"\\text{internal}","\\external":"\\text{external}","\\elastic":"\\text{elastic}","\\fracture":"\\text{fracture}","\\critical":"\\text{critical}","\\activeenergy":"{\\left< A \\right>}","\\inactiveenergy":"{\\left< I \\right>}","\\Gc":"\\mathcal{G}_c","\\strain":"\\bs{\\varepsilon}","\\stress":"\\bs{\\sigma}","\\xstress":"\\widetilde{\\stress}","\\macaulay":"\\left<#1\\right>","\\body":"\\Omega","\\bodyboundary":"\\partial\\body","\\grad":"\\bs{\\nabla}"}});</script></span>. Integrating over the extend of an element and using Gauss&#x27; theorem leads to:</p><p><span class="moose-katex-block-equation"><span tex="-  \int_{\Omega} \nabla \cdot D(v,\vec{r}) \nabla v dV =  \int_{\partial \Omega} \left(-D(v, \vec{r}) \vec{n}\cdot \nabla v \right) dS." bookmark="moose-equation-421a8bea-7b60-4cdc-8669-4aab12c58d33" recursive="True" class="moose-katex-equation table-cell" id="moose-equation-421a8bea-7b60-4cdc-8669-4aab12c58d33"></span><script>var element = document.getElementById("moose-equation-421a8bea-7b60-4cdc-8669-4aab12c58d33");katex.render("-  \\int_{\\Omega} \\nabla \\cdot D(v,\\vec{r}) \\nabla v dV =  \\int_{\\partial \\Omega} \\left(-D(v, \\vec{r}) \\vec{n}\\cdot \\nabla v \\right) dS.", element, {displayMode:true,throwOnError:false,macros:{"\\bs":"\\boldsymbol{#1}","\\normal":"\\bs{n}","\\divergence":"\\nabla \\cdot","\\norm":"\\left\\lVert#1\\right\\rVert","\\dArea":"\\text{ d}A","\\dVolume":"\\text{ d}V","\\total":"\\text{total}","\\internal":"\\text{internal}","\\external":"\\text{external}","\\elastic":"\\text{elastic}","\\fracture":"\\text{fracture}","\\critical":"\\text{critical}","\\activeenergy":"{\\left< A \\right>}","\\inactiveenergy":"{\\left< I \\right>}","\\Gc":"\\mathcal{G}_c","\\strain":"\\bs{\\varepsilon}","\\stress":"\\bs{\\sigma}","\\xstress":"\\widetilde{\\stress}","\\macaulay":"\\left<#1\\right>","\\body":"\\Omega","\\bodyboundary":"\\partial\\body","\\grad":"\\bs{\\nabla}"}});</script></span></p><p>The term in parenthesis in the surface integral on the right hand side must be implemented in the <code>FVKernel</code>. However, there is one more step before we can implement the kernel. We must determine how the values of <span tex="D" bookmark="moose-equation-c65a21b1-3428-4654-99ea-7f4ed160ff5c" recursive="True" class="moose-katex-inline-equation" id="moose-equation-c65a21b1-3428-4654-99ea-7f4ed160ff5c"><script>var element = document.getElementById("moose-equation-c65a21b1-3428-4654-99ea-7f4ed160ff5c");katex.render("D", element, {displayMode:false,throwOnError:false,macros:{"\\bs":"\\boldsymbol{#1}","\\normal":"\\bs{n}","\\divergence":"\\nabla \\cdot","\\norm":"\\left\\lVert#1\\right\\rVert","\\dArea":"\\text{ d}A","\\dVolume":"\\text{ d}V","\\total":"\\text{total}","\\internal":"\\text{internal}","\\external":"\\text{external}","\\elastic":"\\text{elastic}","\\fracture":"\\text{fracture}","\\critical":"\\text{critical}","\\activeenergy":"{\\left< A \\right>}","\\inactiveenergy":"{\\left< I \\right>}","\\Gc":"\\mathcal{G}_c","\\strain":"\\bs{\\varepsilon}","\\stress":"\\bs{\\sigma}","\\xstress":"\\widetilde{\\stress}","\\macaulay":"\\left<#1\\right>","\\body":"\\Omega","\\bodyboundary":"\\partial\\body","\\grad":"\\bs{\\nabla}"}});</script></span> and <span tex="\nabla v" bookmark="moose-equation-0ca2e13a-ae9d-4186-bd32-387333b54f7e" recursive="True" class="moose-katex-inline-equation" id="moose-equation-0ca2e13a-ae9d-4186-bd32-387333b54f7e"><script>var element = document.getElementById("moose-equation-0ca2e13a-ae9d-4186-bd32-387333b54f7e");katex.render("\\nabla v", element, {displayMode:false,throwOnError:false,macros:{"\\bs":"\\boldsymbol{#1}","\\normal":"\\bs{n}","\\divergence":"\\nabla \\cdot","\\norm":"\\left\\lVert#1\\right\\rVert","\\dArea":"\\text{ d}A","\\dVolume":"\\text{ d}V","\\total":"\\text{total}","\\internal":"\\text{internal}","\\external":"\\text{external}","\\elastic":"\\text{elastic}","\\fracture":"\\text{fracture}","\\critical":"\\text{critical}","\\activeenergy":"{\\left< A \\right>}","\\inactiveenergy":"{\\left< I \\right>}","\\Gc":"\\mathcal{G}_c","\\strain":"\\bs{\\varepsilon}","\\stress":"\\bs{\\sigma}","\\xstress":"\\widetilde{\\stress}","\\macaulay":"\\left<#1\\right>","\\body":"\\Omega","\\bodyboundary":"\\partial\\body","\\grad":"\\bs{\\nabla}"}});</script></span> depend on the values of <span tex="D" bookmark="moose-equation-8dcabc8e-0eab-445a-8b2f-2950f69ee285" recursive="True" class="moose-katex-inline-equation" id="moose-equation-8dcabc8e-0eab-445a-8b2f-2950f69ee285"><script>var element = document.getElementById("moose-equation-8dcabc8e-0eab-445a-8b2f-2950f69ee285");katex.render("D", element, {displayMode:false,throwOnError:false,macros:{"\\bs":"\\boldsymbol{#1}","\\normal":"\\bs{n}","\\divergence":"\\nabla \\cdot","\\norm":"\\left\\lVert#1\\right\\rVert","\\dArea":"\\text{ d}A","\\dVolume":"\\text{ d}V","\\total":"\\text{total}","\\internal":"\\text{internal}","\\external":"\\text{external}","\\elastic":"\\text{elastic}","\\fracture":"\\text{fracture}","\\critical":"\\text{critical}","\\activeenergy":"{\\left< A \\right>}","\\inactiveenergy":"{\\left< I \\right>}","\\Gc":"\\mathcal{G}_c","\\strain":"\\bs{\\varepsilon}","\\stress":"\\bs{\\sigma}","\\xstress":"\\widetilde{\\stress}","\\macaulay":"\\left<#1\\right>","\\body":"\\Omega","\\bodyboundary":"\\partial\\body","\\grad":"\\bs{\\nabla}"}});</script></span> and <span tex="v" bookmark="moose-equation-695dedbf-e45f-4cfe-ad3e-4592ce25b963" recursive="True" class="moose-katex-inline-equation" id="moose-equation-695dedbf-e45f-4cfe-ad3e-4592ce25b963"><script>var element = document.getElementById("moose-equation-695dedbf-e45f-4cfe-ad3e-4592ce25b963");katex.render("v", element, {displayMode:false,throwOnError:false,macros:{"\\bs":"\\boldsymbol{#1}","\\normal":"\\bs{n}","\\divergence":"\\nabla \\cdot","\\norm":"\\left\\lVert#1\\right\\rVert","\\dArea":"\\text{ d}A","\\dVolume":"\\text{ d}V","\\total":"\\text{total}","\\internal":"\\text{internal}","\\external":"\\text{external}","\\elastic":"\\text{elastic}","\\fracture":"\\text{fracture}","\\critical":"\\text{critical}","\\activeenergy":"{\\left< A \\right>}","\\inactiveenergy":"{\\left< I \\right>}","\\Gc":"\\mathcal{G}_c","\\strain":"\\bs{\\varepsilon}","\\stress":"\\bs{\\sigma}","\\xstress":"\\widetilde{\\stress}","\\macaulay":"\\left<#1\\right>","\\body":"\\Omega","\\bodyboundary":"\\partial\\body","\\grad":"\\bs{\\nabla}"}});</script></span> on the &#x27;+&#x27; and &#x27;-&#x27; side of the face <span tex="\partial \Omega" bookmark="moose-equation-477f2e12-0b66-47d2-9f61-4f70935b6f28" recursive="True" class="moose-katex-inline-equation" id="moose-equation-477f2e12-0b66-47d2-9f61-4f70935b6f28"><script>var element = document.getElementById("moose-equation-477f2e12-0b66-47d2-9f61-4f70935b6f28");katex.render("\\partial \\Omega", element, {displayMode:false,throwOnError:false,macros:{"\\bs":"\\boldsymbol{#1}","\\normal":"\\bs{n}","\\divergence":"\\nabla \\cdot","\\norm":"\\left\\lVert#1\\right\\rVert","\\dArea":"\\text{ d}A","\\dVolume":"\\text{ d}V","\\total":"\\text{total}","\\internal":"\\text{internal}","\\external":"\\text{external}","\\elastic":"\\text{elastic}","\\fracture":"\\text{fracture}","\\critical":"\\text{critical}","\\activeenergy":"{\\left< A \\right>}","\\inactiveenergy":"{\\left< I \\right>}","\\Gc":"\\mathcal{G}_c","\\strain":"\\bs{\\varepsilon}","\\stress":"\\bs{\\sigma}","\\xstress":"\\widetilde{\\stress}","\\macaulay":"\\left<#1\\right>","\\body":"\\Omega","\\bodyboundary":"\\partial\\body","\\grad":"\\bs{\\nabla}"}});</script></span>.  In this example, the following approximation is used:</p><p><span class="moose-katex-block-equation"><span tex="\left(-D(\vec{r}) \vec{n}\cdot \nabla v \right) \approx \frac{D(v_L,\vec{r}_L) + D(v_R,\vec{r}_R)}{2} \frac{v_R - v_L}{\|\vec{r}_R - \vec{r}_L\|}" bookmark="moose-equation-294d12b0-963c-45ad-b079-94891d2975fa" recursive="True" class="moose-katex-equation table-cell" id="moose-equation-294d12b0-963c-45ad-b079-94891d2975fa"></span><script>var element = document.getElementById("moose-equation-294d12b0-963c-45ad-b079-94891d2975fa");katex.render("    \\left(-D(\\vec{r}) \\vec{n}\\cdot \\nabla v \\right) \\approx \\frac{D(v_L,\\vec{r}_L) + D(v_R,\\vec{r}_R)}{2} \\frac{v_R - v_L}{\\|\\vec{r}_R - \\vec{r}_L\\|}", element, {displayMode:true,throwOnError:false,macros:{"\\bs":"\\boldsymbol{#1}","\\normal":"\\bs{n}","\\divergence":"\\nabla \\cdot","\\norm":"\\left\\lVert#1\\right\\rVert","\\dArea":"\\text{ d}A","\\dVolume":"\\text{ d}V","\\total":"\\text{total}","\\internal":"\\text{internal}","\\external":"\\text{external}","\\elastic":"\\text{elastic}","\\fracture":"\\text{fracture}","\\critical":"\\text{critical}","\\activeenergy":"{\\left< A \\right>}","\\inactiveenergy":"{\\left< I \\right>}","\\Gc":"\\mathcal{G}_c","\\strain":"\\bs{\\varepsilon}","\\stress":"\\bs{\\sigma}","\\xstress":"\\widetilde{\\stress}","\\macaulay":"\\left<#1\\right>","\\body":"\\Omega","\\bodyboundary":"\\partial\\body","\\grad":"\\bs{\\nabla}"}});</script></span></p><p>This is a central difference approximation of the gradient on the face that neglects cross diffusion terms.</p><p>Now, the implementation of this numerical flux into <code>FVDiffusion::computeQpResidual</code> is discussed.</p><p>* the kernel provides the &#x27;-&#x27; and &#x27;+&#x27; values of the variable <span tex="v" bookmark="moose-equation-8d8f5ab2-378b-4650-a47a-55fc84ac6d85" recursive="True" class="moose-katex-inline-equation" id="moose-equation-8d8f5ab2-378b-4650-a47a-55fc84ac6d85"><script>var element = document.getElementById("moose-equation-8d8f5ab2-378b-4650-a47a-55fc84ac6d85");katex.render("v", element, {displayMode:false,throwOnError:false,macros:{"\\bs":"\\boldsymbol{#1}","\\normal":"\\bs{n}","\\divergence":"\\nabla \\cdot","\\norm":"\\left\\lVert#1\\right\\rVert","\\dArea":"\\text{ d}A","\\dVolume":"\\text{ d}V","\\total":"\\text{total}","\\internal":"\\text{internal}","\\external":"\\text{external}","\\elastic":"\\text{elastic}","\\fracture":"\\text{fracture}","\\critical":"\\text{critical}","\\activeenergy":"{\\left< A \\right>}","\\inactiveenergy":"{\\left< I \\right>}","\\Gc":"\\mathcal{G}_c","\\strain":"\\bs{\\varepsilon}","\\stress":"\\bs{\\sigma}","\\xstress":"\\widetilde{\\stress}","\\macaulay":"\\left<#1\\right>","\\body":"\\Omega","\\bodyboundary":"\\partial\\body","\\grad":"\\bs{\\nabla}"}});</script></span> as <code>_u_elem[_qp]</code> and <code>_u_neighbor[_qp]</code></p><p>* the values of the material properties on the &#x27;-&#x27; side of the face is obtained by <code>_coeff_elem(getADMaterialProperty&lt;Real&gt;(&quot;coeff&quot;))</code> while the &#x27;+&#x27; side value is obtained by calling <code>getNeighborADMaterialProperty&lt;Real&gt;(&quot;coeff&quot;)</code>.</p><p>* geometric information about the &#x27;-&#x27; and &#x27;+&#x27; adjacent elements is available from the <code>face_info</code> object.</p><p>The implementation is then straight forward. The first line of the code computes <code>dudn</code> which corresponds to the term:</p><p><span class="moose-katex-block-equation"><span tex="\text{dudn} = \frac{v_R - v_L}{\|\vec{r}_R - \vec{r}_L\|}" bookmark="moose-equation-cccb7775-3508-4d08-ad7a-8edd04ad73d5" recursive="True" class="moose-katex-equation table-cell" id="moose-equation-cccb7775-3508-4d08-ad7a-8edd04ad73d5"></span><script>var element = document.getElementById("moose-equation-cccb7775-3508-4d08-ad7a-8edd04ad73d5");katex.render(" \\text{dudn} = \\frac{v_R - v_L}{\\|\\vec{r}_R - \\vec{r}_L\\|}", element, {displayMode:true,throwOnError:false,macros:{"\\bs":"\\boldsymbol{#1}","\\normal":"\\bs{n}","\\divergence":"\\nabla \\cdot","\\norm":"\\left\\lVert#1\\right\\rVert","\\dArea":"\\text{ d}A","\\dVolume":"\\text{ d}V","\\total":"\\text{total}","\\internal":"\\text{internal}","\\external":"\\text{external}","\\elastic":"\\text{elastic}","\\fracture":"\\text{fracture}","\\critical":"\\text{critical}","\\activeenergy":"{\\left< A \\right>}","\\inactiveenergy":"{\\left< I \\right>}","\\Gc":"\\mathcal{G}_c","\\strain":"\\bs{\\varepsilon}","\\stress":"\\bs{\\sigma}","\\xstress":"\\widetilde{\\stress}","\\macaulay":"\\left<#1\\right>","\\body":"\\Omega","\\bodyboundary":"\\partial\\body","\\grad":"\\bs{\\nabla}"}});</script></span></p><p>while the second line computes <code>k</code> corresponding to:</p><p><span class="moose-katex-block-equation"><span tex="\text{k} = \frac{D(v_L,\vec{r}_L) + D(v_R,\vec{r}_R)}{2} ." bookmark="moose-equation-0ad0172a-b987-47b6-9b39-8b377369cf12" recursive="True" class="moose-katex-equation table-cell" id="moose-equation-0ad0172a-b987-47b6-9b39-8b377369cf12"></span><script>var element = document.getElementById("moose-equation-0ad0172a-b987-47b6-9b39-8b377369cf12");katex.render("  \\text{k} = \\frac{D(v_L,\\vec{r}_L) + D(v_R,\\vec{r}_R)}{2} .", element, {displayMode:true,throwOnError:false,macros:{"\\bs":"\\boldsymbol{#1}","\\normal":"\\bs{n}","\\divergence":"\\nabla \\cdot","\\norm":"\\left\\lVert#1\\right\\rVert","\\dArea":"\\text{ d}A","\\dVolume":"\\text{ d}V","\\total":"\\text{total}","\\internal":"\\text{internal}","\\external":"\\text{external}","\\elastic":"\\text{elastic}","\\fracture":"\\text{fracture}","\\critical":"\\text{critical}","\\activeenergy":"{\\left< A \\right>}","\\inactiveenergy":"{\\left< I \\right>}","\\Gc":"\\mathcal{G}_c","\\strain":"\\bs{\\varepsilon}","\\stress":"\\bs{\\sigma}","\\xstress":"\\widetilde{\\stress}","\\macaulay":"\\left<#1\\right>","\\body":"\\Omega","\\bodyboundary":"\\partial\\body","\\grad":"\\bs{\\nabla}"}});</script></span></p><p>The minus sign originates from the minus sign in the original expression. Flow from &#x27;-&#x27; to &#x27;+ is defined to be positive.</p></section><section class="scrollspy" id="4b23a656-8771-4c6f-b91b-ee50d464e376" data-section-level="2" data-section-text="FVKernel source code : FVMatAdvection example"><h2 id="fvkernel-source-code-fvmatadvection-example">FVKernel source code: FVMatAdvection example</h2><p>In this example the advection term:</p><p><span class="moose-katex-block-equation"><span tex="\nabla \cdot \left( \vec{u} v \right)" bookmark="moose-equation-caf495a7-750d-4c07-a949-f52b8fb5b38c" recursive="True" class="moose-katex-equation table-cell" id="moose-equation-caf495a7-750d-4c07-a949-f52b8fb5b38c"></span><script>var element = document.getElementById("moose-equation-caf495a7-750d-4c07-a949-f52b8fb5b38c");katex.render("  \\nabla \\cdot \\left( \\vec{u} v \\right)", element, {displayMode:true,throwOnError:false,macros:{"\\bs":"\\boldsymbol{#1}","\\normal":"\\bs{n}","\\divergence":"\\nabla \\cdot","\\norm":"\\left\\lVert#1\\right\\rVert","\\dArea":"\\text{ d}A","\\dVolume":"\\text{ d}V","\\total":"\\text{total}","\\internal":"\\text{internal}","\\external":"\\text{external}","\\elastic":"\\text{elastic}","\\fracture":"\\text{fracture}","\\critical":"\\text{critical}","\\activeenergy":"{\\left< A \\right>}","\\inactiveenergy":"{\\left< I \\right>}","\\Gc":"\\mathcal{G}_c","\\strain":"\\bs{\\varepsilon}","\\stress":"\\bs{\\sigma}","\\xstress":"\\widetilde{\\stress}","\\macaulay":"\\left<#1\\right>","\\body":"\\Omega","\\bodyboundary":"\\partial\\body","\\grad":"\\bs{\\nabla}"}});</script></span></p><p>is discretized using upwinding. The velocity is denoted by <span tex="\vec{u}" bookmark="moose-equation-1c0d7311-e1bd-40ae-b09a-70abbbb2fa61" recursive="True" class="moose-katex-inline-equation" id="moose-equation-1c0d7311-e1bd-40ae-b09a-70abbbb2fa61"><script>var element = document.getElementById("moose-equation-1c0d7311-e1bd-40ae-b09a-70abbbb2fa61");katex.render("\\vec{u}", element, {displayMode:false,throwOnError:false,macros:{"\\bs":"\\boldsymbol{#1}","\\normal":"\\bs{n}","\\divergence":"\\nabla \\cdot","\\norm":"\\left\\lVert#1\\right\\rVert","\\dArea":"\\text{ d}A","\\dVolume":"\\text{ d}V","\\total":"\\text{total}","\\internal":"\\text{internal}","\\external":"\\text{external}","\\elastic":"\\text{elastic}","\\fracture":"\\text{fracture}","\\critical":"\\text{critical}","\\activeenergy":"{\\left< A \\right>}","\\inactiveenergy":"{\\left< I \\right>}","\\Gc":"\\mathcal{G}_c","\\strain":"\\bs{\\varepsilon}","\\stress":"\\bs{\\sigma}","\\xstress":"\\widetilde{\\stress}","\\macaulay":"\\left<#1\\right>","\\body":"\\Omega","\\bodyboundary":"\\partial\\body","\\grad":"\\bs{\\nabla}"}});</script></span> and <span tex="v" bookmark="moose-equation-81ba3e93-f2ca-4a49-844c-3742147fd2b5" recursive="True" class="moose-katex-inline-equation" id="moose-equation-81ba3e93-f2ca-4a49-844c-3742147fd2b5"><script>var element = document.getElementById("moose-equation-81ba3e93-f2ca-4a49-844c-3742147fd2b5");katex.render("v", element, {displayMode:false,throwOnError:false,macros:{"\\bs":"\\boldsymbol{#1}","\\normal":"\\bs{n}","\\divergence":"\\nabla \\cdot","\\norm":"\\left\\lVert#1\\right\\rVert","\\dArea":"\\text{ d}A","\\dVolume":"\\text{ d}V","\\total":"\\text{total}","\\internal":"\\text{internal}","\\external":"\\text{external}","\\elastic":"\\text{elastic}","\\fracture":"\\text{fracture}","\\critical":"\\text{critical}","\\activeenergy":"{\\left< A \\right>}","\\inactiveenergy":"{\\left< I \\right>}","\\Gc":"\\mathcal{G}_c","\\strain":"\\bs{\\varepsilon}","\\stress":"\\bs{\\sigma}","\\xstress":"\\widetilde{\\stress}","\\macaulay":"\\left<#1\\right>","\\body":"\\Omega","\\bodyboundary":"\\partial\\body","\\grad":"\\bs{\\nabla}"}});</script></span> represents a passive scalar quantity advected by the flow. Upwinding is a strategy that approximates the value of a variable on a face by taking the value from the upwind element (i.e. the element where the flow originates from).</p><div class="card moose-float"><div class="card-content"><p class="moose-caption"><span class="moose-caption-heading">Listing 4: </span><span class="moose-caption-text">Example source code for a finite volume kernel discretizing advection of a passive scalar.</span></p><pre class="moose-pre" style="max-height:350px;"><code class="language-cpp">
+#include &quot;FVDiffusion.h&quot;
+
+registerMooseObject(&quot;MooseApp&quot;, FVDiffusion);
+
+InputParameters
+FVDiffusion::validParams()
+{
+  InputParameters params = FVFluxKernel::validParams();
+  params.addRequiredParam&lt;MaterialPropertyName&gt;(&quot;coeff&quot;, &quot;diffusion coefficient&quot;);
+  return params;
+}
+
+FVDiffusion::FVDiffusion(const InputParameters &amp; params)
+  : FVFluxKernel(params),
+    _coeff_elem(getADMaterialProperty&lt;Real&gt;(&quot;coeff&quot;)),
+    _coeff_neighbor(getNeighborADMaterialProperty&lt;Real&gt;(&quot;coeff&quot;))
+{
+}
+
+ADReal
+FVDiffusion::computeQpResidual()
+{
+  auto dudn = gradUDotNormal();
+
+  // Eventually, it will be nice to offer automatic-switching triggered by
+  // input parameters to change between different interpolation methods for
+  // this.
+  ADReal k;
+  interpolate(InterpMethod::Average, k, _coeff_elem[_qp], _coeff_neighbor[_qp]);
+
+  return -1 * k * dudn;
+}
+</code></pre><a href="#44324d29-b742-412e-a6ca-c9530f624fb1" class="modal-trigger">(moose/framework/src/fvkernels/FVDiffusion.C)</a></div></div><div class="modal moose-modal" id="44324d29-b742-412e-a6ca-c9530f624fb1"><div class="modal-content"><h4>/home/travis/build/hugary1995/raccoon/moose/framework/src/fvkernels/FVDiffusion.C</h4><pre class="moose-pre"><code class="language-cpp">// This file is part of the MOOSE framework
+// https://www.mooseframework.org
+//
+// All rights reserved, see COPYRIGHT for full restrictions
+// https://github.com/idaholab/moose/blob/master/COPYRIGHT
+//
+// Licensed under LGPL 2.1, please see LICENSE for details
+// https://www.gnu.org/licenses/lgpl-2.1.html
+
+#include &quot;FVDiffusion.h&quot;
+
+registerMooseObject(&quot;MooseApp&quot;, FVDiffusion);
+
+InputParameters
+FVDiffusion::validParams()
+{
+  InputParameters params = FVFluxKernel::validParams();
+  params.addRequiredParam&lt;MaterialPropertyName&gt;(&quot;coeff&quot;, &quot;diffusion coefficient&quot;);
+  return params;
+}
+
+FVDiffusion::FVDiffusion(const InputParameters &amp; params)
+  : FVFluxKernel(params),
+    _coeff_elem(getADMaterialProperty&lt;Real&gt;(&quot;coeff&quot;)),
+    _coeff_neighbor(getNeighborADMaterialProperty&lt;Real&gt;(&quot;coeff&quot;))
+{
+}
+
+ADReal
+FVDiffusion::computeQpResidual()
+{
+  auto dudn = gradUDotNormal();
+
+  // Eventually, it will be nice to offer automatic-switching triggered by
+  // input parameters to change between different interpolation methods for
+  // this.
+  ADReal k;
+  interpolate(InterpMethod::Average, k, _coeff_elem[_qp], _coeff_neighbor[_qp]);
+
+  return -1 * k * dudn;
+}
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><p>Integrating the advection term over the element and using Gauss&#x27; theorem leads to:</p><p><span class="moose-katex-block-equation"><span tex="\int_{\Omega}   \nabla \cdot \left( \vec{u} v \right) dV =    \int_{\partial \Omega} \left(\vec{n} \cdot \vec{u} v \right) dS." bookmark="moose-equation-cfc310e9-7da3-4d9e-b606-7fe5d0816b60" recursive="True" class="moose-katex-equation table-cell" id="moose-equation-cfc310e9-7da3-4d9e-b606-7fe5d0816b60"></span><script>var element = document.getElementById("moose-equation-cfc310e9-7da3-4d9e-b606-7fe5d0816b60");katex.render("   \\int_{\\Omega}   \\nabla \\cdot \\left( \\vec{u} v \\right) dV =    \\int_{\\partial \\Omega} \\left(\\vec{n} \\cdot \\vec{u} v \\right) dS.", element, {displayMode:true,throwOnError:false,macros:{"\\bs":"\\boldsymbol{#1}","\\normal":"\\bs{n}","\\divergence":"\\nabla \\cdot","\\norm":"\\left\\lVert#1\\right\\rVert","\\dArea":"\\text{ d}A","\\dVolume":"\\text{ d}V","\\total":"\\text{total}","\\internal":"\\text{internal}","\\external":"\\text{external}","\\elastic":"\\text{elastic}","\\fracture":"\\text{fracture}","\\critical":"\\text{critical}","\\activeenergy":"{\\left< A \\right>}","\\inactiveenergy":"{\\left< I \\right>}","\\Gc":"\\mathcal{G}_c","\\strain":"\\bs{\\varepsilon}","\\stress":"\\bs{\\sigma}","\\xstress":"\\widetilde{\\stress}","\\macaulay":"\\left<#1\\right>","\\body":"\\Omega","\\bodyboundary":"\\partial\\body","\\grad":"\\bs{\\nabla}"}});</script></span></p><p>This term in parenthesis on the right hand side is approximated using upwinding:</p><p><span class="moose-katex-block-equation"><span tex="\vec{n} \cdot \vec{u} v \approx  \tilde{\vec{u}}\cdot \vec{n}    \tilde{v}    ," bookmark="moose-equation-4f69f6be-557b-412d-b55d-2609fc759a30" recursive="True" class="moose-katex-equation table-cell" id="moose-equation-4f69f6be-557b-412d-b55d-2609fc759a30"></span><script>var element = document.getElementById("moose-equation-4f69f6be-557b-412d-b55d-2609fc759a30");katex.render("   \\vec{n} \\cdot \\vec{u} v \\approx  \\tilde{\\vec{u}}\\cdot \\vec{n}    \\tilde{v}    ,", element, {displayMode:true,throwOnError:false,macros:{"\\bs":"\\boldsymbol{#1}","\\normal":"\\bs{n}","\\divergence":"\\nabla \\cdot","\\norm":"\\left\\lVert#1\\right\\rVert","\\dArea":"\\text{ d}A","\\dVolume":"\\text{ d}V","\\total":"\\text{total}","\\internal":"\\text{internal}","\\external":"\\text{external}","\\elastic":"\\text{elastic}","\\fracture":"\\text{fracture}","\\critical":"\\text{critical}","\\activeenergy":"{\\left< A \\right>}","\\inactiveenergy":"{\\left< I \\right>}","\\Gc":"\\mathcal{G}_c","\\strain":"\\bs{\\varepsilon}","\\stress":"\\bs{\\sigma}","\\xstress":"\\widetilde{\\stress}","\\macaulay":"\\left<#1\\right>","\\body":"\\Omega","\\bodyboundary":"\\partial\\body","\\grad":"\\bs{\\nabla}"}});</script></span></p><p>where</p><p><span class="moose-katex-block-equation"><span tex="\tilde{\vec{u}} = \frac{1}{2} \left( \vec{u}_L + \vec{u}_R \right)" bookmark="moose-equation-9a0d3dc3-2658-4459-bec5-0edc6acff13e" recursive="True" class="moose-katex-equation table-cell" id="moose-equation-9a0d3dc3-2658-4459-bec5-0edc6acff13e"></span><script>var element = document.getElementById("moose-equation-9a0d3dc3-2658-4459-bec5-0edc6acff13e");katex.render("   \\tilde{\\vec{u}} = \\frac{1}{2} \\left( \\vec{u}_L + \\vec{u}_R \\right)", element, {displayMode:true,throwOnError:false,macros:{"\\bs":"\\boldsymbol{#1}","\\normal":"\\bs{n}","\\divergence":"\\nabla \\cdot","\\norm":"\\left\\lVert#1\\right\\rVert","\\dArea":"\\text{ d}A","\\dVolume":"\\text{ d}V","\\total":"\\text{total}","\\internal":"\\text{internal}","\\external":"\\text{external}","\\elastic":"\\text{elastic}","\\fracture":"\\text{fracture}","\\critical":"\\text{critical}","\\activeenergy":"{\\left< A \\right>}","\\inactiveenergy":"{\\left< I \\right>}","\\Gc":"\\mathcal{G}_c","\\strain":"\\bs{\\varepsilon}","\\stress":"\\bs{\\sigma}","\\xstress":"\\widetilde{\\stress}","\\macaulay":"\\left<#1\\right>","\\body":"\\Omega","\\bodyboundary":"\\partial\\body","\\grad":"\\bs{\\nabla}"}});</script></span></p><p>and  <span tex="\tilde{v} = v_L" bookmark="moose-equation-30944a59-85ee-4410-9603-ff970c018a6f" recursive="True" class="moose-katex-inline-equation" id="moose-equation-30944a59-85ee-4410-9603-ff970c018a6f"><script>var element = document.getElementById("moose-equation-30944a59-85ee-4410-9603-ff970c018a6f");katex.render("\\tilde{v} = v_L", element, {displayMode:false,throwOnError:false,macros:{"\\bs":"\\boldsymbol{#1}","\\normal":"\\bs{n}","\\divergence":"\\nabla \\cdot","\\norm":"\\left\\lVert#1\\right\\rVert","\\dArea":"\\text{ d}A","\\dVolume":"\\text{ d}V","\\total":"\\text{total}","\\internal":"\\text{internal}","\\external":"\\text{external}","\\elastic":"\\text{elastic}","\\fracture":"\\text{fracture}","\\critical":"\\text{critical}","\\activeenergy":"{\\left< A \\right>}","\\inactiveenergy":"{\\left< I \\right>}","\\Gc":"\\mathcal{G}_c","\\strain":"\\bs{\\varepsilon}","\\stress":"\\bs{\\sigma}","\\xstress":"\\widetilde{\\stress}","\\macaulay":"\\left<#1\\right>","\\body":"\\Omega","\\bodyboundary":"\\partial\\body","\\grad":"\\bs{\\nabla}"}});</script></span> if <span tex="\tilde{\vec{u}} \cdot \vec{n} > 0" bookmark="moose-equation-056c097e-d8b7-4a29-9f70-2186e26c2f7c" recursive="True" class="moose-katex-inline-equation" id="moose-equation-056c097e-d8b7-4a29-9f70-2186e26c2f7c"><script>var element = document.getElementById("moose-equation-056c097e-d8b7-4a29-9f70-2186e26c2f7c");katex.render("\\tilde{\\vec{u}} \\cdot \\vec{n} > 0", element, {displayMode:false,throwOnError:false,macros:{"\\bs":"\\boldsymbol{#1}","\\normal":"\\bs{n}","\\divergence":"\\nabla \\cdot","\\norm":"\\left\\lVert#1\\right\\rVert","\\dArea":"\\text{ d}A","\\dVolume":"\\text{ d}V","\\total":"\\text{total}","\\internal":"\\text{internal}","\\external":"\\text{external}","\\elastic":"\\text{elastic}","\\fracture":"\\text{fracture}","\\critical":"\\text{critical}","\\activeenergy":"{\\left< A \\right>}","\\inactiveenergy":"{\\left< I \\right>}","\\Gc":"\\mathcal{G}_c","\\strain":"\\bs{\\varepsilon}","\\stress":"\\bs{\\sigma}","\\xstress":"\\widetilde{\\stress}","\\macaulay":"\\left<#1\\right>","\\body":"\\Omega","\\bodyboundary":"\\partial\\body","\\grad":"\\bs{\\nabla}"}});</script></span> and <span tex="\tilde{v} = v_R" bookmark="moose-equation-149fda66-43e1-4d63-9603-c417987b1c73" recursive="True" class="moose-katex-inline-equation" id="moose-equation-149fda66-43e1-4d63-9603-c417987b1c73"><script>var element = document.getElementById("moose-equation-149fda66-43e1-4d63-9603-c417987b1c73");katex.render("\\tilde{v} = v_R", element, {displayMode:false,throwOnError:false,macros:{"\\bs":"\\boldsymbol{#1}","\\normal":"\\bs{n}","\\divergence":"\\nabla \\cdot","\\norm":"\\left\\lVert#1\\right\\rVert","\\dArea":"\\text{ d}A","\\dVolume":"\\text{ d}V","\\total":"\\text{total}","\\internal":"\\text{internal}","\\external":"\\text{external}","\\elastic":"\\text{elastic}","\\fracture":"\\text{fracture}","\\critical":"\\text{critical}","\\activeenergy":"{\\left< A \\right>}","\\inactiveenergy":"{\\left< I \\right>}","\\Gc":"\\mathcal{G}_c","\\strain":"\\bs{\\varepsilon}","\\stress":"\\bs{\\sigma}","\\xstress":"\\widetilde{\\stress}","\\macaulay":"\\left<#1\\right>","\\body":"\\Omega","\\bodyboundary":"\\partial\\body","\\grad":"\\bs{\\nabla}"}});</script></span> otherwise. By convention, the normal <span tex="\vec{n}" bookmark="moose-equation-58b6e88d-d192-4630-9808-98fc37960d8c" recursive="True" class="moose-katex-inline-equation" id="moose-equation-58b6e88d-d192-4630-9808-98fc37960d8c"><script>var element = document.getElementById("moose-equation-58b6e88d-d192-4630-9808-98fc37960d8c");katex.render("\\vec{n}", element, {displayMode:false,throwOnError:false,macros:{"\\bs":"\\boldsymbol{#1}","\\normal":"\\bs{n}","\\divergence":"\\nabla \\cdot","\\norm":"\\left\\lVert#1\\right\\rVert","\\dArea":"\\text{ d}A","\\dVolume":"\\text{ d}V","\\total":"\\text{total}","\\internal":"\\text{internal}","\\external":"\\text{external}","\\elastic":"\\text{elastic}","\\fracture":"\\text{fracture}","\\critical":"\\text{critical}","\\activeenergy":"{\\left< A \\right>}","\\inactiveenergy":"{\\left< I \\right>}","\\Gc":"\\mathcal{G}_c","\\strain":"\\bs{\\varepsilon}","\\stress":"\\bs{\\sigma}","\\xstress":"\\widetilde{\\stress}","\\macaulay":"\\left<#1\\right>","\\body":"\\Omega","\\bodyboundary":"\\partial\\body","\\grad":"\\bs{\\nabla}"}});</script></span> points from the &#x27;-&#x27; side to the &#x27;+&#x27; side.</p><p>The implementation is straight forward. In the constructor the &#x27;-&#x27; and &#x27;<strong>&#x27; velocities are obtained as <code>RealVectorValue</code> material properties. The average is computed and stored in variable <code>v_avg</code>. The direction of the flow is determined using the inner product of <code>v_avg * _normal</code> and the residual is then computed using either the &#x27;-&#x27; value of <span tex="v" bookmark="moose-equation-7ca28447-9d05-491a-978f-9038d048e84f" recursive="True" class="moose-katex-inline-equation" id="moose-equation-7ca28447-9d05-491a-978f-9038d048e84f"><script>var element = document.getElementById("moose-equation-7ca28447-9d05-491a-978f-9038d048e84f");katex.render("v", element, {displayMode:false,throwOnError:false,macros:{"\\bs":"\\boldsymbol{#1}","\\normal":"\\bs{n}","\\divergence":"\\nabla \\cdot","\\norm":"\\left\\lVert#1\\right\\rVert","\\dArea":"\\text{ d}A","\\dVolume":"\\text{ d}V","\\total":"\\text{total}","\\internal":"\\text{internal}","\\external":"\\text{external}","\\elastic":"\\text{elastic}","\\fracture":"\\text{fracture}","\\critical":"\\text{critical}","\\activeenergy":"{\\left< A \\right>}","\\inactiveenergy":"{\\left< I \\right>}","\\Gc":"\\mathcal{G}_c","\\strain":"\\bs{\\varepsilon}","\\stress":"\\bs{\\sigma}","\\xstress":"\\widetilde{\\stress}","\\macaulay":"\\left<#1\\right>","\\body":"\\Omega","\\bodyboundary":"\\partial\\body","\\grad":"\\bs{\\nabla}"}});</script></span> given by <code>_u_elem[_qp]</code> or the &#x27;</strong>&#x27; value given by <code>_u_neighbor [_qp]</code>.</p></section><section class="scrollspy" id="d3534f82-6b55-4611-82d1-d7f1a5805b52" data-section-level="2" data-section-text="FVKernel source code : FVTimeKernel"><h2 id="fvkernel-source-code-fvtimekernel">FVKernel source code: FVTimeKernel</h2><p>This example demonstrates source code for an <code>FVElementalKernel</code>. <code>FVElementalKernel</code> are volumetric terms. In this case, the kernel is <code>FVTimeKernel</code>.</p><div class="card moose-float"><div class="card-content"><p class="moose-caption"><span class="moose-caption-heading">Listing 5: </span><span class="moose-caption-text">Example source code for the finite volume time kernel.</span></p><pre class="moose-pre" style="max-height:350px;"><code class="language-cpp">FVTimeKernel::computeQpResidual()
+{
+  return _u_dot[_qp];
+}
+</code></pre><a href="#4ab6b4a8-5c37-4ffc-8a01-f174651500d7" class="modal-trigger">(moose/framework/src/fvkernels/FVTimeKernel.C)</a></div></div><div class="modal moose-modal" id="4ab6b4a8-5c37-4ffc-8a01-f174651500d7"><div class="modal-content"><h4>/home/travis/build/hugary1995/raccoon/moose/framework/src/fvkernels/FVTimeKernel.C</h4><pre class="moose-pre"><code class="language-cpp">// This file is part of the MOOSE framework
+// https://www.mooseframework.org
+//
+// All rights reserved, see COPYRIGHT for full restrictions
+// https://github.com/idaholab/moose/blob/master/COPYRIGHT
+//
+// Licensed under LGPL 2.1, please see LICENSE for details
+// https://www.gnu.org/licenses/lgpl-2.1.html
+
+#include &quot;FVTimeKernel.h&quot;
+
+#include &quot;SystemBase.h&quot;
+
+registerADMooseObject(&quot;MooseApp&quot;, FVTimeKernel);
+
+InputParameters
+FVTimeKernel::validParams()
+{
+  InputParameters params = FVElementalKernel::validParams();
+  params.set&lt;MultiMooseEnum&gt;(&quot;vector_tags&quot;) = &quot;time&quot;;
+  params.set&lt;MultiMooseEnum&gt;(&quot;matrix_tags&quot;) = &quot;system time&quot;;
+  return params;
+}
+
+FVTimeKernel::FVTimeKernel(const InputParameters &amp; parameters)
+  : FVElementalKernel(parameters), _u_dot(_var.adUDot())
+{
+}
+
+ADReal
+FVTimeKernel::computeQpResidual()
+{
+  return _u_dot[_qp];
+}
+</code></pre></div><div class="modal-footer"><a class="modal-close btn-flat">Close</a></div></div><p>This kernel implements the term:</p><p><span class="moose-katex-block-equation"><span tex="\frac{\partial v}{\partial t}" bookmark="moose-equation-ffc4f0ae-ac98-43da-bb1d-ca1ac8598be3" recursive="True" class="moose-katex-equation table-cell" id="moose-equation-ffc4f0ae-ac98-43da-bb1d-ca1ac8598be3"></span><script>var element = document.getElementById("moose-equation-ffc4f0ae-ac98-43da-bb1d-ca1ac8598be3");katex.render("  \\frac{\\partial v}{\\partial t}", element, {displayMode:true,throwOnError:false,macros:{"\\bs":"\\boldsymbol{#1}","\\normal":"\\bs{n}","\\divergence":"\\nabla \\cdot","\\norm":"\\left\\lVert#1\\right\\rVert","\\dArea":"\\text{ d}A","\\dVolume":"\\text{ d}V","\\total":"\\text{total}","\\internal":"\\text{internal}","\\external":"\\text{external}","\\elastic":"\\text{elastic}","\\fracture":"\\text{fracture}","\\critical":"\\text{critical}","\\activeenergy":"{\\left< A \\right>}","\\inactiveenergy":"{\\left< I \\right>}","\\Gc":"\\mathcal{G}_c","\\strain":"\\bs{\\varepsilon}","\\stress":"\\bs{\\sigma}","\\xstress":"\\widetilde{\\stress}","\\macaulay":"\\left<#1\\right>","\\body":"\\Omega","\\bodyboundary":"\\partial\\body","\\grad":"\\bs{\\nabla}"}});</script></span></p><p>The implementation is identical to the implementation of FEM kernels except that the FVM does not require multiplication by the test function. </p></section></section></div><div class="col hide-on-med-and-down l2"><div class="toc-wrapper pin-top"><ul class="section table-of-contents"><li><a href="#7c5caeaf-2b56-4789-be68-213367993268" class="tooltipped" data-position="left" data-tooltip="FVKernels block">FVKernels block</a></li><li><a href="#e41d0be2-a15c-49f4-bb56-588e3f04a9de" class="tooltipped" data-position="left" data-tooltip="Available Objects">Available Objects</a></li><li><a href="#a713b13d-99f0-416e-9f89-ef0987242e90" class="tooltipped" data-position="left" data-tooltip="FVKernel source code : FVDiffusion example">FVKernel source code : FVDiffusion example</a></li><li><a href="#4b23a656-8771-4c6f-b91b-ee50d464e376" class="tooltipped" data-position="left" data-tooltip="FVKernel source code : FVMatAdvection example">FVKernel source code : FVMatAdvection example</a></li><li><a href="#d3534f82-6b55-4611-82d1-d7f1a5805b52" class="tooltipped" data-position="left" data-tooltip="FVKernel source code : FVTimeKernel">FVKernel source code : FVTimeKernel</a></li></ul></div></div></div></div></main></div></body><script type="text/javascript" src="../../contrib/materialize/materialize.min.js"></script><script type="text/javascript" src="../../contrib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="../../contrib/prism/prism.min.js"></script><script type="text/javascript" src="../../js/init.js"></script><script type="text/javascript" src="../../js/navigation.js"></script><script type="text/javascript" src="../../contrib/fuse/fuse.min.js"></script><script type="text/javascript" src="../../js/search_index.js"></script><script type="text/javascript" src="../../js/sqa_moose.js"></script>
