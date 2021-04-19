@@ -16,6 +16,7 @@ public:
   DegradationBaseTempl(const InputParameters & parameters);
 
 protected:
+  virtual void initQpStatefulProperties() override {computeQpProperties();} 
   virtual void computeQpProperties() override;
   virtual void computeDegradation() = 0;
   virtual void postComputeDegradation();
