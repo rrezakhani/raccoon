@@ -22,7 +22,7 @@ ADSPFVolStrTimeDerivative::ADSPFVolStrTimeDerivative(const InputParameters & par
   : ADTimeKernel(parameters),
     _strain(getADMaterialPropertyByName<RankTwoTensor>("total_strain")),
     _strain_old(getMaterialPropertyOldByName<RankTwoTensor>("total_strain")),
-    _alpha(getMaterialProperty<Real>("biot_coefficient"))
+    _alpha(getADMaterialProperty<Real>("biot_coefficient"))
 {
 }
 

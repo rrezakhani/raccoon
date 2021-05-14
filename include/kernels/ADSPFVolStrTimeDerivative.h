@@ -19,5 +19,5 @@ protected:
   const ADMaterialProperty<RankTwoTensor> & _strain;
   const MaterialProperty<RankTwoTensor> & _strain_old;
   
-  const MaterialProperty<Real> & _alpha;
+  const ADMaterialProperty<Real> & _alpha;
 };
