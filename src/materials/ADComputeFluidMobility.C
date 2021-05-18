@@ -54,8 +54,8 @@ ADComputeFluidMobility::computeQpProperties()
   ADRankTwoTensor nn;
   nn.vectorOuterProduct(n,n);
   //ADRankTwoTensor fracture_mob = (_wn[_qp]*_wn[_qp]/(12*_eta[_qp]) - _K[_qp]/_eta[_qp]) * (identity - nn);
-  //ADRankTwoTensor fracture_mob = _wn[_qp]*_wn[_qp]/(12*_eta[_qp]) * (identity - nn);
-  ADRankTwoTensor fracture_mob = std::abs(_wn[_qp])/(12*_eta[_qp]) * (identity - nn);
+  ADRankTwoTensor fracture_mob = _wn[_qp]*_wn[_qp]/(12*_eta[_qp]) * (identity - nn);
+  //ADRankTwoTensor fracture_mob = std::abs(_wn[_qp])/(12*_eta[_qp]) * (identity - nn);
 
   _fluid_mob[_qp] = matrix_mob + std::pow(_d[_qp],_mob_eps) * fracture_mob;
 }
