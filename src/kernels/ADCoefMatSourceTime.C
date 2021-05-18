@@ -38,5 +38,6 @@ ADCoefMatSourceTime::precomputeQpResidual()
     factor *= (*prop)[_qp];
 
   const Real _end_t = _app.getExecutioner()->getParam<Real>("end_time");
-  return factor * _coef * _t/_end_t ;
+  
+  return _coef * factor * _t/_end_t;
 }

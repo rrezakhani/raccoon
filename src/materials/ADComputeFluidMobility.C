@@ -32,6 +32,7 @@ ADComputeFluidMobility::ADComputeFluidMobility(const InputParameters & parameter
     _d(adCoupledValue("damage")),
     _grad_d(adCoupledGradient("damage")),
     _strain(getADMaterialPropertyByName<RankTwoTensor>("total_strain")),
+    _strain_old(getMaterialPropertyOldByName<RankTwoTensor>("total_strain")),
     _eta(getADMaterialProperty<Real>("fluid_viscosity_name")),
     _K(getADMaterialProperty<Real>("fluid_permeability_name")),
     _mob_eps(getParam<Real>("mobility_exponent"))
@@ -45,13 +46,16 @@ ADComputeFluidMobility::computeQpProperties()
   ADRealVectorValue n;
   if (_grad_d[_qp].norm() > eps)
      n = _grad_d[_qp] / _grad_d[_qp].norm();
-  _wn[_qp] = _current_elem->hmin() * (_strain[_qp] * n) * n;
+  //_wn[_qp] = _current_elem->hmin() * (_strain[_qp] * n) * n;
+  _wn[_qp] = _current_elem->hmin() * (_strain_old[_qp] * n) * n;
 
   ADRankTwoTensor identity(ADRankTwoTensor::initIdentity);
   ADRankTwoTensor matrix_mob = _K[_qp]/_eta[_qp] * identity;
   ADRankTwoTensor nn;
   nn.vectorOuterProduct(n,n);
-  ADRankTwoTensor fracture_mob = _wn[_qp]*_wn[_qp] * (1/(12*_eta[_qp]) - _K[_qp]/_eta[_qp]) * (identity - nn);
+  //ADRankTwoTensor fracture_mob = (_wn[_qp]*_wn[_qp]/(12*_eta[_qp]) - _K[_qp]/_eta[_qp]) * (identity - nn);
+  //ADRankTwoTensor fracture_mob = _wn[_qp]*_wn[_qp]/(12*_eta[_qp]) * (identity - nn);
+  ADRankTwoTensor fracture_mob = std::abs(_wn[_qp])/(12*_eta[_qp]) * (identity - nn);
 
   _fluid_mob[_qp] = matrix_mob + std::pow(_d[_qp],_mob_eps) * fracture_mob;
 }

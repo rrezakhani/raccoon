@@ -24,6 +24,7 @@ protected:
   const ADVariableGradient & _grad_d;
   
   const ADMaterialProperty<RankTwoTensor> & _strain;
+  const MaterialProperty<RankTwoTensor> & _strain_old;
   
   const ADMaterialProperty<Real> & _eta;
   const ADMaterialProperty<Real> & _K;
