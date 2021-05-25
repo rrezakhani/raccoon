@@ -42,20 +42,17 @@ ADComputeFluidMobility::ADComputeFluidMobility(const InputParameters & parameter
 void
 ADComputeFluidMobility::computeQpProperties()
 {
-  const Real eps = libMesh::TOLERANCE;
+  const Real eps = 1e-15;
   ADRealVectorValue n;
   if (_grad_d[_qp].norm() > eps)
      n = _grad_d[_qp] / _grad_d[_qp].norm();
-  //_wn[_qp] = _current_elem->hmin() * (_strain[_qp] * n) * n;
-  _wn[_qp] = _current_elem->hmin() * (_strain_old[_qp] * n) * n;
+  _wn[_qp] = 0.5*(_current_elem->hmin() + _current_elem->hmax()) * (_strain_old[_qp] * n) * n;
 
   ADRankTwoTensor identity(ADRankTwoTensor::initIdentity);
   ADRankTwoTensor matrix_mob = _K[_qp]/_eta[_qp] * identity;
   ADRankTwoTensor nn;
   nn.vectorOuterProduct(n,n);
-  //ADRankTwoTensor fracture_mob = (_wn[_qp]*_wn[_qp]/(12*_eta[_qp]) - _K[_qp]/_eta[_qp]) * (identity - nn);
   ADRankTwoTensor fracture_mob = _wn[_qp]*_wn[_qp]/(12*_eta[_qp]) * (identity - nn);
-  //ADRankTwoTensor fracture_mob = std::abs(_wn[_qp])/(12*_eta[_qp]) * (identity - nn);
 
   _fluid_mob[_qp] = matrix_mob + std::pow(_d[_qp],_mob_eps) * fracture_mob;
 }
